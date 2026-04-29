@@ -47,6 +47,11 @@ function normalizePhone(value) {
   return normalizeLine(value);
 }
 
+function normalizeHexColor(value, fallback = "#c9642b") {
+  const color = normalizeLine(value);
+  return /^#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?$/.test(color) ? color : fallback;
+}
+
 function buildPhoneUrl(value) {
   const digits = digitsOnly(value);
   return digits ? `tel:+${digits}` : "";
@@ -182,7 +187,7 @@ function buildSubmissionPayload(input, previousRecord = null) {
     || [name, addressLine, "Amargosa, Bahia, Brasil"].filter(Boolean).join(", ");
   const phone = normalizePhone(input.phone || previousRecord?.contacts?.phone);
 
-  return {
+  const payload = {
     publicId: normalizeLine(input.id || previousRecord?.id) || `cad-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`,
     approvalStatus: normalizeStatus(input.approvalStatus, previousRecord?.approvalStatus || "pending"),
     category,
@@ -205,11 +210,14 @@ function buildSubmissionPayload(input, previousRecord = null) {
     serviceLine: normalizeLine(input.serviceLine || previousRecord?.guide?.serviceLine),
     mapQuery,
     directionsUrl: normalizeLine(input.directionsUrl || previousRecord?.guide?.directionsUrl) || buildDirectionsUrl(mapQuery),
-    popupTitleColor: normalizeLine(input.popupTitleColor || previousRecord?.guide?.popupTitleColor)
-      || (category === "hotel" ? "#3568c9" : "#c9642b"),
+    popupTitleColor: normalizeLine(input.popupTitleColor || previousRecord?.guide?.popupTitleColor),
     latitude: input.latitude != null && input.latitude !== "" ? Number(input.latitude) : previousRecord?.guide?.coords?.lat ?? null,
     longitude: input.longitude != null && input.longitude !== "" ? Number(input.longitude) : previousRecord?.guide?.coords?.lng ?? null
   };
+
+  payload.popupTitleColor = normalizeHexColor(payload.popupTitleColor, category === "hotel" ? "#3568c9" : "#c9642b");
+
+  return payload;
 }
 
 async function listAdminSubmissions(filters = {}) {

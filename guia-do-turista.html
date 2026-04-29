@@ -2126,6 +2126,11 @@
         .replace(/'/g, "&#39;");
     }
 
+    function safeHexColor(value, fallback = "#157c62") {
+      const color = normalizeText(value);
+      return /^#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?$/.test(color) ? color : fallback;
+    }
+
     function buildSubmittedPointSummary(record) {
       const summary = normalizeText(record.subtitle || record.description);
 
@@ -2155,7 +2160,7 @@
         directionsUrl: normalizeText(record.directionsUrl || buildDirectionsUrl(`${latitudeValue},${longitudeValue}`)),
         content: `
           <div style="font-family: Cabin, sans-serif; color: #243834; max-width: 260px; line-height: 1.45;">
-            <strong style="display: block; margin-bottom: 8px; color: ${record.popupTitleColor}; font-size: 1.05rem;">${escapeHtml(record.name)}</strong>
+            <strong style="display: block; margin-bottom: 8px; color: ${safeHexColor(record.popupTitleColor)}; font-size: 1.05rem;">${escapeHtml(record.name)}</strong>
             <span style="font-size: 0.92rem;">${escapeHtml(buildSubmittedPointSummary(record))}</span>
           </div>
         `

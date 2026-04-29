@@ -5,7 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const helmet = require("helmet");
 
-const { admin, port, uploadDir } = require("./config");
+const { admin, port, uploadDir, uploadMaxBytes } = require("./config");
 const {
   clearSessionCookie,
   getSessionFromRequest,
@@ -35,19 +35,33 @@ const { getPool } = require("./db");
 
 fs.mkdirSync(uploadDir, { recursive: true });
 
+const ALLOWED_IMAGE_MIME_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif"
+]);
+
 const upload = multer({
   storage: multer.memoryStorage(),
+  limits: {
+    fileSize: uploadMaxBytes,
+    files: 1
+  },
   fileFilter: (_req, file, callback) => {
-    if (file.mimetype && file.mimetype.startsWith("image/")) {
+    if (ALLOWED_IMAGE_MIME_TYPES.has(file.mimetype)) {
       callback(null, true);
       return;
     }
 
-    callback(new Error("Envie apenas arquivos de imagem."));
+    const error = new Error("Envie apenas imagens JPG, PNG, WEBP ou GIF.");
+    error.statusCode = 400;
+    callback(error);
   }
 });
 
 const app = express();
+app.set("trust proxy", true);
 
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -59,13 +73,98 @@ app.use("/uploads", express.static(uploadDir, {
   maxAge: "7d"
 }));
 
+function detectImageMime(buffer) {
+  if (!Buffer.isBuffer(buffer) || buffer.length < 12) {
+    return "";
+  }
+
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return "image/jpeg";
+  }
+
+  if (
+    buffer[0] === 0x89
+    && buffer[1] === 0x50
+    && buffer[2] === 0x4e
+    && buffer[3] === 0x47
+    && buffer[4] === 0x0d
+    && buffer[5] === 0x0a
+    && buffer[6] === 0x1a
+    && buffer[7] === 0x0a
+  ) {
+    return "image/png";
+  }
+
+  if (buffer.slice(0, 4).toString("ascii") === "GIF8") {
+    return "image/gif";
+  }
+
+  if (
+    buffer.slice(0, 4).toString("ascii") === "RIFF"
+    && buffer.slice(8, 12).toString("ascii") === "WEBP"
+  ) {
+    return "image/webp";
+  }
+
+  return "";
+}
+
 function fileToDataUrl(file) {
   if (!file?.buffer || !file?.mimetype) {
     return "";
   }
 
-  return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+  const detectedMime = detectImageMime(file.buffer);
+  if (!detectedMime || detectedMime !== file.mimetype) {
+    const error = new Error("Arquivo de imagem invalido ou corrompido.");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return `data:${detectedMime};base64,${file.buffer.toString("base64")}`;
 }
+
+function createRateLimiter({ name, windowMs, max, message }) {
+  const attempts = new Map();
+
+  return (req, res, next) => {
+    const now = Date.now();
+    const key = `${name}:${req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress || "unknown"}`;
+    const current = attempts.get(key);
+
+    if (!current || current.resetAt <= now) {
+      attempts.set(key, {
+        count: 1,
+        resetAt: now + windowMs
+      });
+      next();
+      return;
+    }
+
+    current.count += 1;
+    if (current.count > max) {
+      res.status(429).json({ message });
+      return;
+    }
+
+    attempts.set(key, current);
+    next();
+  };
+}
+
+const loginRateLimit = createRateLimiter({
+  name: "admin-login",
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: "Muitas tentativas de login. Aguarde alguns minutos e tente novamente."
+});
+
+const publicSubmissionRateLimit = createRateLimiter({
+  name: "public-submission",
+  windowMs: 60 * 60 * 1000,
+  max: 20,
+  message: "Muitos envios em pouco tempo. Aguarde alguns minutos e tente novamente."
+});
 
 function buildPayloadFromRequest(req) {
   const body = req.body || {};
@@ -149,7 +248,7 @@ app.get("/api/admin/session", (req, res) => {
   });
 });
 
-app.post("/api/admin/login", (req, res) => {
+app.post("/api/admin/login", loginRateLimit, (req, res) => {
   const username = String(req.body?.username || "").trim();
   const password = String(req.body?.password || "");
 
@@ -212,7 +311,7 @@ app.post("/api/admin/cards", upload.single("photo"), async (req, res, next) => {
   }
 });
 
-app.post("/api/submissions", upload.single("photo"), async (req, res, next) => {
+app.post("/api/submissions", publicSubmissionRateLimit, upload.single("photo"), async (req, res, next) => {
   try {
     const record = await createSubmission(buildPayloadFromRequest(req));
     res.status(201).json({
@@ -305,9 +404,20 @@ app.delete("/api/admin/submissions", async (_req, res, next) => {
 });
 
 app.use((error, _req, res, _next) => {
-  const statusCode = error.statusCode || 500;
+  const statusCode = error.statusCode || (error instanceof multer.MulterError ? 400 : 500);
+  const isUploadSizeError = error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE";
+  const message = isUploadSizeError
+    ? `Imagem muito grande. Envie uma imagem de ate ${Math.round(uploadMaxBytes / 1024 / 1024)}MB.`
+    : statusCode >= 500
+      ? "Erro interno do servidor."
+      : error.message || "Nao foi possivel processar a solicitacao.";
+
+  if (statusCode >= 500) {
+    console.error(error);
+  }
+
   res.status(statusCode).json({
-    message: error.message || "Erro interno do servidor."
+    message
   });
 });
 
