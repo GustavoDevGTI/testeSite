@@ -2118,6 +2118,11 @@ window.addEventListener('message', (event) => {
 
     const data = event.data;
 
+    if (data?.type === 'amargosa-close-guide-modal') {
+        closeGuiaModal();
+        return;
+    }
+
     if (data?.type === 'amargosa-close-event-modal') {
         const visibleModal = getVisibleBrowserModal();
 

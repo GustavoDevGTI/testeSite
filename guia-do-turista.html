@@ -2058,7 +2058,7 @@
 
       button.addEventListener("click", () => {
         const targetOrigin = window.location.origin === "null" ? "*" : window.location.origin;
-        window.parent.postMessage({ type: "amargosa-close-event-modal" }, targetOrigin);
+        window.parent.postMessage({ type: "amargosa-close-guide-modal" }, targetOrigin);
       });
     });
 
