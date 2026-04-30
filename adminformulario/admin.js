@@ -88,6 +88,11 @@ let adminMapsLoaderPromise = null;
 const DEFAULT_MAP_CENTER = { lat: -13.0265, lng: -39.6085 };
 const DEFAULT_MAP_ZOOM = 14;
 const GOOGLE_MAPS_API_KEY = "AIzaSyBdddKSwLzMfQdvDOYIO2Qx5ZX7RiF6syc";
+const GEOCODING_COMPONENT_RESTRICTIONS = {
+  country: "BR",
+  administrativeArea: "BA",
+  locality: "Amargosa"
+};
 
 function normalizeLine(value) {
   return String(value || "").trim();
@@ -152,6 +157,78 @@ function buildStructuredLocationQuery(street, number, neighborhood) {
   ]
     .filter(Boolean)
     .join(", ");
+}
+
+function uniqueLines(lines) {
+  return Array.from(new Set(lines.map((line) => normalizeLine(line)).filter(Boolean)));
+}
+
+function buildStructuredLocationQueryCandidates(street, number, neighborhood, name = "") {
+  const normalizedStreet = normalizeLine(street);
+  const normalizedNumber = normalizeLine(number);
+  const normalizedNeighborhood = normalizeLine(neighborhood);
+  const normalizedName = normalizeLine(name);
+  const streetNumber = [normalizedStreet, normalizedNumber].filter(Boolean).join(", ");
+
+  return uniqueLines([
+    [streetNumber, normalizedNeighborhood, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [normalizedName, streetNumber, normalizedNeighborhood, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [normalizedStreet, normalizedNeighborhood, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [streetNumber, "Amargosa - BA", "Brasil"].filter(Boolean).join(", ")
+  ]);
+}
+
+function buildFreeTextLocationQueryCandidates(name, addressLine) {
+  const normalizedName = normalizeLine(name);
+  const normalizedAddress = normalizeLine(addressLine);
+
+  return uniqueLines([
+    [normalizedAddress, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [normalizedName, normalizedAddress, "Amargosa - BA", "Brasil"].filter(Boolean).join(", ")
+  ]);
+}
+
+function isAmargosaGeocodeResult(result) {
+  const formattedAddress = String(result?.formatted_address || "");
+  const components = Array.isArray(result?.address_components) ? result.address_components : [];
+  const hasAmargosaComponent = components.some((component) => (
+    component.types?.includes("locality")
+    && /amargosa/i.test(component.long_name || component.short_name || "")
+  ));
+  const hasBahiaComponent = components.some((component) => (
+    component.types?.includes("administrative_area_level_1")
+    && /^(BA|Bahia)$/i.test(component.short_name || component.long_name || "")
+  ));
+
+  return hasAmargosaComponent || (/amargosa/i.test(formattedAddress) && (hasBahiaComponent || /\bBA\b|Bahia/i.test(formattedAddress)));
+}
+
+function geocodeMapPickerQuery(state, query) {
+  return new Promise((resolve) => {
+    state.geocoder.geocode({
+      address: query,
+      region: "BR",
+      componentRestrictions: GEOCODING_COMPONENT_RESTRICTIONS
+    }, (results, status) => {
+      resolve({ results: results || [], status });
+    });
+  });
+}
+
+function getGeocodeFailureMessage(status, fallbackMessage) {
+  if (status === "REQUEST_DENIED") {
+    return "O Google recusou a consulta. Verifique se a chave do Maps permite este dominio e se a Geocoding/Maps JavaScript API esta ativa.";
+  }
+
+  if (status === "OVER_QUERY_LIMIT") {
+    return "A cota de localizacao do Google foi atingida temporariamente. Tente novamente mais tarde.";
+  }
+
+  if (status === "INVALID_REQUEST") {
+    return "Endereco incompleto para localizar. Revise rua, numero e bairro.";
+  }
+
+  return fallbackMessage;
 }
 
 function splitAddressLine(addressLine) {
@@ -277,6 +354,7 @@ function createAdminMapPickerState(options) {
     longitudeInput: options.longitudeInput,
     locateButton: options.locateButton,
     buildQuery: options.buildQuery,
+    buildQueries: options.buildQueries,
     idleMessage: options.idleMessage,
     notFoundMessage: options.notFoundMessage,
     locatedMessage: options.locatedMessage,
@@ -476,11 +554,14 @@ function invalidateMapPicker(state) {
 
 async function openMapPickerAtAddress(state) {
   const query = normalizeLine(state.buildQuery());
+  const queries = typeof state.buildQueries === "function"
+    ? uniqueLines(state.buildQueries())
+    : uniqueLines([query]);
   const existingLatitude = Number(state.latitudeInput.value);
   const existingLongitude = Number(state.longitudeInput.value);
   const hasExistingCoordinates = Number.isFinite(existingLatitude) && Number.isFinite(existingLongitude);
 
-  if (!query && !hasExistingCoordinates) {
+  if (!queries.length && !hasExistingCoordinates) {
     setMapPickerStatus(state, "Informe um nome e um endereco antes de localizar no mapa.", true);
     return;
   }
@@ -505,28 +586,43 @@ async function openMapPickerAtAddress(state) {
     return;
   }
 
-  state.geocoder.geocode({ address: query }, (results, status) => {
-    state.locateButton.disabled = false;
+  let lastStatus = "";
 
-    if (status === "OK" && results?.[0]) {
-      const result = results[0];
-      const location = result.geometry?.location;
+  try {
+    for (const currentQuery of queries) {
+      const { results, status } = await geocodeMapPickerQuery(state, currentQuery);
+      lastStatus = status;
 
-      if (result.geometry?.viewport) {
-        state.map.fitBounds(result.geometry.viewport);
-      } else {
-        state.map.setCenter(location);
-        state.map.setZoom(17);
+      if (status === "OK" && results.length) {
+        const result = results.find(isAmargosaGeocodeResult) || results[0];
+        const location = result.geometry?.location;
+
+        if (result.geometry?.viewport) {
+          state.map.fitBounds(result.geometry.viewport);
+        } else {
+          state.map.setCenter(location);
+          state.map.setZoom(17);
+        }
+
+        placeMapPickerMarker(state, location, false);
+        setMapPickerStatus(state, state.locatedMessage);
+        state.locateButton.disabled = false;
+        return;
       }
 
-      placeMapPickerMarker(state, location, false);
-      setMapPickerStatus(state, state.locatedMessage);
-      return;
+      if (status !== "ZERO_RESULTS") {
+        break;
+      }
     }
 
     resetMapPicker(state, false);
-    setMapPickerStatus(state, state.notFoundMessage, true);
-  });
+    setMapPickerStatus(state, getGeocodeFailureMessage(lastStatus, state.notFoundMessage), true);
+  } catch (error) {
+    resetMapPicker(state, false);
+    setMapPickerStatus(state, error.message || getGeocodeFailureMessage("ERROR", state.notFoundMessage), true);
+  } finally {
+    state.locateButton.disabled = false;
+  }
 }
 
 function buildGastronomyScheduleLine(daysLine, hoursLine, fallbackLine = "") {
@@ -1298,6 +1394,7 @@ const submissionMapPickerState = createAdminMapPickerState({
   buildQuery: () => [normalizeLine(editNameInput.value), normalizeLine(editAddressLineInput.value), "Amargosa, Bahia, Brasil"]
     .filter(Boolean)
     .join(", "),
+  buildQueries: () => buildFreeTextLocationQueryCandidates(editNameInput.value, editAddressLineInput.value),
   idleMessage: 'Clique em "Abrir / localizar" para revisar ou corrigir a posicao no mapa.',
   notFoundMessage: "Nao foi possivel localizar este cadastro no mapa. Revise o endereco e tente novamente.",
   locatedMessage: "Endereco encontrado. Confira o pino e ajuste manualmente se precisar.",
@@ -1316,6 +1413,12 @@ const catalogMapPickerState = createAdminMapPickerState({
     catalogEditLogradouroInput.value,
     catalogEditNumeroInput.value,
     catalogEditBairroInput.value
+  ),
+  buildQueries: () => buildStructuredLocationQueryCandidates(
+    catalogEditLogradouroInput.value,
+    catalogEditNumeroInput.value,
+    catalogEditBairroInput.value,
+    catalogEditNameInput.value
   ),
   idleMessage: 'Preencha rua, numero e bairro. Depois clique em "Abrir / localizar".',
   notFoundMessage: "Nao foi possivel localizar este card no mapa. Revise o endereco e tente novamente.",

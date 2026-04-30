@@ -39,6 +39,11 @@ let mapsLoaderPromise = null;
 const defaultMapCenter = { lat: -13.0265, lng: -39.6085 };
 const defaultMapZoom = 14;
 const GOOGLE_MAPS_API_KEY = "AIzaSyBdddKSwLzMfQdvDOYIO2Qx5ZX7RiF6syc";
+const GEOCODING_COMPONENT_RESTRICTIONS = {
+  country: "BR",
+  administrativeArea: "BA",
+  locality: "Amargosa"
+};
 
 function digitsOnly(value) {
   return String(value || "").replace(/\D/g, "");
@@ -242,16 +247,95 @@ function invalidateLocationSelection() {
 }
 
 function buildLocationQueryFromInputs() {
-  return [
-    logradouroInput?.value.trim(),
-    numeroInput?.value.trim(),
-    bairroInput?.value.trim(),
-    "Amargosa",
-    "Bahia",
-    "Brasil"
-  ]
-    .filter(Boolean)
-    .join(", ");
+  return buildLocationQueryCandidatesFromInputs()[0] || "";
+}
+
+function uniqueLines(lines) {
+  return Array.from(new Set(lines.map((line) => String(line || "").trim()).filter(Boolean)));
+}
+
+function buildLocationQueryCandidatesFromInputs() {
+  const street = logradouroInput?.value.trim() || "";
+  const number = numeroInput?.value.trim() || "";
+  const neighborhood = bairroInput?.value.trim() || "";
+  const streetNumber = [street, number].filter(Boolean).join(", ");
+
+  return uniqueLines([
+    [streetNumber, neighborhood, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [street, neighborhood, "Amargosa - BA", "Brasil"].filter(Boolean).join(", "),
+    [streetNumber, "Amargosa - BA", "Brasil"].filter(Boolean).join(", ")
+  ]);
+}
+
+function isAmargosaGeocodeResult(result) {
+  const formattedAddress = String(result?.formatted_address || "");
+  const components = Array.isArray(result?.address_components) ? result.address_components : [];
+  const hasAmargosaComponent = components.some((component) => (
+    component.types?.includes("locality")
+    && /amargosa/i.test(component.long_name || component.short_name || "")
+  ));
+  const hasBahiaComponent = components.some((component) => (
+    component.types?.includes("administrative_area_level_1")
+    && /^(BA|Bahia)$/i.test(component.short_name || component.long_name || "")
+  ));
+
+  return hasAmargosaComponent || (/amargosa/i.test(formattedAddress) && (hasBahiaComponent || /\bBA\b|Bahia/i.test(formattedAddress)));
+}
+
+function geocodeLocationQuery(query) {
+  return new Promise((resolve) => {
+    locationGeocoder.geocode({
+      address: query,
+      region: "BR",
+      componentRestrictions: GEOCODING_COMPONENT_RESTRICTIONS
+    }, (results, status) => {
+      resolve({ results: results || [], status });
+    });
+  });
+}
+
+function getGeocodeFailureMessage(status) {
+  if (status === "REQUEST_DENIED") {
+    return "O Google recusou a consulta. Verifique se a chave do Maps permite este dominio e se a Geocoding/Maps JavaScript API esta ativa.";
+  }
+
+  if (status === "OVER_QUERY_LIMIT") {
+    return "A cota de localizacao do Google foi atingida temporariamente. Tente novamente mais tarde.";
+  }
+
+  if (status === "INVALID_REQUEST") {
+    return "Endereco incompleto para localizar. Revise rua, numero e bairro.";
+  }
+
+  return "Nao foi possivel localizar esse endereco em Amargosa/BA. Revise os campos ou clique no mapa para marcar manualmente.";
+}
+
+async function findLocationByAddress() {
+  const queries = buildLocationQueryCandidatesFromInputs();
+  let lastStatus = "";
+
+  for (const query of queries) {
+    const { results, status } = await geocodeLocationQuery(query);
+    lastStatus = status;
+
+    if (status === "OK" && results.length) {
+      return {
+        result: results.find(isAmargosaGeocodeResult) || results[0],
+        status,
+        query
+      };
+    }
+
+    if (status !== "ZERO_RESULTS") {
+      break;
+    }
+  }
+
+  return {
+    result: null,
+    status: lastStatus,
+    query: queries[0] || ""
+  };
 }
 
 function initLocationPicker() {
@@ -340,14 +424,13 @@ async function locateAddressOnMap() {
     return;
   }
 
-  const query = buildLocationQueryFromInputs();
   setMapStatus("Localizando o endereco informado no mapa...");
 
-  locationGeocoder.geocode({ address: query }, (results, status) => {
+  try {
+    const { result, status } = await findLocationByAddress();
     mapLocateBtn.disabled = false;
 
-    if (status === "OK" && results?.[0]) {
-      const result = results[0];
+    if (result) {
       const location = result.geometry?.location;
 
       if (result.geometry?.viewport) {
@@ -363,8 +446,12 @@ async function locateAddressOnMap() {
     }
 
     resetLocationSelection(false);
-    setMapStatus("Nao foi possivel localizar esse endereco. Revise os campos e tente novamente.", true);
-  });
+    setMapStatus(getGeocodeFailureMessage(status), true);
+  } catch (error) {
+    mapLocateBtn.disabled = false;
+    resetLocationSelection(false);
+    setMapStatus(error.message || getGeocodeFailureMessage("ERROR"), true);
+  }
 }
 
 function setDropState(active) {
