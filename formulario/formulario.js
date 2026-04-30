@@ -155,10 +155,21 @@ function getLatLngLiteral(position) {
   return null;
 }
 
+function hasConfirmedCoordinates(latitude, longitude) {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return false;
+  }
+
+  return !(Math.abs(lat) < 0.000001 && Math.abs(lng) < 0.000001);
+}
+
 function updateMapSummary(position) {
   const literal = getLatLngLiteral(position);
 
-  if (!literal || !mapSummary) {
+  if (!literal || !hasConfirmedCoordinates(literal.lat, literal.lng) || !mapSummary) {
     if (mapSummary) {
       mapSummary.hidden = true;
       mapSummary.textContent = "";
@@ -179,7 +190,7 @@ function clearStoredCoordinates() {
 function storeCoordinates(position) {
   const literal = getLatLngLiteral(position);
 
-  if (!literal) {
+  if (!literal || !hasConfirmedCoordinates(literal.lat, literal.lng)) {
     clearStoredCoordinates();
     return;
   }
@@ -986,7 +997,7 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  if (!latitudeInput.value || !longitudeInput.value) {
+  if (!hasConfirmedCoordinates(latitudeInput.value, longitudeInput.value)) {
     showFeedback('Confirme a localizacao no mapa antes de enviar o cadastro.', true);
     mapLocateBtn?.focus();
     return;

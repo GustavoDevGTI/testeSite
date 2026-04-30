@@ -70,6 +70,26 @@ function buildDirectionsUrl(query) {
   return query ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}` : "";
 }
 
+function hasConfirmedCoordinates(latitude, longitude) {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return false;
+  }
+
+  return !(Math.abs(lat) < 0.000001 && Math.abs(lng) < 0.000001);
+}
+
+function normalizeCoordinatePair(latitude, longitude) {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  return hasConfirmedCoordinates(lat, lng)
+    ? { latitude: lat, longitude: lng }
+    : { latitude: null, longitude: null };
+}
+
 function buildGastronomyScheduleLine(daysLine, hoursLine) {
   return [normalizeLine(daysLine), normalizeLine(hoursLine)].filter(Boolean).join(", ");
 }
@@ -92,6 +112,7 @@ function mapRowToRecord(row) {
     phoneUrl: normalizeLine(row.phone_url)
   };
 
+  const coords = normalizeCoordinatePair(row.latitude, row.longitude);
   const guide = {
     daysLine: normalizeLine(row.days_line),
     subtitle: normalizeLine(row.subtitle),
@@ -105,8 +126,8 @@ function mapRowToRecord(row) {
     mapQuery: normalizeLine(row.map_query),
     directionsUrl: normalizeLine(row.directions_url),
     popupTitleColor: normalizeLine(row.popup_title_color),
-    coords: row.latitude != null && row.longitude != null
-      ? { lat: Number(row.latitude), lng: Number(row.longitude) }
+    coords: coords.latitude != null && coords.longitude != null
+      ? { lat: coords.latitude, lng: coords.longitude }
       : null
   };
 
@@ -186,6 +207,10 @@ function buildSubmissionPayload(input, previousRecord = null) {
   const mapQuery = normalizeLine(input.mapQuery || previousRecord?.guide?.mapQuery)
     || [name, addressLine, "Amargosa, Bahia, Brasil"].filter(Boolean).join(", ");
   const phone = normalizePhone(input.phone || previousRecord?.contacts?.phone);
+  const coords = normalizeCoordinatePair(
+    input.latitude != null && input.latitude !== "" ? input.latitude : previousRecord?.guide?.coords?.lat ?? null,
+    input.longitude != null && input.longitude !== "" ? input.longitude : previousRecord?.guide?.coords?.lng ?? null
+  );
 
   const payload = {
     publicId: normalizeLine(input.id || previousRecord?.id) || `cad-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`,
@@ -211,8 +236,8 @@ function buildSubmissionPayload(input, previousRecord = null) {
     mapQuery,
     directionsUrl: normalizeLine(input.directionsUrl || previousRecord?.guide?.directionsUrl) || buildDirectionsUrl(mapQuery),
     popupTitleColor: normalizeLine(input.popupTitleColor || previousRecord?.guide?.popupTitleColor),
-    latitude: input.latitude != null && input.latitude !== "" ? Number(input.latitude) : previousRecord?.guide?.coords?.lat ?? null,
-    longitude: input.longitude != null && input.longitude !== "" ? Number(input.longitude) : previousRecord?.guide?.coords?.lng ?? null
+    latitude: coords.latitude,
+    longitude: coords.longitude
   };
 
   payload.popupTitleColor = normalizeHexColor(payload.popupTitleColor, category === "hotel" ? "#3568c9" : "#c9642b");

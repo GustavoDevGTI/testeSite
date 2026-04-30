@@ -334,7 +334,7 @@ function buildDirectionsUrlFromCoordinates(latitude, longitude) {
   const lat = Number(latitude);
   const lng = Number(longitude);
 
-  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+  if (!hasConfirmedCoordinates(lat, lng)) {
     return "";
   }
 
@@ -342,7 +342,14 @@ function buildDirectionsUrlFromCoordinates(latitude, longitude) {
 }
 
 function hasConfirmedCoordinates(latitude, longitude) {
-  return Number.isFinite(Number(latitude)) && Number.isFinite(Number(longitude));
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return false;
+  }
+
+  return !(Math.abs(lat) < 0.000001 && Math.abs(lng) < 0.000001);
 }
 
 function createAdminMapPickerState(options) {
@@ -382,7 +389,7 @@ function updateMapPickerSummary(state, position) {
     return;
   }
 
-  if (!literal) {
+  if (!literal || !hasConfirmedCoordinates(literal.lat, literal.lng)) {
     state.summaryNode.hidden = true;
     state.summaryNode.textContent = "";
     return;
@@ -401,7 +408,7 @@ function clearMapPickerCoordinates(state) {
 function storeMapPickerCoordinates(state, position) {
   const literal = getLatLngLiteral(position);
 
-  if (!literal) {
+  if (!literal || !hasConfirmedCoordinates(literal.lat, literal.lng)) {
     clearMapPickerCoordinates(state);
     return;
   }
@@ -531,7 +538,7 @@ function hydrateMapPickerFromCoordinates(state, latitude, longitude, statusMessa
   const lat = Number(latitude);
   const lng = Number(longitude);
 
-  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+  if (!hasConfirmedCoordinates(lat, lng)) {
     clearMapPickerCoordinates(state);
     setMapPickerStatus(state, statusMessage || state.idleMessage);
     return;
@@ -559,7 +566,7 @@ async function openMapPickerAtAddress(state) {
     : uniqueLines([query]);
   const existingLatitude = Number(state.latitudeInput.value);
   const existingLongitude = Number(state.longitudeInput.value);
-  const hasExistingCoordinates = Number.isFinite(existingLatitude) && Number.isFinite(existingLongitude);
+  const hasExistingCoordinates = hasConfirmedCoordinates(existingLatitude, existingLongitude);
 
   if (!queries.length && !hasExistingCoordinates) {
     setMapPickerStatus(state, "Informe um nome e um endereco antes de localizar no mapa.", true);
@@ -1098,7 +1105,7 @@ function openEditDialog(recordId) {
     submissionMapPickerState,
     draft.latitude,
     draft.longitude,
-    Number.isFinite(Number(draft.latitude)) && Number.isFinite(Number(draft.longitude))
+    hasConfirmedCoordinates(draft.latitude, draft.longitude)
       ? "Localizacao atual carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar."
       : submissionMapPickerState.idleMessage
   );

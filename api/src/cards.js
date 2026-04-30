@@ -75,7 +75,7 @@ function buildPhoneUrl(value) {
 }
 
 function buildDirectionsUrlFromCoordinates(latitude, longitude) {
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+  if (!hasConfirmedCoordinates(latitude, longitude)) {
     return "";
   }
 
@@ -95,6 +95,26 @@ function toPositiveInteger(value, fallback = 1) {
 function toNullableNumber(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function hasConfirmedCoordinates(latitude, longitude) {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return false;
+  }
+
+  return !(Math.abs(lat) < 0.000001 && Math.abs(lng) < 0.000001);
+}
+
+function normalizeCoordinatePair(latitude, longitude) {
+  const lat = toNullableNumber(latitude);
+  const lng = toNullableNumber(longitude);
+
+  return hasConfirmedCoordinates(lat, lng)
+    ? { latitude: lat, longitude: lng }
+    : { latitude: null, longitude: null };
 }
 
 function normalizeComparable(value) {
@@ -167,8 +187,7 @@ function buildCardPayloadFromSubmission(record) {
   const guide = record.guide || {};
   const contacts = record.contacts || {};
   const coords = guide.coords || {};
-  const latitude = toNullableNumber(coords.lat);
-  const longitude = toNullableNumber(coords.lng);
+  const { latitude, longitude } = normalizeCoordinatePair(coords.lat, coords.lng);
   const name = normalizeLine(record.name);
   const pointPrefix = category === "hotel" ? "hotel" : "gas";
   const fallbackPointId = `${pointPrefix}-${toSlug(name) || shortHash(record.id)}`;
@@ -203,8 +222,7 @@ function mapRowToCard(row) {
   const category = normalizeCategory(row.category);
   const email = normalizeEmail(row.email);
   const phone = normalizeLine(row.phone);
-  const latitude = toNullableNumber(row.latitude);
-  const longitude = toNullableNumber(row.longitude);
+  const { latitude, longitude } = normalizeCoordinatePair(row.latitude, row.longitude);
   const directionsUrl = normalizeLine(row.directions_url) || buildDirectionsUrlFromCoordinates(latitude, longitude);
 
   return {
@@ -696,12 +714,13 @@ function validateCardPayload(payload) {
 function buildCardPayload(input, currentCard = null) {
   const hasLatitude = Object.prototype.hasOwnProperty.call(input, "latitude");
   const hasLongitude = Object.prototype.hasOwnProperty.call(input, "longitude");
-  const latitude = hasLatitude
-    ? (input.latitude === "" ? null : toNullableNumber(input.latitude))
+  const rawLatitude = hasLatitude
+    ? input.latitude
     : currentCard?.latitude ?? null;
-  const longitude = hasLongitude
-    ? (input.longitude === "" ? null : toNullableNumber(input.longitude))
+  const rawLongitude = hasLongitude
+    ? input.longitude
     : currentCard?.longitude ?? null;
+  const { latitude, longitude } = normalizeCoordinatePair(rawLatitude, rawLongitude);
   const directionsUrl = buildDirectionsUrlFromCoordinates(latitude, longitude)
     || normalizeLine(pickInputValue(input, "directionsUrl", currentCard?.directionsUrl));
 
