@@ -130,6 +130,7 @@ const galleryThemeCards = [
 
 const GUIDE_MODAL_DEFAULT_SRC = './guia-do-turista.html';
 const GUIDE_MODAL_CACHE_VERSION = '20260428-2';
+const GUIDE_MODAL_OPEN_PARAM = 'modalOpen';
 
 const galleryCache = new Map();
 const galleryState = {
@@ -291,6 +292,7 @@ function normalizeGuideModalSource(url) {
 
     try {
         const resolvedUrl = new URL(url, window.location.href);
+        resolvedUrl.searchParams.delete(GUIDE_MODAL_OPEN_PARAM);
         resolvedUrl.searchParams.set('v', GUIDE_MODAL_CACHE_VERSION);
         return `${resolvedUrl.pathname}${resolvedUrl.search}${resolvedUrl.hash}`;
     } catch (error) {
@@ -308,6 +310,18 @@ function resolveGuideModalSource(trigger = null, fallbackUrl = GUIDE_MODAL_DEFAU
     }
 
     return normalizeGuideModalSource(fallbackUrl);
+}
+
+function buildGuideModalFrameSource(sourceUrl = GUIDE_MODAL_DEFAULT_SRC) {
+    const normalizedSource = normalizeGuideModalSource(sourceUrl);
+
+    try {
+        const parsedUrl = new URL(normalizedSource, window.location.href);
+        parsedUrl.searchParams.set(GUIDE_MODAL_OPEN_PARAM, Date.now().toString());
+        return `${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}`;
+    } catch (error) {
+        return `${normalizedSource}${normalizedSource.includes('?') ? '&' : '?'}${GUIDE_MODAL_OPEN_PARAM}=${Date.now()}`;
+    }
 }
 
 function buildGuideMapActionHref(sourceUrl = GUIDE_MODAL_DEFAULT_SRC) {
@@ -1732,8 +1746,8 @@ function openGuiaModal(trigger = null, sourceUrl = GUIDE_MODAL_DEFAULT_SRC) {
         lastGuiaModalTrigger = trigger;
     }
 
-    if (!isGuideFrameShowingSource(nextSourceUrl)) {
-        ensureIframeLoaded(guiaModalFrame, nextSourceUrl);
+    if (!wasOpen || !isGuideFrameShowingSource(nextSourceUrl)) {
+        ensureIframeLoaded(guiaModalFrame, wasOpen ? nextSourceUrl : buildGuideModalFrameSource(nextSourceUrl));
     }
 
     if (guiaModalPrimaryAction) {
