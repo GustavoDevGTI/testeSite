@@ -138,9 +138,31 @@
           <textarea id="editDescription" name="description" maxlength="280" rows="4" required></textarea>
         </div>
 
-        <div class="field field--full">
-          <label for="editAddressLine">Endereco completo</label>
-          <input id="editAddressLine" name="addressLine" placeholder="Rua, numero | Bairro | Cidade - UF | CEP">
+        <input id="editAddressLine" name="addressLine" type="hidden">
+
+        <div class="field">
+          <label for="editLogradouro">Rua / Avenida</label>
+          <input id="editLogradouro" name="logradouro" placeholder="Ex: Avenida Doutor Luis Sande">
+        </div>
+
+        <div class="field">
+          <label for="editNumero">Numero</label>
+          <input id="editNumero" name="numero" placeholder="Ex: 196">
+        </div>
+
+        <div class="field">
+          <label for="editComplemento">Complemento (opcional)</label>
+          <input id="editComplemento" name="complemento" placeholder="Ex: Sala 02, fundos">
+        </div>
+
+        <div class="field">
+          <label for="editReferencia">Ponto de referencia (opcional)</label>
+          <input id="editReferencia" name="referencia" placeholder="Ex: Em frente a praca central">
+        </div>
+
+        <div class="field">
+          <label for="editBairro">Bairro</label>
+          <input id="editBairro" name="bairro" placeholder="Ex: Centro">
         </div>
 
         <div class="field field--full">
@@ -367,6 +389,6 @@
     </form>
   </dialog>
 
-  <script src="./admin.js?v=20260430-1120" defer></script>
+  <script src="./admin.js?v=20260430-1210" defer></script>
 </body>
 </html>

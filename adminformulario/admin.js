@@ -56,6 +56,11 @@ const editCategoryInput = document.getElementById("editCategory");
 const editNameInput = document.getElementById("editName");
 const editDescriptionInput = document.getElementById("editDescription");
 const editAddressLineInput = document.getElementById("editAddressLine");
+const editLogradouroInput = document.getElementById("editLogradouro");
+const editNumeroInput = document.getElementById("editNumero");
+const editComplementoInput = document.getElementById("editComplemento");
+const editReferenciaInput = document.getElementById("editReferencia");
+const editBairroInput = document.getElementById("editBairro");
 const editInstagramInput = document.getElementById("editInstagram");
 const editWhatsappInput = document.getElementById("editWhatsapp");
 const editDaysLineInput = document.getElementById("editDaysLine");
@@ -261,6 +266,43 @@ function splitAddressLine(addressLine) {
   }
 
   return result;
+}
+
+function fillEditAddressFields(addressLine) {
+  const address = splitAddressLine(addressLine);
+  editAddressLineInput.value = normalizeLine(addressLine);
+  editLogradouroInput.value = address.street;
+  editNumeroInput.value = address.number;
+  editComplementoInput.value = address.complement;
+  editReferenciaInput.value = address.reference;
+  editBairroInput.value = address.neighborhood;
+}
+
+function clearEditAddressFields() {
+  editAddressLineInput.value = "";
+  editLogradouroInput.value = "";
+  editNumeroInput.value = "";
+  editComplementoInput.value = "";
+  editReferenciaInput.value = "";
+  editBairroInput.value = "";
+}
+
+function buildEditAddressLineFromFields() {
+  return buildStructuredAddressLine(
+    editLogradouroInput.value,
+    editNumeroInput.value,
+    editBairroInput.value,
+    editComplementoInput.value,
+    editReferenciaInput.value
+  );
+}
+
+function hasEditRequiredAddressParts() {
+  return Boolean(
+    normalizeLine(editLogradouroInput.value)
+    && normalizeLine(editNumeroInput.value)
+    && normalizeLine(editBairroInput.value)
+  );
 }
 
 function fillCatalogAddressFields(addressLine) {
@@ -1091,7 +1133,7 @@ function openEditDialog(recordId) {
   editCurrentPhotoUrlInput.value = draft.photoSrc;
   editNameInput.value = draft.name;
   editDescriptionInput.value = draft.description;
-  editAddressLineInput.value = draft.addressLine;
+  fillEditAddressFields(draft.addressLine);
   editInstagramInput.value = draft.instagram;
   editWhatsappInput.value = draft.whatsapp;
   editDaysLineInput.value = draft.daysLine;
@@ -1141,7 +1183,8 @@ function closeEditDialog() {
 function buildEditPayload() {
   const category = normalizeCategory(editCategoryInput.value);
   const name = normalizeLine(editNameInput.value);
-  const addressLine = normalizeLine(editAddressLineInput.value);
+  const addressLine = buildEditAddressLineFromFields();
+  editAddressLineInput.value = addressLine;
   const mapQuery = buildMapQuery(name, addressLine);
   const latitude = normalizeLine(editLatitudeInput.value);
   const longitude = normalizeLine(editLongitudeInput.value);
@@ -1316,8 +1359,28 @@ editPhotoInput.addEventListener("change", () => {
 });
 
 editNameInput?.addEventListener("input", () => invalidateMapPicker(submissionMapPickerState));
-editAddressLineInput?.addEventListener("input", () => invalidateMapPicker(submissionMapPickerState));
+[
+  editLogradouroInput,
+  editNumeroInput,
+  editComplementoInput,
+  editReferenciaInput,
+  editBairroInput
+].forEach((input) => {
+  input?.addEventListener("input", () => {
+    editAddressLineInput.value = buildEditAddressLineFromFields();
+    invalidateMapPicker(submissionMapPickerState);
+  });
+});
 editMapLocateBtn?.addEventListener("click", () => {
+  editAddressLineInput.value = buildEditAddressLineFromFields();
+  if (
+    !hasEditRequiredAddressParts()
+    && !hasConfirmedCoordinates(editLatitudeInput.value, editLongitudeInput.value)
+  ) {
+    setMapPickerStatus(submissionMapPickerState, "Informe rua, numero e bairro antes de localizar no mapa.", true);
+    return;
+  }
+
   openMapPickerAtAddress(submissionMapPickerState);
 });
 bindPhoneSanitizer(editPhoneInput);
@@ -1398,10 +1461,13 @@ const submissionMapPickerState = createAdminMapPickerState({
   latitudeInput: editLatitudeInput,
   longitudeInput: editLongitudeInput,
   locateButton: editMapLocateBtn,
-  buildQuery: () => [normalizeLine(editNameInput.value), normalizeLine(editAddressLineInput.value), "Amargosa, Bahia, Brasil"]
-    .filter(Boolean)
-    .join(", "),
-  buildQueries: () => buildFreeTextLocationQueryCandidates(editNameInput.value, editAddressLineInput.value),
+  buildQuery: () => buildStructuredLocationQuery(editLogradouroInput.value, editNumeroInput.value, editBairroInput.value),
+  buildQueries: () => buildStructuredLocationQueryCandidates(
+    editLogradouroInput.value,
+    editNumeroInput.value,
+    editBairroInput.value,
+    editNameInput.value
+  ),
   idleMessage: 'Clique em "Abrir / localizar" para revisar ou corrigir a posicao no mapa.',
   notFoundMessage: "Nao foi possivel localizar este cadastro no mapa. Revise o endereco e tente novamente.",
   locatedMessage: "Endereco encontrado. Confira o pino e ajuste manualmente se precisar.",
