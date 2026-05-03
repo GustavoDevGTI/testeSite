@@ -737,6 +737,10 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
 sectionMenuButtons.forEach((button) => {
     button.addEventListener('click', () => {
+        if (button.dataset.galleryHub !== undefined) {
+            return;
+        }
+
         if (button.dataset.url) {
             openMenuUrl(button.dataset.url);
             return;
