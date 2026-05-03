@@ -1641,54 +1641,6 @@ function queueEventModalFrameSync() {
     });
 }
 
-function initEventModalFrameScrollBridge(frame) {
-    if (!(frame instanceof HTMLIFrameElement)) {
-        return;
-    }
-
-    const frameDocument = frame.contentDocument || frame.contentWindow?.document;
-    const modal = frame.closest('.event-modal');
-    const modalDialog = frame.closest('.event-modal__dialog');
-
-    if (!frameDocument || !modalDialog || frameDocument.documentElement.dataset.eventModalScrollBridge === 'true') {
-        return;
-    }
-
-    frameDocument.documentElement.dataset.eventModalScrollBridge = 'true';
-
-    let lastTouchY = 0;
-
-    frameDocument.addEventListener('touchstart', (event) => {
-        lastTouchY = event.touches?.[0]?.clientY || 0;
-    }, { passive: true });
-
-    frameDocument.addEventListener('touchmove', (event) => {
-        if (modal?.hidden || !eventModalMobileMediaQuery.matches) {
-            return;
-        }
-
-        const nextTouchY = event.touches?.[0]?.clientY || lastTouchY;
-        const deltaY = lastTouchY - nextTouchY;
-
-        if (Math.abs(deltaY) < 1) {
-            return;
-        }
-
-        modalDialog.scrollTop += deltaY;
-        lastTouchY = nextTouchY;
-        event.preventDefault();
-    }, { passive: false });
-
-    frameDocument.addEventListener('wheel', (event) => {
-        if (modal?.hidden || !eventModalMobileMediaQuery.matches) {
-            return;
-        }
-
-        modalDialog.scrollTop += event.deltaY;
-        event.preventDefault();
-    }, { passive: false });
-}
-
 function closeOpenEventModals() {
     closeCarnavalCulturalModal({ skipHistory: true });
     closeSaoJoaoModal({ skipHistory: true });
@@ -1779,7 +1731,6 @@ function openGuiaModal(trigger = null, sourceUrl = GUIDE_MODAL_DEFAULT_SRC) {
     }
     guiaModalCloseButton?.focus();
     queueEventModalFrameSync();
-    window.setTimeout(() => initEventModalFrameScrollBridge(guiaModalFrame), 250);
 }
 
 function closeGuiaModal(options = {}) {
@@ -2125,8 +2076,6 @@ function initGuiaModal() {
 eventModalFrames.forEach((frame) => {
     frame.addEventListener('load', () => {
         queueEventModalFrameSync();
-
-        initEventModalFrameScrollBridge(frame);
     });
 });
 
