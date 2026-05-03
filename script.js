@@ -1554,6 +1554,19 @@ function shouldCloseModalViaBrowserBack(modalId, options = {}) {
     return false;
 }
 
+function clearBrowserModalHistoryState(modalId) {
+    const currentState = window.history.state;
+
+    if (!currentState || typeof currentState !== 'object' || currentState.amargosaModal !== modalId) {
+        return;
+    }
+
+    const nextState = { ...currentState };
+    delete nextState.amargosaModal;
+
+    window.history.replaceState(Object.keys(nextState).length ? nextState : null, '', window.location.href);
+}
+
 function closeGalleryModal(options = {}) {
     if (!galleryModal || galleryModal.hidden) {
         return;
@@ -1772,8 +1785,8 @@ function closeGuiaModal(options = {}) {
         return;
     }
 
-    if (shouldCloseModalViaBrowserBack('guia-modal', options)) {
-        return;
+    if (!options.skipHistory && !isHandlingBrowserModalPopstate && activeBrowserModalId === 'guia-modal') {
+        clearBrowserModalHistoryState('guia-modal');
     }
 
     guiaModal.hidden = true;
