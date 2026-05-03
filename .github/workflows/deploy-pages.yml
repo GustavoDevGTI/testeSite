@@ -1,8 +1,9 @@
 name: Deploy site to GitHub Pages
 
 on:
-  # O deploy de producao passa pelo Portainer. O Pages fica manual para nao
-  # marcar todo push como falho quando o GitHub Pages nao estiver configurado.
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
