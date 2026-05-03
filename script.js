@@ -61,6 +61,7 @@ const festivalForroModalCloseButton = festivalForroModal?.querySelector('.event-
 const festivalForroModalTriggers = Array.from(document.querySelectorAll('[data-festival-forro-modal-trigger]'));
 const guiaModal = document.querySelector('#guia-modal');
 const guiaModalCloseButton = guiaModal?.querySelector('.event-modal__close');
+const guiaModalDialog = guiaModal?.querySelector('.event-modal__dialog');
 const contactModal = document.querySelector('#contact-modal');
 const contactModalCloseButton = contactModal?.querySelector('.event-modal__close');
 const contactModalActions = document.querySelector('#contact-modal-actions');
@@ -1613,24 +1614,21 @@ function syncEventModalFrameHeights() {
             return;
         }
 
-        const frameDocumentHeight = getFrameDocumentHeight(frame);
-
         if (frame === guiaModalFrame) {
-            const mobileGuideHeight = Math.max(520, window.innerHeight - 32, frameDocumentHeight);
+            const mobileGuideHeight = Math.max(320, Math.min(window.innerHeight - 140, 820));
             frame.style.height = `${mobileGuideHeight}px`;
-            frame.setAttribute('scrolling', 'no');
+            frame.setAttribute('scrolling', 'yes');
             return;
         }
 
         const isPrimaryEventFrame = frame === carnavalCulturalModalFrame
             || frame === saoJoaoModalFrame
             || frame === festivalForroModalFrame;
-        const fallbackFrameHeight = isPrimaryEventFrame
+        const mobileFrameHeight = isPrimaryEventFrame
             ? Math.max(620, window.innerHeight - 32)
             : Math.max(360, Math.min(window.innerHeight * 0.62, 640));
-        const mobileFrameHeight = Math.max(fallbackFrameHeight, frameDocumentHeight);
         frame.style.height = `${mobileFrameHeight}px`;
-        frame.setAttribute('scrolling', 'no');
+        frame.setAttribute('scrolling', 'yes');
     });
 }
 
@@ -1641,20 +1639,22 @@ function queueEventModalFrameSync() {
     });
 }
 
-function initEventModalFrameScrollBridge(frame) {
-    if (!(frame instanceof HTMLIFrameElement)) {
+function initGuiaModalFrameScrollBridge() {
+    if (!(guiaModalFrame instanceof HTMLIFrameElement) || !guiaModalDialog) {
         return;
     }
 
-    const frameDocument = frame.contentDocument || frame.contentWindow?.document;
-    const modal = frame.closest('.event-modal');
-    const modalDialog = frame.closest('.event-modal__dialog');
-
-    if (!frameDocument || !modalDialog || frameDocument.documentElement.dataset.eventModalScrollBridge === 'true') {
+    if (eventModalMobileMediaQuery.matches) {
         return;
     }
 
-    frameDocument.documentElement.dataset.eventModalScrollBridge = 'true';
+    const frameDocument = guiaModalFrame.contentDocument || guiaModalFrame.contentWindow?.document;
+
+    if (!frameDocument || frameDocument.documentElement.dataset.guiaScrollBridge === 'true') {
+        return;
+    }
+
+    frameDocument.documentElement.dataset.guiaScrollBridge = 'true';
 
     let lastTouchY = 0;
 
@@ -1663,7 +1663,8 @@ function initEventModalFrameScrollBridge(frame) {
     }, { passive: true });
 
     frameDocument.addEventListener('touchmove', (event) => {
-        if (modal?.hidden || !eventModalMobileMediaQuery.matches) {
+        // No desktop, o iframe deve rolar normalmente sem mover o container do modal.
+        if (guiaModal?.hidden || !eventModalMobileMediaQuery.matches) {
             return;
         }
 
@@ -1674,17 +1675,18 @@ function initEventModalFrameScrollBridge(frame) {
             return;
         }
 
-        modalDialog.scrollTop += deltaY;
+        guiaModalDialog.scrollTop += deltaY;
         lastTouchY = nextTouchY;
         event.preventDefault();
     }, { passive: false });
 
     frameDocument.addEventListener('wheel', (event) => {
-        if (modal?.hidden || !eventModalMobileMediaQuery.matches) {
+        // Mantém o modal estático no desktop; no mobile o scroll fica unificado no modal.
+        if (guiaModal?.hidden || !eventModalMobileMediaQuery.matches) {
             return;
         }
 
-        modalDialog.scrollTop += event.deltaY;
+        guiaModalDialog.scrollTop += event.deltaY;
         event.preventDefault();
     }, { passive: false });
 }
@@ -1779,7 +1781,7 @@ function openGuiaModal(trigger = null, sourceUrl = GUIDE_MODAL_DEFAULT_SRC) {
     }
     guiaModalCloseButton?.focus();
     queueEventModalFrameSync();
-    window.setTimeout(() => initEventModalFrameScrollBridge(guiaModalFrame), 250);
+    window.setTimeout(initGuiaModalFrameScrollBridge, 250);
 }
 
 function closeGuiaModal(options = {}) {
@@ -2126,7 +2128,9 @@ eventModalFrames.forEach((frame) => {
     frame.addEventListener('load', () => {
         queueEventModalFrameSync();
 
-        initEventModalFrameScrollBridge(frame);
+        if (frame === guiaModalFrame) {
+            initGuiaModalFrameScrollBridge();
+        }
     });
 });
 
