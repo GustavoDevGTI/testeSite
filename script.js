@@ -6,25 +6,25 @@ const root = document.documentElement;
 const body = document.body;
 const dateNode = document.querySelector('.data');
 const hourNode = document.querySelector('.hora');
-const resetButton = document.querySelector('.accessibilidade_reset');
-const desktopHeader = document.querySelector('.cabecalho');
-const mobileHeader = document.querySelector('.menu-mobile');
-const menuToggle = document.querySelector('.menu-mobile-hamburger');
-const mobileMenu = document.querySelector('.menu-mobile-links');
-const mobileMenuBox = document.querySelector('.menu-mobile-links-box');
-const desktopMenuButtons = document.querySelector('.menu-btns-campo');
-const desktopHamburgerItem = document.querySelector('.menu-btns-campo .menu-sub-campo.hamburger');
-const desktopHamburgerButton = document.querySelector('.menu-sub-campo.hamburger .menu-btn');
-const desktopHamburgerSubmenu = document.querySelector('.menu-sub-campo.hamburger .submenu_horizontal');
-const desktopContactSubmenu = document.querySelector('#submenu-contato');
-const desktopGalleryDropdownItem = document.querySelector('.menu-sub-campo--dropdown');
-const desktopGalleryDropdownButton = desktopGalleryDropdownItem?.querySelector('.menu-btn');
-const desktopGalleryDropdownSubmenu = desktopGalleryDropdownItem?.querySelector('.submenu');
-const sectionMenuButtons = document.querySelectorAll('.menu-btn[data-target], .menu-sub-campo--link .menu-btn[data-url]');
+const resetButton = document.querySelector('.barra-acessibilidade-reset');
+const topoPrefeituraDesktop = document.querySelector('.topo-prefeitura');
+const topoPrefeituraMobile = document.querySelector('.portal-mobile');
+const botaoMenuPortal = document.querySelector('.portal-mobile-toggle');
+const painelMenuPortal = document.querySelector('.portal-mobile-links');
+const painelMenuPortalConteudo = document.querySelector('.portal-mobile-links-box');
+const navegacaoPortalDesktop = document.querySelector('.navegacao-institucional-campo');
+const itemMenuPortalDesktop = document.querySelector('.navegacao-institucional-campo .navegacao-institucional-item.hamburger');
+const botaoMenuPortalDesktop = document.querySelector('.navegacao-institucional-item.hamburger .navegacao-institucional-btn');
+const submenuPortalDesktop = document.querySelector('.navegacao-institucional-item.hamburger .submenu-institucional');
+const submenuContatoPortal = document.querySelector('#submenu-contato');
+const itemGaleriaPortalDesktop = document.querySelector('.navegacao-institucional-item--dropdown');
+const botaoGaleriaPortalDesktop = itemGaleriaPortalDesktop?.querySelector('.navegacao-institucional-btn');
+const submenuGaleriaPortalDesktop = itemGaleriaPortalDesktop?.querySelector('.submenu');
+const botoesSecaoPortal = document.querySelectorAll('.navegacao-institucional-btn[data-target], .navegacao-institucional-item--link .navegacao-institucional-btn[data-url]');
 const attractionCardsWithLinks = document.querySelectorAll('.attraction-card[data-url]');
-const menuToggleLine01 = menuToggle?.querySelector('.menu-mobile-hamburger-01');
-const menuToggleLine02 = menuToggle?.querySelector('.menu-mobile-hamburger-02');
-const menuToggleLine03 = menuToggle?.querySelector('.menu-mobile-hamburger-03');
+const linhaMenuPortal01 = botaoMenuPortal?.querySelector('.portal-mobile-toggle-01');
+const linhaMenuPortal02 = botaoMenuPortal?.querySelector('.portal-mobile-toggle-02');
+const linhaMenuPortal03 = botaoMenuPortal?.querySelector('.portal-mobile-toggle-03');
 const galleryModal = document.querySelector('#gallery-modal');
 const galleryModalTitle = document.querySelector('#gallery-modal-title');
 const galleryModalSubtitle = document.querySelector('#gallery-modal-subtitle');
@@ -156,17 +156,17 @@ let heroAutoplayId = 0;
 let activeBrowserModalId = null;
 let isHandlingBrowserModalPopstate = false;
 
-if (desktopMenuButtons && desktopHamburgerItem) {
-    desktopMenuButtons.appendChild(desktopHamburgerItem);
+if (navegacaoPortalDesktop && itemMenuPortalDesktop) {
+    navegacaoPortalDesktop.appendChild(itemMenuPortalDesktop);
 }
 
-function setDesktopHamburgerOpen(isOpen) {
-    if (!desktopHamburgerItem || !desktopHamburgerButton) {
+function definirMenuPortalDesktopAberto(isOpen) {
+    if (!itemMenuPortalDesktop || !botaoMenuPortalDesktop) {
         return;
     }
 
-    desktopHamburgerItem.classList.toggle('is-open', isOpen);
-    desktopHamburgerButton.setAttribute('aria-expanded', String(isOpen));
+    itemMenuPortalDesktop.classList.toggle('is-open', isOpen);
+    botaoMenuPortalDesktop.setAttribute('aria-expanded', String(isOpen));
 }
 
 function copyLinkAttributes(sourceLink, targetLink) {
@@ -183,31 +183,31 @@ function copyLinkAttributes(sourceLink, targetLink) {
     });
 }
 
-function createMobileMenuLink(sourceLink, extraClasses = []) {
+function criarLinkPainelPortal(sourceLink, extraClasses = []) {
     const link = document.createElement('a');
 
-    link.className = ['menu-mobile-links-btn', ...extraClasses].join(' ');
+    link.className = ['portal-mobile-links-btn', ...extraClasses].join(' ');
     copyLinkAttributes(sourceLink, link);
     link.textContent = sourceLink.textContent.trim();
 
     return link;
 }
 
-function createMobileContactTrigger(labelText = 'Contato') {
+function criarContatoPainelPortal(labelText = 'Contato') {
     const button = document.createElement('button');
 
     button.type = 'button';
-    button.className = 'menu-mobile-links-btn';
+    button.className = 'portal-mobile-links-btn';
     button.dataset.contactModalTrigger = 'true';
     button.textContent = labelText;
 
     return button;
 }
 
-function createGuideMobileShortcutLink(labelText, sourceUrl) {
+function criarAtalhoGuiaPainelPortal(labelText, sourceUrl) {
     const link = document.createElement('a');
 
-    link.className = 'menu-mobile-links-btn menu-mobile-links-btn--atalho';
+    link.className = 'portal-mobile-links-btn portal-mobile-links-btn--atalho';
     link.setAttribute('href', sourceUrl);
     link.dataset.guideModalTrigger = 'true';
     link.textContent = labelText;
@@ -215,7 +215,7 @@ function createGuideMobileShortcutLink(labelText, sourceUrl) {
     return link;
 }
 
-function createGuideMobileShortcutGroup() {
+function criarGrupoAtalhosGuiaPortal() {
     const fragment = document.createDocumentFragment();
     const guideShortcuts = [
         { label: 'Como chegar', url: './guia-do-turista.html?route=como-chegar#mapa' },
@@ -224,30 +224,30 @@ function createGuideMobileShortcutGroup() {
     ];
 
     guideShortcuts.forEach(({ label, url }) => {
-        fragment.appendChild(createGuideMobileShortcutLink(label, url));
+        fragment.appendChild(criarAtalhoGuiaPainelPortal(label, url));
     });
 
     return fragment;
 }
 
-function createMobileThemeToggleButton() {
+function criarAlternadorTemaPainelPortal() {
     const button = document.createElement('button');
     const label = document.createElement('span');
     const icon = document.createElement('span');
 
     button.type = 'button';
-    button.className = 'menu-mobile-links-btn menu-mobile-links-btn--theme-toggle';
+    button.className = 'portal-mobile-links-btn portal-mobile-links-btn--theme-toggle';
     button.dataset.action = 'dark-mode';
 
-    label.className = 'menu-mobile-links-theme-label';
-    icon.className = 'menu-mobile-links-theme-icon material-symbols-outlined';
+    label.className = 'portal-mobile-links-theme-label';
+    icon.className = 'portal-mobile-links-theme-icon material-symbols-outlined';
 
     button.append(label, icon);
 
     return button;
 }
 
-function createMobileMenuDetails(titleText, sourceLinks = []) {
+function criarDetalhesPainelPortal(titleText, sourceLinks = []) {
     if (!titleText || !sourceLinks.length) {
         return null;
     }
@@ -257,13 +257,13 @@ function createMobileMenuDetails(titleText, sourceLinks = []) {
     const panel = document.createElement('div');
     const linksGrid = document.createElement('div');
 
-    details.className = 'menu-mobile-links-pai menu-mobile-links-pai--submenu';
-    panel.className = 'menu-mobile-links-panel';
-    linksGrid.className = 'menu-mobile-links-grid';
+    details.className = 'portal-mobile-links-pai portal-mobile-links-pai--submenu';
+    panel.className = 'portal-mobile-links-panel';
+    linksGrid.className = 'portal-mobile-links-grid';
     summary.textContent = titleText;
 
     sourceLinks.forEach((sourceLink) => {
-        linksGrid.appendChild(createMobileMenuLink(sourceLink));
+        linksGrid.appendChild(criarLinkPainelPortal(sourceLink));
     });
 
     panel.appendChild(linksGrid);
@@ -390,6 +390,10 @@ function shouldOpenInNewTab(url) {
 
 function applyNewTabToRedirectLinks(rootElement = document) {
     rootElement.querySelectorAll('a[href]').forEach((link) => {
+        if (link.hasAttribute('data-local-navigation')) {
+            return;
+        }
+
         const href = link.getAttribute('href');
 
         if (!shouldOpenInNewTab(href)) {
@@ -419,8 +423,8 @@ function openMenuUrl(url) {
     window.location.assign(url);
 }
 
-function createMobileMenuShortcut(button) {
-    const label = button.querySelector('.menu-btn-nome')?.textContent.trim();
+function criarAtalhoPainelPortal(button) {
+    const label = button.querySelector('.navegacao-institucional-rotulo')?.textContent.trim();
     const targetSelector = button.dataset.target;
     const targetUrl = button.dataset.url;
 
@@ -431,7 +435,7 @@ function createMobileMenuShortcut(button) {
     if (targetUrl) {
         const mobileLink = document.createElement('a');
 
-        mobileLink.className = 'menu-mobile-links-btn menu-mobile-links-btn--atalho';
+        mobileLink.className = 'portal-mobile-links-btn portal-mobile-links-btn--atalho';
         mobileLink.setAttribute('href', targetUrl);
 
         if (shouldOpenInNewTab(targetUrl)) {
@@ -447,7 +451,7 @@ function createMobileMenuShortcut(button) {
     if (targetSelector) {
         const mobileLink = document.createElement('a');
 
-        mobileLink.className = 'menu-mobile-links-btn menu-mobile-links-btn--atalho';
+        mobileLink.className = 'portal-mobile-links-btn portal-mobile-links-btn--atalho';
         mobileLink.setAttribute('href', targetSelector);
         mobileLink.textContent = label;
 
@@ -457,41 +461,41 @@ function createMobileMenuShortcut(button) {
     return null;
 }
 
-function buildMobileMenuFromDesktop() {
-    if (!mobileMenuBox) {
+function montarPainelPortalPeloDesktop() {
+    if (!painelMenuPortalConteudo) {
         return;
     }
 
-    mobileMenuBox.replaceChildren();
+    painelMenuPortalConteudo.replaceChildren();
 
-    if (desktopHamburgerSubmenu) {
+    if (submenuPortalDesktop) {
         const linksPanel = document.createElement('div');
-        linksPanel.className = 'menu-mobile-links-panel menu-mobile-links-panel--simple';
+        linksPanel.className = 'portal-mobile-links-panel portal-mobile-links-panel--simple';
 
-        desktopHamburgerSubmenu.querySelectorAll('.submenu_horizontal-btn a').forEach((sourceLink) => {
+        submenuPortalDesktop.querySelectorAll('.submenu-institucional-btn a').forEach((sourceLink) => {
             if (sourceLink.hasAttribute('data-guide-modal-trigger')) {
-                linksPanel.appendChild(createGuideMobileShortcutGroup());
+                linksPanel.appendChild(criarGrupoAtalhosGuiaPortal());
                 return;
             }
 
-            if (sourceLink.textContent.trim() === 'Contato' && desktopContactSubmenu?.querySelector('.submenu-btn a')) {
-                linksPanel.appendChild(createMobileContactTrigger(sourceLink.textContent.trim()));
+            if (sourceLink.textContent.trim() === 'Contato' && submenuContatoPortal?.querySelector('.submenu-link a')) {
+                linksPanel.appendChild(criarContatoPainelPortal(sourceLink.textContent.trim()));
                 return;
             }
 
-            linksPanel.appendChild(createMobileMenuLink(sourceLink));
+            linksPanel.appendChild(criarLinkPainelPortal(sourceLink));
         });
 
-        mobileMenuBox.appendChild(linksPanel);
+        painelMenuPortalConteudo.appendChild(linksPanel);
     }
 }
 
 function populateContactModalActions() {
-    if (!contactModalActions || !desktopContactSubmenu) {
+    if (!contactModalActions || !submenuContatoPortal) {
         return;
     }
 
-    const sourceLinks = Array.from(desktopContactSubmenu.querySelectorAll('.submenu-btn a'));
+    const sourceLinks = Array.from(submenuContatoPortal.querySelectorAll('.submenu-link a'));
 
     if (!sourceLinks.length) {
         contactModalActions.replaceChildren();
@@ -511,28 +515,28 @@ function populateContactModalActions() {
     contactModalActions.replaceChildren(actionsFragment);
 }
 
-function setMobileMenuOpen(isOpen) {
-    if (!mobileMenu || !menuToggle) {
+function definirPainelPortalAberto(isOpen) {
+    if (!painelMenuPortal || !botaoMenuPortal) {
         return;
     }
 
-    mobileMenu.classList.toggle('menu-mobile-links-on', isOpen);
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-    body.classList.toggle('menu-mobile-open', isOpen);
-    menuToggleLine01?.classList.toggle('menu-mobile-hamburger-01-on', isOpen);
-    menuToggleLine02?.classList.toggle('menu-mobile-hamburger-02-on', isOpen);
-    menuToggleLine03?.classList.toggle('menu-mobile-hamburger-03-on', isOpen);
+    painelMenuPortal.classList.toggle('portal-mobile-links-on', isOpen);
+    botaoMenuPortal.setAttribute('aria-expanded', String(isOpen));
+    body.classList.toggle('portal-mobile-open', isOpen);
+    linhaMenuPortal01?.classList.toggle('portal-mobile-toggle-01-on', isOpen);
+    linhaMenuPortal02?.classList.toggle('portal-mobile-toggle-02-on', isOpen);
+    linhaMenuPortal03?.classList.toggle('portal-mobile-toggle-03-on', isOpen);
 }
 
 function getScrollOffset() {
-    if (!mobileHeader || window.getComputedStyle(mobileHeader).display === 'none') {
+    if (!topoPrefeituraMobile || window.getComputedStyle(topoPrefeituraMobile).display === 'none') {
         return 0;
     }
 
-    return mobileHeader.offsetHeight + 16;
+    return topoPrefeituraMobile.offsetHeight + 16;
 }
 
-buildMobileMenuFromDesktop();
+montarPainelPortalPeloDesktop();
 populateContactModalActions();
 applyNewTabToRedirectLinks();
 
@@ -736,7 +740,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     });
 });
 
-sectionMenuButtons.forEach((button) => {
+botoesSecaoPortal.forEach((button) => {
     button.addEventListener('click', () => {
         if (button.dataset.galleryHub !== undefined) {
             return;
@@ -776,22 +780,22 @@ attractionCardsWithLinks.forEach((card) => {
     });
 });
 
-if (desktopHamburgerItem && desktopHamburgerButton && desktopHamburgerSubmenu) {
-    desktopHamburgerButton.addEventListener('click', (event) => {
+if (itemMenuPortalDesktop && botaoMenuPortalDesktop && submenuPortalDesktop) {
+    botaoMenuPortalDesktop.addEventListener('click', (event) => {
         event.preventDefault();
         event.stopPropagation();
-        setDesktopHamburgerOpen(!desktopHamburgerItem.classList.contains('is-open'));
+        definirMenuPortalDesktopAberto(!itemMenuPortalDesktop.classList.contains('is-open'));
     });
 
-    desktopHamburgerSubmenu.querySelectorAll('a').forEach((link) => {
+    submenuPortalDesktop.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => {
-            setDesktopHamburgerOpen(false);
+            definirMenuPortalDesktopAberto(false);
         });
     });
 
     document.addEventListener('click', (event) => {
-        if (!desktopHamburgerItem.contains(event.target)) {
-            setDesktopHamburgerOpen(false);
+        if (!itemMenuPortalDesktop.contains(event.target)) {
+            definirMenuPortalDesktopAberto(false);
         }
     });
 }
@@ -875,15 +879,15 @@ function applyFontScale() {
 function setDarkMode(enabled) {
     body.classList.toggle('modo_escuro', enabled);
     localStorage.setItem('amargosa-dark-mode', enabled ? 'on' : 'off');
-    updateMobileThemeToggleButton();
+    atualizarAlternadorTemaPainelPortal();
 }
 
-function updateMobileThemeToggleButton() {
+function atualizarAlternadorTemaPainelPortal() {
     const isDarkMode = body.classList.contains('modo_escuro');
 
-    document.querySelectorAll('.menu-mobile-links-btn--theme-toggle').forEach((button) => {
-        const label = button.querySelector('.menu-mobile-links-theme-label');
-        const icon = button.querySelector('.menu-mobile-links-theme-icon');
+    document.querySelectorAll('.portal-mobile-links-btn--theme-toggle').forEach((button) => {
+        const label = button.querySelector('.portal-mobile-links-theme-label');
+        const icon = button.querySelector('.portal-mobile-links-theme-icon');
 
         if (label) {
             label.textContent = isDarkMode ? 'Modo claro' : 'Modo escuro';
@@ -930,32 +934,32 @@ document.querySelectorAll('[data-action]').forEach((button) => {
 });
 
 // Menu mobile
-if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-        setMobileMenuOpen(!mobileMenu.classList.contains('menu-mobile-links-on'));
+if (botaoMenuPortal && painelMenuPortal) {
+    botaoMenuPortal.addEventListener('click', () => {
+        definirPainelPortalAberto(!painelMenuPortal.classList.contains('portal-mobile-links-on'));
     });
 
-    mobileMenu.addEventListener('click', (event) => {
+    painelMenuPortal.addEventListener('click', (event) => {
         if (!event.target.closest('a')) {
             return;
         }
 
-        setMobileMenuOpen(false);
+        definirPainelPortalAberto(false);
     });
 
     document.addEventListener('click', (event) => {
-        if (!mobileMenu.classList.contains('menu-mobile-links-on')) {
+        if (!painelMenuPortal.classList.contains('portal-mobile-links-on')) {
             return;
         }
 
-        if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-            setMobileMenuOpen(false);
+        if (!painelMenuPortal.contains(event.target) && !botaoMenuPortal.contains(event.target)) {
+            definirPainelPortalAberto(false);
         }
     });
 
     window.addEventListener('resize', () => {
         if (window.innerWidth > 1279) {
-            setMobileMenuOpen(false);
+            definirPainelPortalAberto(false);
         }
     });
 }
@@ -966,12 +970,12 @@ window.addEventListener('scroll', () => {
         ? '0 8px 16px rgba(0, 0, 0, 0.2)'
         : '';
 
-    if (desktopHeader) {
-        desktopHeader.style.boxShadow = shadowValue;
+    if (topoPrefeituraDesktop) {
+        topoPrefeituraDesktop.style.boxShadow = shadowValue;
     }
 
-    if (mobileHeader) {
-        mobileHeader.style.boxShadow = shadowValue || '0 8px 24px rgba(0, 0, 0, 0.2)';
+    if (topoPrefeituraMobile) {
+        topoPrefeituraMobile.style.boxShadow = shadowValue || '0 8px 24px rgba(0, 0, 0, 0.2)';
     }
 });
 
@@ -996,7 +1000,7 @@ function initVisitorCounter() {
 
 initVisitorCounter();
 
-// Função para voltar ao topo
+// Função para voltar ao barra-data
 function scrollToTop() {
     window.scrollTo({
         top: 0,
@@ -2377,8 +2381,8 @@ document.addEventListener('click', (event) => {
 
     if (contactModalTrigger) {
         event.preventDefault();
-        setMobileMenuOpen(false);
-        setDesktopHamburgerOpen(false);
+        definirPainelPortalAberto(false);
+        definirMenuPortalDesktopAberto(false);
         openContactModal(contactModalTrigger);
         return;
     }
@@ -2388,8 +2392,8 @@ document.addEventListener('click', (event) => {
     if (guideModalTrigger) {
         event.preventDefault();
         event.stopPropagation();
-        setMobileMenuOpen(false);
-        setDesktopHamburgerOpen(false);
+        definirPainelPortalAberto(false);
+        definirMenuPortalDesktopAberto(false);
         openGuiaModal(guideModalTrigger, resolveGuideModalSource(guideModalTrigger));
         return;
     }
@@ -2398,7 +2402,7 @@ document.addEventListener('click', (event) => {
 
     if (galleryHubTrigger) {
         event.preventDefault();
-        setMobileMenuOpen(false);
+        definirPainelPortalAberto(false);
         openGalleryHub(galleryHubTrigger);
         return;
     }
@@ -2410,7 +2414,7 @@ document.addEventListener('click', (event) => {
     }
 
     event.preventDefault();
-    setMobileMenuOpen(false);
+    definirPainelPortalAberto(false);
     openGallery(galleryTrigger.dataset.galleryKey, galleryTrigger);
 });
 
@@ -2598,8 +2602,8 @@ document.addEventListener('keydown', (event) => {
             return;
         }
 
-        setMobileMenuOpen(false);
-        setDesktopHamburgerOpen(false);
+        definirPainelPortalAberto(false);
+        definirMenuPortalDesktopAberto(false);
     }
 });
 

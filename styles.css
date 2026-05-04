@@ -53,7 +53,7 @@ body {
     background: linear-gradient(180deg, #f7fbf9 0%, var(--light-bg) 55%, #edf2f0 100%);
 }
 
-body.menu-mobile-open,
+body.portal-mobile-open,
 body.gallery-modal-open,
 body.carnaval-cultural-modal-open,
 body.sao-joao-modal-open,
@@ -82,13 +82,13 @@ textarea {
    CABEÇALHO OFICIAL
    ======================================== */
 
-.cabecalho,
-.menu-mobile,
-.menu-mobile-links {
+.topo-prefeitura,
+.portal-mobile,
+.portal-mobile-links {
     font-family: 'Cabin', sans-serif;
 }
 
-.cabecalho {
+.topo-prefeitura {
     width: 100%;
     height: 7.8vw;
     min-height: 120px;
@@ -97,7 +97,7 @@ textarea {
     z-index: 9999;
 }
 
-.cabecalho-logo-box {
+.topo-prefeitura-marca {
     width: 37.7vw;
     min-width: 420px;
     height: 100%;
@@ -110,17 +110,17 @@ textarea {
     position: absolute;
 }
 
-.cabecalho-logo-box:hover {
+.topo-prefeitura-marca:hover {
     width: 38.5vw;
 }
 
-.cabecalho-logo-box a {
+.topo-prefeitura-marca a {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-.cabecalho-logo {
+.topo-prefeitura-brasao {
     width: 16vw;
     min-width: 250px;
     height: 100%;
@@ -132,13 +132,13 @@ textarea {
     margin-right: 0.9vw;
 }
 
-.cabecalho-dir {
+.topo-prefeitura-conteudo {
     width: 67.3vw;
     height: 100%;
     float: right;
 }
 
-.topo {
+.barra-data {
     width: 100%;
     height: 1.5vw;
     min-height: 23px;
@@ -146,7 +146,7 @@ textarea {
     float: left;
 }
 
-.topo-txt {
+.barra-data-texto {
     float: right;
     font-size: 0.7vw;
     line-height: 1.5vw;
@@ -156,15 +156,15 @@ textarea {
     margin-right: 19.8vw;
 }
 
-.topo-txt:hover {
+.barra-data-texto:hover {
     background-color: var(--branco-lente03);
 }
 
-.topo-txt .hora {
+.barra-data-texto .hora {
     margin-left: 0.35vw;
 }
 
-.acessibilidade {
+.barra-acessibilidade {
     width: 100%;
     height: 3.7vw;
     min-height: 56px;
@@ -172,7 +172,7 @@ textarea {
     float: left;
 }
 
-.acessibilidade-itens {
+.barra-acessibilidade-itens {
     height: 100%;
     float: right;
     margin-right: 19.8vw;
@@ -181,12 +181,12 @@ textarea {
     gap: 0.7vw;
 }
 
-.acessibilidade-search {
+.barra-acessibilidade-busca {
     display: flex;
     align-items: center;
 }
 
-.acessibilidade-input {
+.barra-acessibilidade-input {
     width: 12.6vw;
     min-width: 180px;
     height: 2vw;
@@ -198,11 +198,11 @@ textarea {
     padding: 0 1vw;
 }
 
-.acessibilidade-input::placeholder {
+.barra-acessibilidade-input::placeholder {
     color: var(--white);
 }
 
-.acessibilidade-button {
+.barra-acessibilidade-button {
     width: 3vw;
     min-width: 40px;
     height: 2vw;
@@ -217,7 +217,7 @@ textarea {
     cursor: pointer;
 }
 
-.acessibilidade-btn {
+.barra-acessibilidade-btn {
     width: 1.7vw;
     min-width: 28px;
     height: 1.7vw;
@@ -235,21 +235,21 @@ textarea {
     text-decoration: none;
 }
 
-.acessibilidade-btn:hover,
-.acessibilidade-button:hover {
+.barra-acessibilidade-btn:hover,
+.barra-acessibilidade-button:hover {
     background-color: var(--branco-lente03);
 }
 
-.acessibilidade-btn .material-symbols-outlined,
-.acessibilidade-button .material-symbols-outlined {
+.barra-acessibilidade-btn .material-symbols-outlined,
+.barra-acessibilidade-button .material-symbols-outlined {
     font-size: 1.2vw;
 }
 
-.accessibilidade_reset {
+.barra-acessibilidade-reset {
     display: none;
 }
 
-.accessibilidade_reset.on {
+.barra-acessibilidade-reset.on {
     display: inline-flex;
 }
 
@@ -257,7 +257,7 @@ textarea {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-.menu {
+.barra-navegacao {
     width: 100%;
     height: 2.6vw;
     min-height: 41px;
@@ -265,7 +265,7 @@ textarea {
     float: left;
 }
 
-.menu-btns-campo {
+.navegacao-institucional-campo {
     width: 100%;
     height: 100%;
     background-color: var(--padrao05);
@@ -275,20 +275,20 @@ textarea {
     justify-content: flex-end;
 }
 
-.menu-sub-campo {
+.navegacao-institucional-item {
     position: relative;
     display: flex;
 }
 
-.menu-sub-campo.hamburger {
+.navegacao-institucional-item.hamburger {
     order: 99;
 }
 
-.menu-sub-campo--link .submenu {
+.navegacao-institucional-item--link .submenu {
     display: none !important;
 }
 
-.menu-btn {
+.navegacao-institucional-btn {
     height: 100%;
     min-height: 0;
     background-color: transparent;
@@ -306,7 +306,7 @@ textarea {
     padding: 0;
 }
 
-.menu-btn-nome {
+.navegacao-institucional-rotulo {
     position: relative;
     z-index: 1;
     display: inline-flex;
@@ -317,14 +317,14 @@ textarea {
     white-space: nowrap;
 }
 
-.menu-btn .material-symbols-outlined {
+.navegacao-institucional-btn .material-symbols-outlined {
     font-size: 1.22vw;
     font-weight: 700;
     color: var(--white);
     line-height: 1;
 }
 
-.menu-btn-base {
+.navegacao-institucional-realce {
     width: 100%;
     height: 5vw;
     background-color: var(--padrao02);
@@ -335,8 +335,8 @@ textarea {
     transition: all 0.2s ease-in-out;
 }
 
-.menu-sub-campo:hover .menu-btn-base,
-.menu-sub-campo:focus-within .menu-btn-base {
+.navegacao-institucional-item:hover .navegacao-institucional-realce,
+.navegacao-institucional-item:focus-within .navegacao-institucional-realce {
     top: 0;
 }
 
@@ -348,7 +348,7 @@ textarea {
     z-index: 40;
 }
 
-.submenu-box {
+.submenu-card {
     margin-top: 0.1vw;
     border-radius: 0.3vw;
     overflow: hidden;
@@ -360,15 +360,15 @@ textarea {
     min-width: 15vw;
 }
 
-#submenu-contato .submenu-box {
+#submenu-contato .submenu-card {
     background-color: var(--padrao07);
 }
 
-.submenu-box--wide {
+.submenu-card--amplo {
     min-width: 23vw;
 }
 
-.submenu-btn {
+.submenu-link {
     font-size: 0.8vw;
     line-height: 1.7vw;
     color: var(--white);
@@ -376,29 +376,29 @@ textarea {
     transition: all 0.2s ease-in-out;
 }
 
-.submenu-btn a {
+.submenu-link a {
     display: block;
     padding: 0.45vw 0;
     color: inherit;
     text-decoration: none;
 }
 
-.submenu-btn a[aria-disabled='true'],
-.menu-mobile-links-btn[aria-disabled='true'] {
+.submenu-link a[aria-disabled='true'],
+.portal-mobile-links-btn[aria-disabled='true'] {
     cursor: default;
 }
 
-.menu-mobile-links-btn {
+.portal-mobile-links-btn {
     font-family: 'Cabin', sans-serif;
     font-weight: 700;
 }
 
-.submenu-btn a:hover,
-.submenu-btn a:focus-visible {
+.submenu-link a:hover,
+.submenu-link a:focus-visible {
     text-decoration: underline;
 }
 
-.submenu_horizontal {
+.submenu-institucional {
     width: min(61vw, 920px);
     background: linear-gradient(135deg, rgba(15, 111, 90, 0.96), rgba(22, 138, 114, 0.96));
     position: absolute;
@@ -419,13 +419,13 @@ textarea {
     gap: clamp(12px, 1vw, 18px);
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal {
+.navegacao-institucional-item.hamburger .submenu-institucional {
     left: auto;
     right: 0;
     transform: none;
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple {
     width: min(360px, calc(100vw - 48px));
     max-width: calc(100vw - 48px);
     padding: 8px 10px;
@@ -437,34 +437,34 @@ textarea {
     gap: 0;
 }
 
-.menu-sub-campo.hamburger.is-open .submenu_horizontal {
+.navegacao-institucional-item.hamburger.is-open .submenu-institucional {
     display: flex;
 }
 
-.menu-sub-campo.hamburger.is-open .menu-btn-base {
+.navegacao-institucional-item.hamburger.is-open .navegacao-institucional-realce {
     top: 0;
 }
 
-.submenu_horizontal_col_esq {
+.submenu-institucional_col_esq {
     flex: 0 0 18vw;
     min-width: 250px;
     display: flex;
 }
 
-.submenu_horizontal_col_dir {
+.submenu-institucional-coluna {
     flex: 1;
     display: flex;
 }
 
-.submenu_horizontal--simple .submenu_horizontal_col_dir {
+.submenu-institucional--simple .submenu-institucional-coluna {
     width: 100%;
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal_col_dir {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-coluna {
     display: block;
 }
 
-.submenu_horizontal_h1 {
+.submenu-institucional_h1 {
     width: 100%;
     min-height: 170px;
     background-color: var(--padrao02);
@@ -476,7 +476,7 @@ textarea {
     border: 1px solid var(--branco-lente03);
 }
 
-.submenu_horizontal_h1-icone {
+.submenu-institucional_h1-icone {
     width: 4.3vw;
     min-width: 58px;
     height: 4.3vw;
@@ -491,31 +491,31 @@ textarea {
     background: rgba(255, 255, 255, 0.18);
 }
 
-.submenu_horizontal_h1-copy {
+.submenu-institucional_h1-copy {
     display: grid;
     gap: 0.35vw;
     padding-left: 1vw;
 }
 
-.submenu_horizontal_h1-titulo {
+.submenu-institucional_h1-titulo {
     font-weight: 600;
     font-size: 1vw;
     color: var(--white);
     text-transform: uppercase;
 }
 
-.submenu_horizontal_h1-subtitulo {
+.submenu-institucional_h1-subtitulo {
     color: rgba(255, 255, 255, 0.86);
     font-size: 0.82vw;
     line-height: 1.45;
 }
 
-.submenu_horizontal_col_esq-btn:hover,
-.submenu_horizontal-btn:hover {
+.submenu-institucional_col_esq-btn:hover,
+.submenu-institucional-btn:hover {
     text-decoration: underline;
 }
 
-.submenu_horizontal_links_card {
+.submenu-institucional-links-card {
     width: 100%;
     min-height: 170px;
     display: grid;
@@ -523,13 +523,13 @@ textarea {
     gap: clamp(12px, 1vw, 16px);
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal_links_card {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-links-card {
     min-height: auto;
     grid-template-columns: 1fr;
     gap: 0;
 }
 
-.submenu_horizontal-btn {
+.submenu-institucional-btn {
     font-size: clamp(0.9rem, 0.84vw, 1rem);
     color: var(--padrao04);
     min-height: clamp(70px, 4.8vw, 82px);
@@ -540,7 +540,7 @@ textarea {
     box-shadow: 0 10px 22px rgba(4, 52, 42, 0.16);
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn {
     min-height: auto;
     border: 0;
     border-radius: 0;
@@ -550,7 +550,7 @@ textarea {
     font-size: clamp(1rem, 0.98vw, 1.08rem);
 }
 
-.submenu_horizontal-btn a {
+.submenu-institucional-btn a {
     width: 100%;
     height: 100%;
     display: flex;
@@ -560,42 +560,42 @@ textarea {
     padding: clamp(14px, 1vw, 18px) clamp(18px, 1.4vw, 24px);
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn a {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn a {
     display: block;
     height: auto;
     padding: 12px 8px;
     color: inherit;
 }
 
-.submenu_horizontal-btn:hover,
-.submenu_horizontal-btn:focus-within {
+.submenu-institucional-btn:hover,
+.submenu-institucional-btn:focus-within {
     background: linear-gradient(135deg, #ffffff, #eef8f5);
     border-color: rgba(255, 255, 255, 0.72);
     text-decoration: none;
     transform: translateY(-1px);
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn:hover,
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn:focus-within {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn:hover,
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn:focus-within {
     background: transparent;
     border-color: transparent;
     transform: none;
 }
 
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn a:hover,
-.menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn a:focus-visible {
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn a:hover,
+.navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn a:focus-visible {
     text-decoration: underline;
 }
 
-.menu-sub-campo:hover .submenu,
-.menu-sub-campo:focus-within .submenu,
-.menu-sub-campo.hamburger:hover .submenu_horizontal,
-.menu-sub-campo.hamburger:focus-within .submenu_horizontal {
+.navegacao-institucional-item:hover .submenu,
+.navegacao-institucional-item:focus-within .submenu,
+.navegacao-institucional-item.hamburger:hover .submenu-institucional,
+.navegacao-institucional-item.hamburger:focus-within .submenu-institucional {
     display: flex;
 }
 
-.menu-mobile,
-.menu-mobile-links {
+.portal-mobile,
+.portal-mobile-links {
     display: none;
 }
 
@@ -2833,7 +2833,7 @@ section h2::after {
     display: none;
 }
 
-.submenu-btn a[aria-disabled="true"] {
+.submenu-link a[aria-disabled="true"] {
     opacity: 0.58;
     cursor: not-allowed;
 }
@@ -3360,11 +3360,11 @@ section h2::after {
 }
 
 @media only screen and (max-width: 1279px) {
-    .cabecalho {
+    .topo-prefeitura {
         display: none;
     }
 
-    .menu-mobile {
+    .portal-mobile {
         width: 100%;
         height: 86px;
         background-color: #51B89E;
@@ -3376,7 +3376,7 @@ section h2::after {
         display: flex;
     }
 
-    .menu-mobile-hamburger {
+    .portal-mobile-toggle {
         width: 84px;
         height: 86px;
         border: 0;
@@ -3389,9 +3389,9 @@ section h2::after {
         cursor: pointer;
     }
 
-    .menu-mobile-hamburger-01,
-    .menu-mobile-hamburger-02,
-    .menu-mobile-hamburger-03 {
+    .portal-mobile-toggle-01,
+    .portal-mobile-toggle-02,
+    .portal-mobile-toggle-03 {
         width: 38px;
         height: 4px;
         border-radius: 999px;
@@ -3399,30 +3399,30 @@ section h2::after {
         transition: all 0.3s ease-in-out;
     }
 
-    .menu-mobile-hamburger-01-on {
+    .portal-mobile-toggle-01-on {
         transform: translateY(12px) rotate(45deg);
     }
 
-    .menu-mobile-hamburger-02-on {
+    .portal-mobile-toggle-02-on {
         opacity: 0;
     }
 
-    .menu-mobile-hamburger-03-on {
+    .portal-mobile-toggle-03-on {
         transform: translateY(-12px) rotate(-45deg);
     }
 
-    .menu-mobile-esquerda {
+    .portal-mobile-marca {
         width: calc(100% - 84px);
         height: 86px;
     }
 
-    .menu-mobile-esquerda a {
+    .portal-mobile-marca a {
         display: block;
         width: 100%;
         height: 100%;
     }
 
-    .menu-mobile-logo {
+    .portal-mobile-brasao {
         width: 100%;
         height: 100%;
         background-image: url('logo_oficial_amargosa.png');
@@ -3431,7 +3431,7 @@ section h2::after {
         background-size: auto 62px;
     }
 
-    .menu-mobile-links {
+    .portal-mobile-links {
         display: block;
         width: 100%;
         height: 100vh;
@@ -3446,11 +3446,11 @@ section h2::after {
         overflow: hidden;
     }
 
-    .menu-mobile-links-on {
+    .portal-mobile-links-on {
         top: 0;
     }
 
-    .menu-mobile-links-box {
+    .portal-mobile-links-box {
         width: min(92vw, 720px);
         max-height: calc(100vh - 136px);
         margin: 0 auto;
@@ -3460,7 +3460,7 @@ section h2::after {
         gap: 14px;
     }
 
-    .menu-mobile-links-pai {
+    .portal-mobile-links-pai {
         border-radius: 26px;
         overflow: hidden;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 249, 246, 0.98) 100%);
@@ -3468,7 +3468,7 @@ section h2::after {
         box-shadow: 0 14px 28px rgba(21, 124, 98, 0.1);
     }
 
-    .menu-mobile-links-pai summary {
+    .portal-mobile-links-pai summary {
         width: 100%;
         background: linear-gradient(135deg, var(--padrao04), var(--padrao02));
         border: 0;
@@ -3486,11 +3486,11 @@ section h2::after {
         gap: 12px;
     }
 
-    .menu-mobile-links-pai summary::-webkit-details-marker {
+    .portal-mobile-links-pai summary::-webkit-details-marker {
         display: none;
     }
 
-    .menu-mobile-links-pai summary::after {
+    .portal-mobile-links-pai summary::after {
         content: 'expand_more';
         font-family: 'Material Symbols Outlined';
         font-size: 1.8rem;
@@ -3498,69 +3498,69 @@ section h2::after {
         transition: transform 0.2s ease;
     }
 
-    .menu-mobile-links-pai[open] summary::after {
+    .portal-mobile-links-pai[open] summary::after {
         transform: rotate(180deg);
     }
 
-    .menu-mobile-links-summary-content {
+    .portal-mobile-links-summary-content {
         display: inline-flex;
         align-items: center;
         gap: 12px;
     }
 
-    .menu-mobile-links-summary-icon {
+    .portal-mobile-links-summary-icon {
         font-size: 1.5rem;
     }
 
-    .menu-mobile-links-summary-title {
+    .portal-mobile-links-summary-title {
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
 
-    .menu-mobile-links-panel {
+    .portal-mobile-links-panel {
         padding: 14px;
         background: rgba(245, 251, 248, 0.82);
     }
 
-    .menu-mobile-links-panel--simple {
+    .portal-mobile-links-panel--simple {
         display: grid;
         gap: 10px;
     }
 
-    .menu-mobile-links-panel--simple .menu-mobile-links-btn {
+    .portal-mobile-links-panel--simple .portal-mobile-links-btn {
         background: linear-gradient(135deg, #0f6f5a, #168a72);
         border-color: rgba(255, 255, 255, 0.22);
         color: var(--white);
     }
 
-    .menu-mobile-links-panel--simple .menu-mobile-links-btn:hover,
-    .menu-mobile-links-panel--simple .menu-mobile-links-btn:focus-visible {
+    .portal-mobile-links-panel--simple .portal-mobile-links-btn:hover,
+    .portal-mobile-links-panel--simple .portal-mobile-links-btn:focus-visible {
         background: linear-gradient(135deg, #0c5f4e, #157c67);
         color: var(--white);
     }
 
-    .menu-mobile-links-featured,
-    .menu-mobile-links-grid,
-    .menu-mobile-links-atalhos,
-    .menu-mobile-links-acoes {
+    .portal-mobile-links-featured,
+    .portal-mobile-links-grid,
+    .portal-mobile-links-atalhos,
+    .portal-mobile-links-acoes {
         display: grid;
         gap: 10px;
     }
 
-    .menu-mobile-links-grid {
+    .portal-mobile-links-grid {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         margin-top: 12px;
     }
 
-    .menu-mobile-links-atalhos {
+    .portal-mobile-links-atalhos {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     }
 
-    .menu-mobile-links-acoes {
+    .portal-mobile-links-acoes {
         grid-template-columns: 1fr;
     }
 
-    .menu-mobile-links-btn {
+    .portal-mobile-links-btn {
         width: 100%;
         min-height: 56px;
         background: linear-gradient(135deg, #0f6f5a, #168a72);
@@ -3578,39 +3578,39 @@ section h2::after {
         transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    .menu-mobile-links-btn:hover,
-    .menu-mobile-links-btn:focus-visible,
-    .menu-mobile-links-pai summary:focus-visible {
+    .portal-mobile-links-btn:hover,
+    .portal-mobile-links-btn:focus-visible,
+    .portal-mobile-links-pai summary:focus-visible {
         outline: none;
         transform: translateY(-1px);
         box-shadow: 0 10px 22px rgba(21, 124, 98, 0.12);
     }
 
-    .menu-mobile-links-btn:hover,
-    .menu-mobile-links-btn:focus-visible {
+    .portal-mobile-links-btn:hover,
+    .portal-mobile-links-btn:focus-visible {
         background: linear-gradient(135deg, #0c5f4e, #157c67);
         border-color: rgba(255, 255, 255, 0.34);
         color: var(--white);
     }
 
-    .menu-mobile-links-btn--featured {
+    .portal-mobile-links-btn--featured {
         background: linear-gradient(135deg, #0f6f5a, #168a72);
     }
 
-    .menu-mobile-links-btn--featured-highlight,
-    .menu-mobile-links-btn--atalho {
+    .portal-mobile-links-btn--featured-highlight,
+    .portal-mobile-links-btn--atalho {
         background: linear-gradient(135deg, #0f6f5a, #168a72);
         border-color: rgba(255, 255, 255, 0.22);
         color: var(--white);
     }
 
-    .menu-mobile-links-btn--atalho {
+    .portal-mobile-links-btn--atalho {
         font-weight: 700;
         text-transform: none;
         letter-spacing: 0;
     }
 
-    .menu-mobile-links-btn--theme-toggle {
+    .portal-mobile-links-btn--theme-toggle {
         justify-content: space-between;
         background: linear-gradient(135deg, #0f6f5a, #168a72);
         border-color: rgba(255, 255, 255, 0.22);
@@ -3619,12 +3619,12 @@ section h2::after {
         box-shadow: 0 14px 24px rgba(21, 124, 98, 0.12);
     }
 
-    .menu-mobile-links-theme-label {
+    .portal-mobile-links-theme-label {
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
 
-    .menu-mobile-links-theme-icon {
+    .portal-mobile-links-theme-icon {
         font-size: 1.5rem;
         line-height: 1;
     }
@@ -3775,100 +3775,100 @@ body.modo_escuro .footer {
     border-top: 1px solid rgba(116, 217, 188, 0.12);
 }
 
-body.modo_escuro .cabecalho,
-body.modo_escuro .cabecalho-logo-box {
+body.modo_escuro .topo-prefeitura,
+body.modo_escuro .topo-prefeitura-marca {
     background-color: #64646e;
 }
 
-body.modo_escuro .topo {
+body.modo_escuro .barra-data {
     background-color: #64646e;
 }
 
-body.modo_escuro .acessibilidade {
+body.modo_escuro .barra-acessibilidade {
     background-color: #787882;
 }
 
-body.modo_escuro .menu,
-body.modo_escuro .menu-btns-campo {
+body.modo_escuro .barra-navegacao,
+body.modo_escuro .navegacao-institucional-campo {
     background-color: #212529;
 }
 
-body.modo_escuro .menu-btn-base,
-body.modo_escuro .submenu_horizontal_h1 {
+body.modo_escuro .navegacao-institucional-realce,
+body.modo_escuro .submenu-institucional_h1 {
     background-color: #64646e;
 }
 
-body.modo_escuro .submenu-box,
-body.modo_escuro .submenu_horizontal {
+body.modo_escuro .submenu-card,
+body.modo_escuro .submenu-institucional {
     background-color: rgba(0, 0, 0, 0.55);
 }
 
-body.modo_escuro .menu-sub-campo.hamburger .submenu_horizontal--simple {
+body.modo_escuro .navegacao-institucional-item.hamburger .submenu-institucional--simple {
     background: rgba(0, 0, 0, 0.55);
     border-color: rgba(255, 255, 255, 0.16);
 }
 
-body.modo_escuro #submenu-contato .submenu-box {
+body.modo_escuro #submenu-contato .submenu-card {
     background-color: rgba(0, 0, 0, 0.55);
 }
 
-body.modo_escuro .menu-sub-campo.hamburger .submenu_horizontal--simple .submenu_horizontal-btn {
+body.modo_escuro .navegacao-institucional-item.hamburger .submenu-institucional--simple .submenu-institucional-btn {
     color: #ffffff;
 }
 
-body.modo_escuro .menu-mobile {
+body.modo_escuro .portal-mobile {
     background-color: #212529;
     color: #ffffff;
 }
 
-body.modo_escuro .menu-mobile-links {
+body.modo_escuro .portal-mobile-links {
     background: linear-gradient(180deg, rgba(7, 13, 12, 0.96) 0%, rgba(10, 18, 16, 0.98) 100%);
 }
 
-body.modo_escuro .menu-mobile-links-pai {
+body.modo_escuro .portal-mobile-links-pai {
     background: linear-gradient(180deg, rgba(16, 24, 22, 0.94) 0%, rgba(10, 16, 14, 0.98) 100%);
     border-color: rgba(116, 217, 188, 0.16);
     box-shadow: 0 16px 28px rgba(0, 0, 0, 0.24);
 }
 
-body.modo_escuro .menu-mobile-links-pai summary {
+body.modo_escuro .portal-mobile-links-pai summary {
     background: linear-gradient(135deg, #1b5d4d, #287966);
     color: #ffffff;
 }
 
-body.modo_escuro .menu-mobile-links-panel {
+body.modo_escuro .portal-mobile-links-panel {
     background: rgba(10, 16, 14, 0.78);
 }
 
-body.modo_escuro .menu-mobile-links-btn {
+body.modo_escuro .portal-mobile-links-btn {
     background: linear-gradient(135deg, #0f6f5a, #168a72);
     border-color: rgba(116, 217, 188, 0.16);
     color: #ffffff;
 }
 
-body.modo_escuro .menu-mobile-links-btn:hover,
-body.modo_escuro .menu-mobile-links-btn:focus-visible {
+body.modo_escuro .portal-mobile-links-btn:hover,
+body.modo_escuro .portal-mobile-links-btn:focus-visible {
     background: linear-gradient(135deg, #0c5f4e, #157c67);
     border-color: rgba(116, 217, 188, 0.3);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
 }
 
-body.modo_escuro .menu-mobile-links-btn--featured {
+body.modo_escuro .portal-mobile-links-btn--featured {
     background: linear-gradient(135deg, #0f6f5a, #168a72);
 }
 
-body.modo_escuro .menu-mobile-links-btn--featured-highlight,
-body.modo_escuro .menu-mobile-links-btn--atalho {
+body.modo_escuro .portal-mobile-links-btn--featured-highlight,
+body.modo_escuro .portal-mobile-links-btn--atalho {
     background: linear-gradient(135deg, #0f6f5a, #168a72);
 }
 
-body.modo_escuro .menu-mobile-links-btn--theme-toggle {
+body.modo_escuro .portal-mobile-links-btn--theme-toggle {
     background: linear-gradient(135deg, #0f6f5a, #168a72);
     border-color: rgba(116, 217, 188, 0.24);
     color: #ffffff;
 }
 
-body.modo_escuro .menu-mobile-links-panel--simple .menu-mobile-links-btn {
+body.modo_escuro .portal-mobile-links-panel--simple .portal-mobile-links-btn {
     background: linear-gradient(135deg, #0f6f5a, #168a72);
     border-color: rgba(116, 217, 188, 0.24);
     color: #ffffff;
