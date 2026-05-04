@@ -389,6 +389,16 @@
                             <span class="mapa-link__acao material-symbols-outlined" aria-hidden="true">arrow_forward</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="mapa-link" href="../acessibilidade/">
+                            <span class="mapa-link__icone material-symbols-outlined" aria-hidden="true">accessible</span>
+                            <span class="mapa-link__texto">
+                                <span class="mapa-link__titulo">Acessibilidade</span>
+                                <span class="mapa-link__descricao">Recursos e orientações de acessibilidade digital do portal.</span>
+                            </span>
+                            <span class="mapa-link__acao material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </li>
                 </ul>
             </article>
 
@@ -467,6 +477,18 @@
                 avisoVazio.style.display = encontrados ? 'none' : 'block';
             }
         });
+    </script>
+    <div vw class="enabled" data-vlibras-widget>
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        if (window.VLibras) {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        }
     </script>
 </body>
 </html>

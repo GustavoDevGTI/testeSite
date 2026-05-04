@@ -44,7 +44,7 @@
                     <a class="barra-acessibilidade-btn" href="./menu/" data-local-navigation title="Mapa do site do turismo">
                         <span class="material-symbols-outlined">schema</span>
                     </a>
-                    <a class="barra-acessibilidade-btn" href="https://www.amargosa.ba.gov.br/acessibilidade" target="_blank" rel="noreferrer" title="Página de acessibilidade">
+                    <a class="barra-acessibilidade-btn" href="./acessibilidade/" data-local-navigation title="Página de acessibilidade">
                         <span class="material-symbols-outlined">accessible</span>
                     </a>
 
@@ -869,6 +869,18 @@
     </footer>
 
     <script src="script.js?v=20260428-0920"></script>
+    <div vw class="enabled" data-vlibras-widget>
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        if (window.VLibras) {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        }
+    </script>
 </body>
 </html>
 

@@ -158,5 +158,17 @@
   </main>
 
   <script src="./formulario.js?v=20260430-1120" defer></script>
+    <div vw class="enabled" data-vlibras-widget>
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        if (window.VLibras) {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        }
+    </script>
 </body>
 </html>
