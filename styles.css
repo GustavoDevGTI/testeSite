@@ -2023,6 +2023,15 @@ section h2::after {
     margin-top: auto;
 }
 
+.event-modal__actions--shareable .event-modal__action:first-child {
+    flex: 1 0 100%;
+}
+
+.event-modal__actions--shareable .event-modal__action--secondary {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-width: 0;
+}
+
 .event-modal__action {
     display: inline-flex;
     align-items: center;
@@ -2052,11 +2061,6 @@ section h2::after {
     border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
-.event-share {
-    position: relative;
-    display: inline-flex;
-}
-
 .event-modal__action--share {
     gap: 0.45rem;
     border: 0;
@@ -2067,58 +2071,6 @@ section h2::after {
 .event-modal__action--share .material-symbols-outlined {
     font-size: 1.1rem;
     line-height: 1;
-}
-
-.event-share__menu {
-    position: absolute;
-    left: 0;
-    top: calc(100% + 0.6rem);
-    z-index: 5;
-    width: min(260px, 82vw);
-    padding: 0.55rem;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 18px;
-    background: rgba(255, 250, 245, 0.96);
-    box-shadow: 0 22px 44px rgba(48, 19, 9, 0.22);
-    color: #17322c;
-}
-
-.event-share__option {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.7rem 0.8rem;
-    border: 0;
-    border-radius: 12px;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 800;
-    text-align: left;
-    text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.event-share__option:hover,
-.event-share__option:focus-visible {
-    background: rgba(17, 137, 106, 0.1);
-    color: #08775d;
-    outline: none;
-}
-
-.event-share__option .material-symbols-outlined {
-    font-size: 1.05rem;
-}
-
-.event-share__feedback {
-    display: block;
-    min-height: 1rem;
-    padding: 0.15rem 0.8rem 0.05rem;
-    color: #08775d;
-    font-size: 0.82rem;
-    font-weight: 800;
 }
 
 .event-modal__frame-shell {
@@ -4341,21 +4293,17 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
     }
 
     .event-modal__actions {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .event-modal__action {
         width: 100%;
     }
 
-    .event-share {
-        width: 100%;
-    }
-
-    .event-share__menu {
-        left: 50%;
-        width: min(100%, 300px);
-        transform: translateX(-50%);
+    .event-modal__actions--shareable .event-modal__action--secondary {
+        width: auto;
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
     }
 
     .event-modal__frame {
