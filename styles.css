@@ -2030,6 +2030,11 @@ section h2::after {
 .event-modal__actions--shareable .event-modal__action--secondary {
     flex: 1 1 calc(50% - 0.4rem);
     min-width: 0;
+    min-height: 46px;
+    padding: 0.72rem 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .event-modal__action {
@@ -4302,8 +4307,8 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
 
     .event-modal__actions--shareable .event-modal__action--secondary {
         width: auto;
-        padding-right: 0.75rem;
-        padding-left: 0.75rem;
+        min-height: 44px;
+        padding: 0.68rem 0.72rem;
     }
 
     .event-modal__frame {
