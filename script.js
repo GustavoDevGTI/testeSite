@@ -74,6 +74,7 @@ const guiaModalFrame = guiaModal?.querySelector('[data-guia-frame]');
 const guiaModalPrimaryAction = guiaModal?.querySelector('[data-guia-open-link]');
 const guiaModalMapAction = guiaModal?.querySelector('[data-guia-map-link]');
 const eventModalFrames = Array.from(document.querySelectorAll('.event-modal__frame'));
+const eventShareWidgets = Array.from(document.querySelectorAll('[data-event-share]'));
 const calendarEmbedShell = document.querySelector('.calendar-embed-shell');
 const calendarEmbedIframe = document.querySelector('.calendar-embed-iframe');
 const eventModalMobileMediaQuery = window.matchMedia('(max-width: 960px)');
@@ -2686,11 +2687,182 @@ function initCalendarIframeLazyLoad() {
     observer.observe(observationTarget);
 }
 
+function resolveEventSharePayload(widget) {
+    const rawUrl = widget?.dataset.shareUrl || window.location.href;
+    const title = widget?.dataset.shareTitle || document.title || 'Amargosa Turismo';
+    const url = new URL(rawUrl, window.location.href).href;
+
+    return { title, url };
+}
+
+function buildEventShareUrl(platform, payload) {
+    const encodedUrl = encodeURIComponent(payload.url);
+    const encodedTitle = encodeURIComponent(payload.title);
+    const encodedText = encodeURIComponent(`${payload.title} - ${payload.url}`);
+
+    switch (platform) {
+        case 'whatsapp':
+            return `https://api.whatsapp.com/send?text=${encodedText}`;
+        case 'facebook':
+            return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+        case 'twitter':
+            return `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+        case 'telegram':
+            return `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`;
+        default:
+            return '#';
+    }
+}
+
+function setEventShareFeedback(widget, message) {
+    const feedback = widget?.querySelector('[data-share-feedback]');
+
+    if (!feedback) {
+        return;
+    }
+
+    feedback.textContent = message;
+
+    if (message) {
+        window.setTimeout(() => {
+            if (feedback.textContent === message) {
+                feedback.textContent = '';
+            }
+        }, 2200);
+    }
+}
+
+function closeEventShareMenus(exceptWidget = null) {
+    eventShareWidgets.forEach((widget) => {
+        if (widget === exceptWidget) {
+            return;
+        }
+
+        const menu = widget.querySelector('[data-share-menu]');
+        const toggle = widget.querySelector('[data-share-toggle]');
+
+        if (menu) {
+            menu.hidden = true;
+        }
+
+        toggle?.setAttribute('aria-expanded', 'false');
+        setEventShareFeedback(widget, '');
+    });
+}
+
+function updateEventShareOptions(widget) {
+    const payload = resolveEventSharePayload(widget);
+    const nativeShareButton = widget.querySelector('[data-share-native]');
+    const platformLinks = Array.from(widget.querySelectorAll('[data-share-platform]'));
+
+    platformLinks.forEach((link) => {
+        link.href = buildEventShareUrl(link.dataset.sharePlatform, payload);
+    });
+
+    if (nativeShareButton) {
+        nativeShareButton.hidden = typeof navigator.share !== 'function';
+    }
+}
+
+async function copyEventShareLink(widget) {
+    const { url } = resolveEventSharePayload(widget);
+
+    try {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(url);
+        } else {
+            const helperInput = document.createElement('input');
+            helperInput.value = url;
+            helperInput.setAttribute('readonly', '');
+            helperInput.style.position = 'fixed';
+            helperInput.style.opacity = '0';
+            document.body.appendChild(helperInput);
+            helperInput.select();
+            document.execCommand('copy');
+            helperInput.remove();
+        }
+
+        setEventShareFeedback(widget, 'Link copiado');
+    } catch (error) {
+        setEventShareFeedback(widget, 'Nao foi possivel copiar');
+    }
+}
+
+async function nativeEventShare(widget) {
+    if (typeof navigator.share !== 'function') {
+        return;
+    }
+
+    const payload = resolveEventSharePayload(widget);
+
+    try {
+        await navigator.share(payload);
+        closeEventShareMenus();
+    } catch (error) {
+        if (error?.name !== 'AbortError') {
+            setEventShareFeedback(widget, 'Compartilhamento indisponivel');
+        }
+    }
+}
+
+function initEventShareButtons() {
+    if (!eventShareWidgets.length) {
+        return;
+    }
+
+    eventShareWidgets.forEach((widget) => {
+        const toggle = widget.querySelector('[data-share-toggle]');
+        const menu = widget.querySelector('[data-share-menu]');
+        const copyButton = widget.querySelector('[data-share-copy]');
+        const nativeShareButton = widget.querySelector('[data-share-native]');
+
+        if (!toggle || !menu) {
+            return;
+        }
+
+        updateEventShareOptions(widget);
+
+        toggle.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const shouldOpen = menu.hidden;
+            closeEventShareMenus(widget);
+            updateEventShareOptions(widget);
+            menu.hidden = !shouldOpen;
+            toggle.setAttribute('aria-expanded', String(shouldOpen));
+        });
+
+        copyButton?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            copyEventShareLink(widget);
+        });
+
+        nativeShareButton?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            nativeEventShare(widget);
+        });
+
+        menu.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element) || !event.target.closest('[data-event-share]')) {
+            closeEventShareMenus();
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     initTooltips();
     initCalendarIframeLazyLoad();
     initCalendarIframeScrollBridge();
     initEventModalOpenButtons();
+    initEventShareButtons();
     initCarnavalCulturalModal();
     initSaoJoaoModal();
     initFestivalForroModal();
@@ -2743,6 +2915,16 @@ window.shareOnSocial = shareOnSocial;
 // Suporte a teclado
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
+        const openedShareMenu = eventShareWidgets.some((widget) => {
+            const menu = widget.querySelector('[data-share-menu]');
+            return menu && !menu.hidden;
+        });
+
+        if (openedShareMenu) {
+            closeEventShareMenus();
+            return;
+        }
+
         if (galleryModal && !galleryModal.hidden) {
             if (galleryModalPreview && !galleryModalPreview.hidden) {
                 resetGalleryPreview();

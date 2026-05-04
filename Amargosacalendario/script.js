@@ -147,9 +147,6 @@
         ).join("");
         bindEvents();
         setupCalendarLayoutObserver();
-        if (config && config.adminEmailHint) {
-            refs.loginEmail.placeholder = config.adminEmailHint;
-        }
         if (client) {
             client.auth.onAuthStateChange((_event, session) => {
                 state.session = session || null;
