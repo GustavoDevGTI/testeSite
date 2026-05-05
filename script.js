@@ -9,6 +9,7 @@ const hourNode = document.querySelector('.hora');
 const resetButton = document.querySelector('.barra-acessibilidade-reset');
 const pageSearchForm = document.querySelector('[data-page-search-form]');
 const pageSearchInput = document.querySelector('[data-page-search-input]');
+const amandaHelpWidget = document.querySelector('[data-amanda-widget]');
 const topoPrefeituraDesktop = document.querySelector('.topo-prefeitura');
 const topoPrefeituraMobile = document.querySelector('.portal-mobile');
 const botaoMenuPortal = document.querySelector('.portal-mobile-toggle');
@@ -2687,6 +2688,25 @@ function initCalendarIframeLazyLoad() {
     observer.observe(observationTarget);
 }
 
+function initAmandaHelpWidget() {
+    if (!amandaHelpWidget) {
+        return;
+    }
+
+    const hideDelay = 30000;
+    let wasPressed = false;
+
+    amandaHelpWidget.addEventListener('click', () => {
+        wasPressed = true;
+    });
+
+    window.setTimeout(() => {
+        if (!wasPressed) {
+            amandaHelpWidget.classList.add('is-hidden');
+        }
+    }, hideDelay);
+}
+
 function resolveEventSharePayload(widget) {
     const rawUrl = widget?.dataset.shareUrl || window.location.href;
     const title = widget?.dataset.shareTitle || document.title || 'Amargosa Turismo';
@@ -2754,6 +2774,7 @@ function initEventShareButtons() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     initTooltips();
+    initAmandaHelpWidget();
     initCalendarIframeLazyLoad();
     initCalendarIframeScrollBridge();
     initEventModalOpenButtons();

@@ -3132,6 +3132,64 @@ section h2::after {
     order: 1;
 }
 
+.amanda-help-widget {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    z-index: 11800;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    text-decoration: none;
+    transform: translateY(0);
+    opacity: 1;
+    transition: opacity 0.24s ease, transform 0.24s ease, visibility 0.24s ease;
+}
+
+.amanda-help-widget.is-hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(14px);
+}
+
+.amanda-help-widget__bubble {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.7rem 1.15rem;
+    border-radius: 999px;
+    background: #050505;
+    color: var(--white);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    font-size: 1rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.amanda-help-widget__bubble::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -9px;
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 11px solid #050505;
+    transform: translateY(-50%);
+}
+
+.amanda-help-widget__avatar {
+    width: 86px;
+    height: 86px;
+    flex: 0 0 86px;
+    border-radius: 50%;
+    background: #33d850 url("public/images/amanda-chatbot.jpg") center / cover no-repeat;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
 /* ========================================
    RESPONSIVIDADE
    ======================================== */
@@ -3159,6 +3217,24 @@ section h2::after {
 }
 
 @media (max-width: 768px) {
+    .amanda-help-widget {
+        right: 1rem;
+        bottom: 1rem;
+        gap: 0.65rem;
+    }
+
+    .amanda-help-widget__bubble {
+        min-height: 42px;
+        padding: 0.62rem 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    .amanda-help-widget__avatar {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+    }
+
     .container--calendar-embed {
         max-width: 1200px;
         padding-left: 0;
@@ -4269,6 +4345,18 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
 }
 
 @media (max-width: 640px) {
+    .amanda-help-widget__bubble {
+        max-width: calc(100vw - 118px);
+        white-space: normal;
+        line-height: 1.2;
+    }
+
+    .amanda-help-widget__avatar {
+        width: 66px;
+        height: 66px;
+        flex-basis: 66px;
+    }
+
     .event-modal {
         padding: 12px;
     }
