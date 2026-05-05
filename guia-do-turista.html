@@ -745,6 +745,12 @@
       border: 1px solid rgba(120, 97, 198, 0.22);
     }
 
+    .card-link--share {
+      background: rgba(177, 124, 26, 0.1);
+      color: #9b6414;
+      border: 1px solid rgba(177, 124, 26, 0.24);
+    }
+
     .card-button {
       background: rgba(51, 154, 128, 0.08);
       color: var(--primary-color);
@@ -776,6 +782,10 @@
     .card-actions-inline .card-link {
       flex: 1 1 0;
       min-width: 0;
+    }
+
+    .card-actions-inline .card-link--share {
+      font: inherit;
     }
 
     .card-actions-inline .card-link--icon {
@@ -1106,6 +1116,10 @@
       .card-link,
       .card-button {
         width: 100%;
+      }
+
+      .card-actions-inline {
+        justify-content: center;
       }
 
       .card-actions-inline .card-link--icon {
@@ -2075,7 +2089,8 @@
       instagram: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5A3.95 3.95 0 0 0 16.25 3.8Zm8.93 1.35a1.07 1.07 0 1 1 0 2.14 1.07 1.07 0 0 1 0-2.14ZM12 6.85A5.15 5.15 0 1 1 6.85 12 5.16 5.16 0 0 1 12 6.85Zm0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65Z"/></svg>`,
       whatsapp: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.57 0 .29 5.28.29 11.79c0 2.08.54 4.11 1.56 5.91L0 24l6.48-1.7a11.78 11.78 0 0 0 5.6 1.43h.01c6.5 0 11.79-5.29 11.79-11.8a11.7 11.7 0 0 0-3.36-8.45ZM12.09 21.7h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.85 1.01 1.03-3.75-.24-.39a9.77 9.77 0 0 1-1.5-5.2c0-5.43 4.42-9.84 9.86-9.84 2.63 0 5.1 1.02 6.95 2.88a9.77 9.77 0 0 1 2.89 6.96c0 5.43-4.42 9.86-9.85 9.86Zm5.4-7.34c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.66.15-.2.3-.76.97-.93 1.17-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.19-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.51.08-.78.37s-1.02 1-1.02 2.44 1.05 2.83 1.2 3.03c.15.2 2.07 3.16 5.02 4.43.7.3 1.24.48 1.66.62.7.22 1.34.19 1.85.12.56-.08 1.77-.72 2.02-1.42.25-.69.25-1.28.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>`,
       email: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25v13.5A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V5.25Zm1.8.37v.28l7.2 5.4 7.2-5.4v-.28a.45.45 0 0 0-.45-.45H5.25a.45.45 0 0 0-.45.45Zm14.4 2.53-6.66 4.99a.9.9 0 0 1-1.08 0L4.8 8.15v10.6c0 .25.2.45.45.45h13.5c.25 0 .45-.2.45-.45V8.15Z"/></svg>`,
-      phone: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 2.93c.3-.3.75-.4 1.14-.25l2.3.86c.52.19.83.73.74 1.28l-.39 2.36a1.35 1.35 0 0 1-.78 1.02l-1.42.68a14.57 14.57 0 0 0 6.91 6.91l.68-1.42c.18-.38.56-.66 1.02-.78l2.36-.39c.55-.09 1.09.22 1.28.74l.86 2.3c.15.39.05.84-.25 1.14l-1.26 1.26c-.77.77-1.9 1.1-2.97.87-2.66-.59-5.2-1.98-7.58-4.35-2.37-2.38-3.76-4.92-4.35-7.58-.23-1.07.1-2.2.87-2.97l1.26-1.26Z"/></svg>`
+      phone: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 2.93c.3-.3.75-.4 1.14-.25l2.3.86c.52.19.83.73.74 1.28l-.39 2.36a1.35 1.35 0 0 1-.78 1.02l-1.42.68a14.57 14.57 0 0 0 6.91 6.91l.68-1.42c.18-.38.56-.66 1.02-.78l2.36-.39c.55-.09 1.09.22 1.28.74l.86 2.3c.15.39.05.84-.25 1.14l-1.26 1.26c-.77.77-1.9 1.1-2.97.87-2.66-.59-5.2-1.98-7.58-4.35-2.37-2.38-3.76-4.92-4.35-7.58-.23-1.07.1-2.2.87-2.97l1.26-1.26Z"/></svg>`,
+      share: `<svg class="card-link__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.08c-1.08 0-2.04.52-2.64 1.32L8.91 13.65c.06-.27.09-.45.09-.65s-.03-.38-.09-.65l6.39-3.72A3.28 3.28 0 0 0 18 9.92 3.46 3.46 0 1 0 14.54 6.46c0 .2.03.39.09.57L8.24 10.75A3.45 3.45 0 1 0 8.24 15.25l6.45 3.78c-.06.18-.09.36-.09.57A3.4 3.4 0 1 0 18 16.08Z"/></svg>`
     };
 
     function normalizeText(value) {
@@ -2393,6 +2408,115 @@
       return anchor;
     }
 
+    function getGuideCardTitle(card) {
+      return normalizeText(card?.querySelector("h3")?.textContent) || "Card do Guia do Turista";
+    }
+
+    function buildGuideCardShareUrl(card) {
+      const pointId = normalizeText(card?.dataset?.pointId);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("focus");
+      url.searchParams.delete("point");
+      url.searchParams.delete("ponto");
+      url.searchParams.delete("id");
+      url.searchParams.set("card", pointId);
+      url.hash = "pontos";
+      return url.href;
+    }
+
+    function createGuideShareButton(card) {
+      const pointId = normalizeText(card?.dataset?.pointId);
+
+      if (!pointId) {
+        return null;
+      }
+
+      const button = document.createElement("button");
+      button.className = "card-link card-link--share card-link--icon";
+      button.type = "button";
+      button.dataset.guideCardShare = pointId;
+      button.setAttribute("aria-label", `Compartilhar ${getGuideCardTitle(card)}`);
+      button.title = "Compartilhar";
+      button.innerHTML = `${GUIDE_ICONS.share}<span class="sr-only">Compartilhar</span>`;
+      return button;
+    }
+
+    function applyGuideShareButtons(cards = allCarouselCards) {
+      cards.forEach((card) => {
+        const pointId = normalizeText(card?.dataset?.pointId);
+
+        if (!pointId || card.querySelector("[data-guide-card-share]")) {
+          return;
+        }
+
+        const content = card.querySelector(".card-content");
+        let actions = card.querySelector(".card-actions");
+
+        if (!actions) {
+          actions = document.createElement("div");
+          actions.className = "card-actions";
+          content?.appendChild(actions);
+        }
+
+        let linksInline = actions.querySelector(".card-actions-inline");
+
+        if (!linksInline) {
+          linksInline = document.createElement("div");
+          linksInline.className = "card-actions-inline";
+          actions.appendChild(linksInline);
+        }
+
+        const shareButton = createGuideShareButton(card);
+
+        if (shareButton) {
+          linksInline.appendChild(shareButton);
+        }
+      });
+    }
+
+    async function copyGuideCardShareUrl(card) {
+      const url = buildGuideCardShareUrl(card);
+
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const helperInput = document.createElement("input");
+          helperInput.value = url;
+          helperInput.setAttribute("readonly", "");
+          helperInput.style.position = "fixed";
+          helperInput.style.opacity = "0";
+          document.body.appendChild(helperInput);
+          helperInput.select();
+          document.execCommand("copy");
+          helperInput.remove();
+        }
+      } catch (error) {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }
+    }
+
+    async function shareGuideCard(card) {
+      const payload = {
+        title: `${getGuideCardTitle(card)} | Guia do Turista de Amargosa`,
+        text: `Veja ${getGuideCardTitle(card)} no Guia do Turista de Amargosa.`,
+        url: buildGuideCardShareUrl(card)
+      };
+
+      if (typeof navigator.share !== "function") {
+        copyGuideCardShareUrl(card);
+        return;
+      }
+
+      try {
+        await navigator.share(payload);
+      } catch (error) {
+        if (error?.name !== "AbortError") {
+          copyGuideCardShareUrl(card);
+        }
+      }
+    }
+
     function buildSubmittedGuideCard(record) {
       const article = document.createElement("article");
       article.className = "attraction-card";
@@ -2597,7 +2721,9 @@
       }
 
       syncGuideCardsDomState();
-      refreshVisibleCards();
+      if (!applyPendingGuideCardTarget()) {
+        refreshVisibleCards();
+      }
     }
 
     async function loadGuideCards() {
@@ -2616,7 +2742,9 @@
       }
 
       syncGuideCardsDomState();
-      refreshVisibleCards();
+      if (!applyPendingGuideCardTarget()) {
+        refreshVisibleCards();
+      }
       syncMapPointCountsFromPublishedRecords();
       updateFilterFeedback();
 
@@ -2724,6 +2852,7 @@
       setLazyImageDecoding(allCarouselCards);
       mergeCardSubtitles(allCarouselCards);
       applyTourismWifiStatus(allCarouselCards);
+      applyGuideShareButtons(allCarouselCards);
     }
 
     const filterLabels = {
@@ -2759,6 +2888,15 @@
       );
     }
 
+    function getInitialGuideCardTarget() {
+      const params = new URLSearchParams(window.location.search);
+      return normalizeText(
+        params.get("card")
+        || params.get("cardId")
+        || params.get("cartao")
+      );
+    }
+
     function getInitialSelectedCategories() {
       const params = new URLSearchParams(window.location.search);
       const rawFilters = [
@@ -2791,6 +2929,7 @@
     }
     const initialGuideRouteTarget = getInitialGuideRouteTarget();
     const initialMapFocusTarget = getInitialMapFocusTarget();
+    const initialGuideCardTarget = getInitialGuideCardTarget();
     const extraTourismPoints = initialGuideRouteTarget === "amargosa" ? 1 : 0;
     const defaultMapCenter = { lat: -13.0265, lng: -39.6085 };
     const defaultMapZoom = 14;
@@ -2827,6 +2966,7 @@
     let carouselIndex = 0;
     let carouselResizeFrame = 0;
     let pendingMapFocusId = initialMapFocusTarget || (initialGuideRouteTarget === "amargosa" ? "route-amargosa" : null);
+    let pendingGuideCardId = initialGuideCardTarget;
     let pageMap = null;
     let pageInfoWindow = null;
 
@@ -3090,7 +3230,24 @@
       }
     }
 
-    function refreshVisibleCards() {
+    function findGuideCardByPointId(pointId) {
+      const normalizedPointId = normalizeText(pointId);
+
+      if (!normalizedPointId) {
+        return null;
+      }
+
+      return allCarouselCards.find((card) => card.dataset.pointId === normalizedPointId) || null;
+    }
+
+    function refreshVisibleCards(options = {}) {
+      const targetCard = findGuideCardByPointId(options.targetCardId);
+      const targetCategory = targetCard?.dataset.category;
+
+      if (targetCard && categoryFilters.includes(targetCategory)) {
+        selectedCategories = new Set([targetCategory]);
+      }
+
       visibleCarouselCards = allCarouselCards.filter((card) => matchesActiveCategory(card.dataset.category));
 
       allCarouselCards.forEach((card) => {
@@ -3106,9 +3263,53 @@
       }
 
       carouselIndex = 0;
+
+      if (targetCard) {
+        const targetIndex = visibleCarouselCards.indexOf(targetCard);
+
+        if (targetIndex >= 0) {
+          carouselIndex = targetIndex;
+        }
+      }
+
       updateFilterButtons();
       updateFilterFeedback();
       updateCarousel();
+    }
+
+    function revealGuideCard(pointId, options = {}) {
+      const targetCard = findGuideCardByPointId(pointId);
+
+      if (!targetCard) {
+        return false;
+      }
+
+      refreshVisibleCards({ targetCardId: pointId });
+
+      if (options.scroll) {
+        window.setTimeout(() => {
+          document.querySelector("#pontos")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }, 80);
+      }
+
+      return true;
+    }
+
+    function applyPendingGuideCardTarget(options = {}) {
+      if (!pendingGuideCardId) {
+        return false;
+      }
+
+      const applied = revealGuideCard(pendingGuideCardId, options);
+
+      if (applied) {
+        pendingGuideCardId = "";
+      }
+
+      return applied;
     }
 
     carouselPrevButton?.addEventListener("click", () => {
@@ -3235,6 +3436,19 @@
     }
 
     document.addEventListener("click", (event) => {
+      const shareButton = event.target.closest("[data-guide-card-share]");
+
+      if (shareButton) {
+        const card = shareButton.closest(".attraction-card");
+
+        if (card) {
+          event.preventDefault();
+          shareGuideCard(card);
+        }
+
+        return;
+      }
+
       const button = event.target.closest("[data-map-focus]");
 
       if (!button) {
@@ -3925,7 +4139,9 @@
     }
 
     syncGuideCardsDomState();
-    refreshVisibleCards();
+    if (!applyPendingGuideCardTarget({ scroll: Boolean(initialGuideCardTarget) })) {
+      refreshVisibleCards();
+    }
     loadGuideCards();
   </script>
   <script async defer
