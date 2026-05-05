@@ -49,7 +49,7 @@
             <h1>Painel Admin - Estabelecimentos Cadastrados</h1>
           </div>
           <div class="admin-header__actions">
-            <span class="session-pill" id="sessionPill">Sessao admin ativa</span>
+            <span class="session-pill" id="sessionPill">Sessão admin ativa</span>
             <a class="admin-link admin-link--ghost" href="../">Voltar ao portal</a>
             <a class="admin-link" href="../formulario/">Novo cadastro</a>
             <button class="danger-btn" type="button" id="logoutBtn">Sair</button>
@@ -66,7 +66,7 @@
             <span class="toolbar-label">Categoria</span>
             <button class="filter-btn is-active" type="button" data-filter="todos">Todos</button>
             <button class="filter-btn" type="button" data-filter="gastronomia">Bares/Restaurantes</button>
-            <button class="filter-btn" type="button" data-filter="hotel">Hoteis/Pousadas</button>
+            <button class="filter-btn" type="button" data-filter="hotel">Hotéis/Pousadas</button>
             <button class="neutral-btn" type="button" id="refreshBtn">Atualizar</button>
             <button class="danger-btn" type="button" id="clearBtn">Limpar todos</button>
           </div>
@@ -95,9 +95,9 @@
         <div class="toolbar" role="toolbar" aria-label="Filtro de cards publicados">
           <span class="toolbar-label">Categoria</span>
           <button class="filter-btn is-active" type="button" data-catalog-filter="todos">Todos</button>
-          <button class="filter-btn" type="button" data-catalog-filter="turistico">Pontos Turisticos</button>
+          <button class="filter-btn" type="button" data-catalog-filter="turistico">Pontos Turísticos</button>
           <button class="filter-btn" type="button" data-catalog-filter="gastronomia">Gastronomia</button>
-          <button class="filter-btn" type="button" data-catalog-filter="hotel">Hoteis/Pousadas</button>
+          <button class="filter-btn" type="button" data-catalog-filter="hotel">Hotéis/Pousadas</button>
         </div>
 
         <p class="status-text" id="catalogStatusText"></p>
@@ -116,9 +116,9 @@
       <div class="edit-form__header">
         <div>
           <h2>Editar cadastro</h2>
-          <p class="edit-hint" id="editHint">Salvar a edicao nao publica o card. A publicacao acontece ao validar.</p>
+          <p class="edit-hint" id="editHint">Salvar a edição não publica o card. A publicação acontece ao validar.</p>
         </div>
-        <button class="dialog-close" type="button" id="cancelEditBtn" aria-label="Fechar edicao">Fechar</button>
+        <button class="dialog-close" type="button" id="cancelEditBtn" aria-label="Fechar edição">Fechar</button>
       </div>
 
       <input type="hidden" id="editRecordId" name="recordId">
@@ -134,7 +134,7 @@
         </div>
 
         <div class="field field--full">
-          <label for="editDescription">Descricao</label>
+          <label for="editDescription">Descrição</label>
           <textarea id="editDescription" name="description" maxlength="280" rows="4" required></textarea>
         </div>
 
@@ -146,7 +146,7 @@
         </div>
 
         <div class="field">
-          <label for="editNumero">Numero</label>
+          <label for="editNumero">Número</label>
           <input id="editNumero" name="numero" placeholder="Ex: 196">
         </div>
 
@@ -156,8 +156,8 @@
         </div>
 
         <div class="field">
-          <label for="editReferencia">Ponto de referencia (opcional)</label>
-          <input id="editReferencia" name="referencia" placeholder="Ex: Em frente a praca central">
+          <label for="editReferencia">Ponto de referência (opcional)</label>
+          <input id="editReferencia" name="referencia" placeholder="Ex: Em frente à praça central">
         </div>
 
         <div class="field">
@@ -169,14 +169,14 @@
           <div class="map-picker">
             <div class="map-picker__header">
               <div>
-                <p class="map-picker__label">Mapa de confirmacao</p>
-                <p class="map-picker__lead">Use o endereco para localizar o ponto e, se precisar, arraste o pino para corrigir a localizacao.</p>
+                <p class="map-picker__label">Mapa de confirmação</p>
+                <p class="map-picker__lead">Use o endereço para localizar o ponto e, se precisar, arraste o pino para corrigir a localização.</p>
               </div>
               <button class="neutral-btn map-picker__action" type="button" id="editMapLocateBtn">Abrir / localizar</button>
             </div>
-            <div class="map-picker__status" id="editMapStatus">Clique em "Abrir / localizar" para revisar ou corrigir a posicao no mapa.</div>
+            <div class="map-picker__status" id="editMapStatus">Clique em "Abrir / localizar" para revisar ou corrigir a posição no mapa.</div>
             <div class="map-picker__summary" id="editMapSummary" hidden></div>
-            <div class="map-picker__canvas" id="editLocationMap" aria-label="Mapa para confirmar a localizacao do cadastro"></div>
+            <div class="map-picker__canvas" id="editLocationMap" aria-label="Mapa para confirmar a localização do cadastro"></div>
           </div>
         </div>
 
@@ -203,12 +203,12 @@
       <div class="edit-grid edit-grid--category" id="editGastronomyFields" hidden>
         <div class="field">
           <label for="editDaysLine">Dia de funcionamento</label>
-          <input id="editDaysLine" name="daysLine" placeholder="Ex: Todos os dias ou nao funciona segunda-feira">
+          <input id="editDaysLine" name="daysLine" placeholder="Ex: Todos os dias ou não funciona segunda-feira">
         </div>
 
         <div class="field">
-          <label for="editHoursLine">Horario</label>
-          <input id="editHoursLine" name="hoursLine" placeholder="Ex: 11h as 15h">
+          <label for="editHoursLine">Horário</label>
+          <input id="editHoursLine" name="hoursLine" placeholder="Ex: 11h às 15h">
         </div>
 
         <input id="editSubtitle" name="subtitle" type="hidden" value="">
@@ -221,8 +221,8 @@
         </div>
 
         <div class="field">
-          <label for="editServiceLine">Servico principal</label>
-          <input id="editServiceLine" name="serviceLine" placeholder="Ex: cafe da manha incluso">
+          <label for="editServiceLine">Serviço principal</label>
+          <input id="editServiceLine" name="serviceLine" placeholder="Ex: café da manhã incluso">
         </div>
 
         <div class="field">
@@ -238,7 +238,7 @@
 
       <div class="edit-form__footer">
         <button class="neutral-btn" type="button" id="closeEditBtn">Cancelar</button>
-        <button class="admin-link" type="submit">Salvar edicao</button>
+        <button class="admin-link" type="submit">Salvar edição</button>
       </div>
     </form>
   </dialog>
@@ -248,9 +248,9 @@
       <div class="edit-form__header">
         <div>
           <h2 id="catalogEditTitle">Editar card publicado</h2>
-          <p class="edit-hint" id="catalogEditHint">Esse card aparece no Guia do Turista assim que a alteracao for salva.</p>
+          <p class="edit-hint" id="catalogEditHint">Esse card aparece no Guia do Turista assim que a alteração for salva.</p>
         </div>
-        <button class="dialog-close" type="button" id="catalogCancelEditBtn" aria-label="Fechar edicao do card">Fechar</button>
+        <button class="dialog-close" type="button" id="catalogCancelEditBtn" aria-label="Fechar edição do card">Fechar</button>
       </div>
 
       <input type="hidden" id="catalogEditRecordId" name="recordId">
@@ -262,7 +262,7 @@
         <div class="field field--full">
           <label for="catalogEditCategory">Tipo do card</label>
           <select id="catalogEditCategory" name="category" required>
-            <option value="turistico">Ponto turistico</option>
+            <option value="turistico">Ponto turístico</option>
             <option value="gastronomia">Restaurante / Bar</option>
             <option value="hotel">Hotel / Pousada</option>
           </select>
@@ -271,7 +271,7 @@
         <input id="catalogEditPointId" name="pointId" type="hidden">
 
         <div class="field">
-          <label for="catalogEditDisplayOrder">Ordem de exibicao</label>
+          <label for="catalogEditDisplayOrder">Ordem de exibição</label>
           <input id="catalogEditDisplayOrder" name="displayOrder" type="number" min="1" step="1">
         </div>
 
@@ -297,7 +297,7 @@
         <input id="catalogEditSubtitle" name="subtitle" type="hidden" value="">
 
         <div class="field field--full">
-          <label for="catalogEditDescription">Descricao</label>
+          <label for="catalogEditDescription">Descrição</label>
           <textarea id="catalogEditDescription" name="description" maxlength="280" rows="4" required></textarea>
         </div>
 
@@ -309,7 +309,7 @@
         </div>
 
         <div class="field">
-          <label for="catalogEditNumero">Numero</label>
+          <label for="catalogEditNumero">Número</label>
           <input id="catalogEditNumero" name="numero" placeholder="Ex: 196">
         </div>
 
@@ -319,8 +319,8 @@
         </div>
 
         <div class="field">
-          <label for="catalogEditReferencia">Ponto de referencia (opcional)</label>
-          <input id="catalogEditReferencia" name="referencia" placeholder="Ex: Em frente a praca central">
+          <label for="catalogEditReferencia">Ponto de referência (opcional)</label>
+          <input id="catalogEditReferencia" name="referencia" placeholder="Ex: Em frente à praça central">
         </div>
 
         <div class="field">
@@ -333,19 +333,19 @@
             <div class="map-picker__header">
               <div>
                 <p class="map-picker__label">Mapa do card</p>
-                <p class="map-picker__lead">Revise a localizacao do card e ajuste o pino se o endereco mudou ou se o ponto precisa ficar mais preciso.</p>
+                <p class="map-picker__lead">Revise a localização do card e ajuste o pino se o endereço mudou ou se o ponto precisa ficar mais preciso.</p>
               </div>
               <button class="neutral-btn map-picker__action" type="button" id="catalogMapLocateBtn">Abrir / localizar</button>
             </div>
-            <div class="map-picker__status" id="catalogMapStatus">Clique em "Abrir / localizar" para revisar a posicao do card no mapa.</div>
+            <div class="map-picker__status" id="catalogMapStatus">Clique em "Abrir / localizar" para revisar a posição do card no mapa.</div>
             <div class="map-picker__summary" id="catalogMapSummary" hidden></div>
-            <div class="map-picker__canvas" id="catalogLocationMap" aria-label="Mapa para confirmar a localizacao do card oficial"></div>
+            <div class="map-picker__canvas" id="catalogLocationMap" aria-label="Mapa para confirmar a localização do card oficial"></div>
           </div>
         </div>
 
         <div class="field field--full" id="catalogScheduleFieldWrap">
-          <label for="catalogEditScheduleLine">Horario / agenda exibida</label>
-          <input id="catalogEditScheduleLine" name="scheduleLine" placeholder="Ex: Todos os dias, das 11h as 15h">
+          <label for="catalogEditScheduleLine">Horário / agenda exibida</label>
+          <input id="catalogEditScheduleLine" name="scheduleLine" placeholder="Ex: Todos os dias, das 11h às 15h">
         </div>
 
         <div class="field field--full">

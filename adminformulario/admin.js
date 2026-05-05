@@ -17,7 +17,7 @@ const STATUS_FILTER_LABELS = {
 const CATEGORY_FILTER_LABELS = {
   todos: "todas as categorias",
   gastronomia: "bares/restaurantes",
-  hotel: "hoteis/pousadas"
+  hotel: "hotéis/pousadas"
 };
 
 const ICONS = {
@@ -222,15 +222,15 @@ function geocodeMapPickerQuery(state, query) {
 
 function getGeocodeFailureMessage(status, fallbackMessage) {
   if (status === "REQUEST_DENIED") {
-    return "O Google recusou a consulta. Verifique se a chave do Maps permite este dominio e se a Geocoding/Maps JavaScript API esta ativa.";
+    return "O Google recusou a consulta. Verifique se a chave do Maps permite este domínio e se a Geocoding/Maps JavaScript API está ativa.";
   }
 
   if (status === "OVER_QUERY_LIMIT") {
-    return "A cota de localizacao do Google foi atingida temporariamente. Tente novamente mais tarde.";
+    return "A cota de localização do Google foi atingida temporariamente. Tente novamente mais tarde.";
   }
 
   if (status === "INVALID_REQUEST") {
-    return "Endereco incompleto para localizar. Revise rua, numero e bairro.";
+    return "Endereço incompleto para localizar. Revise rua, número e bairro.";
   }
 
   return fallbackMessage;
@@ -515,7 +515,7 @@ function ensureAdminMapsReady(state) {
       script.onerror = () => {
         adminMapsLoaderPromise = null;
         delete window.__amargosaInitAdminMapPicker;
-        reject(new Error("Nao foi possivel carregar o mapa neste momento."));
+        reject(new Error("Não foi possível carregar o mapa neste momento."));
       };
 
       document.head.appendChild(script);
@@ -539,7 +539,7 @@ function placeMapPickerMarker(state, position, shouldCenter = true) {
       position: literal,
       map: state.map,
       draggable: true,
-      title: "Localizacao confirmada"
+      title: "Localização confirmada"
     });
 
     state.marker.addListener("dragend", (event) => {
@@ -589,7 +589,7 @@ function hydrateMapPickerFromCoordinates(state, latitude, longitude, statusMessa
   state.latitudeInput.value = lat.toFixed(8);
   state.longitudeInput.value = lng.toFixed(8);
   updateMapPickerSummary(state, { lat, lng });
-  setMapPickerStatus(state, statusMessage || "Localizacao atual carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar.");
+  setMapPickerStatus(state, statusMessage || "Localização atual carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar.");
 }
 
 function invalidateMapPicker(state) {
@@ -611,17 +611,17 @@ async function openMapPickerAtAddress(state) {
   const hasExistingCoordinates = hasConfirmedCoordinates(existingLatitude, existingLongitude);
 
   if (!queries.length && !hasExistingCoordinates) {
-    setMapPickerStatus(state, "Informe um nome e um endereco antes de localizar no mapa.", true);
+    setMapPickerStatus(state, "Informe um nome e um endereço antes de localizar no mapa.", true);
     return;
   }
 
   state.locateButton.disabled = true;
-  setMapPickerStatus(state, "Carregando mapa e localizando endereco...");
+  setMapPickerStatus(state, "Carregando mapa e localizando endereço...");
 
   try {
     await ensureAdminMapsReady(state);
   } catch (error) {
-    setMapPickerStatus(state, error.message || "Nao foi possivel carregar o mapa neste momento.", true);
+    setMapPickerStatus(state, error.message || "Não foi possível carregar o mapa neste momento.", true);
     state.locateButton.disabled = false;
     return;
   }
@@ -630,7 +630,7 @@ async function openMapPickerAtAddress(state) {
     state.map.setCenter({ lat: existingLatitude, lng: existingLongitude });
     state.map.setZoom(17);
     placeMapPickerMarker(state, { lat: existingLatitude, lng: existingLongitude }, false);
-    setMapPickerStatus(state, "Localizacao atual carregada no mapa. Ajuste o pino se precisar.");
+    setMapPickerStatus(state, "Localização atual carregada no mapa. Ajuste o pino se precisar.");
     state.locateButton.disabled = false;
     return;
   }
@@ -688,14 +688,14 @@ function fallbackImage(category) {
     return "https://placehold.co/1200x800?text=Hotel+ou+Pousada";
   }
 
-  return "https://placehold.co/1200x800?text=Ponto+Turistico";
+  return "https://placehold.co/1200x800?text=Ponto+Tur%C3%ADstico";
 }
 
 function formatDateTime(value) {
   const parsed = new Date(value);
 
   if (Number.isNaN(parsed.getTime())) {
-    return "Data nao informada";
+    return "Data não informada";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -705,7 +705,7 @@ function formatDateTime(value) {
 }
 
 function getGuideDescription(record) {
-  return record.guide?.description || record.description || "Sem descricao informada.";
+  return record.guide?.description || record.description || "Sem descrição informada.";
 }
 
 function getGuideSubtitle(record) {
@@ -717,7 +717,7 @@ function mergeGuideDescription(subtitle, description) {
   const descriptionText = normalizeLine(description);
 
   if (!subtitleText) {
-    return descriptionText || "Sem descricao informada.";
+    return descriptionText || "Sem descrição informada.";
   }
 
   if (!descriptionText) {
@@ -749,7 +749,7 @@ function getGastronomyMetaLines(record) {
 function getHotelMetaLines(record) {
   return [
     normalizeLine(record.guide?.addressLine),
-    normalizeLine(record.contacts?.email) || "E-mail nao informado",
+    normalizeLine(record.contacts?.email) || "E-mail não informado",
     normalizeLine(record.contacts?.phone)
   ].filter(Boolean);
 }
@@ -828,7 +828,7 @@ function setAuthenticatedView(isAuthenticated, username = "") {
   }
 
   if (sessionPill) {
-    sessionPill.textContent = username ? `Sessao ativa: ${username}` : "Sessao admin ativa";
+    sessionPill.textContent = username ? `Sessão ativa: ${username}` : "Sessão admin ativa";
   }
 }
 
@@ -861,7 +861,7 @@ function resetAdminState() {
   }
 }
 
-function handleUnauthorized(message = "Sua sessao expirou. Faca login novamente.") {
+function handleUnauthorized(message = "Sua sessão expirou. Faça login novamente.") {
   closeEditDialog();
   closeCatalogEditDialog();
   resetAdminState();
@@ -878,12 +878,12 @@ async function apiRequest(path, options = {}) {
   const result = await response.json().catch(() => ({}));
 
   if (response.status === 401) {
-    handleUnauthorized(result.message || "Sua sessao expirou. Faca login novamente.");
-    throw new UnauthorizedError(result.message || "Nao autorizado.");
+    handleUnauthorized(result.message || "Sua sessão expirou. Faça login novamente.");
+    throw new UnauthorizedError(result.message || "Não autorizado.");
   }
 
   if (!response.ok) {
-    throw new Error(result.message || "Nao foi possivel concluir a operacao no servidor.");
+    throw new Error(result.message || "Não foi possível concluir a operação no servidor.");
   }
 
   return result;
@@ -896,7 +896,7 @@ async function fetchAdminSession() {
   const result = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(result.message || "Nao foi possivel validar a sessao admin.");
+    throw new Error(result.message || "Não foi possível validar a sessão admin.");
   }
 
   return result;
@@ -1148,7 +1148,7 @@ function openEditDialog(recordId) {
     draft.latitude,
     draft.longitude,
     hasConfirmedCoordinates(draft.latitude, draft.longitude)
-      ? "Localizacao atual carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar."
+      ? "Localização atual carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar."
       : submissionMapPickerState.idleMessage
   );
   resetEditPhotoSelection();
@@ -1231,7 +1231,7 @@ async function saveEditedRecord(event) {
   }
 
   if (payload.addressLine && !hasConfirmedCoordinates(payload.latitude, payload.longitude)) {
-    window.alert("Confirme a localizacao no mapa antes de salvar este cadastro.");
+    window.alert("Confirme a localização no mapa antes de salvar este cadastro.");
     return;
   }
 
@@ -1255,7 +1255,7 @@ async function saveEditedRecord(event) {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    window.alert(error.message || "Nao foi possivel salvar a edicao.");
+    window.alert(error.message || "Não foi possível salvar a edição.");
   }
 }
 
@@ -1267,7 +1267,7 @@ async function setRecordStatus(recordId, nextStatus) {
   }
 
   if (targetStatus === "rejected") {
-    const confirmed = window.confirm("Deseja recusar este cadastro? Ele nao aparecera no guia publico enquanto estiver recusado.");
+    const confirmed = window.confirm("Deseja recusar este cadastro? Ele não aparecerá no guia público enquanto estiver recusado.");
     if (!confirmed) {
       return;
     }
@@ -1292,7 +1292,7 @@ async function setRecordStatus(recordId, nextStatus) {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    window.alert(error.message || "Nao foi possivel atualizar o status.");
+    window.alert(error.message || "Não foi possível atualizar o status.");
   }
 }
 
@@ -1315,7 +1315,7 @@ refreshBtn.addEventListener("click", async () => {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    statusText.textContent = error.message || "Nao foi possivel atualizar a lista.";
+    statusText.textContent = error.message || "Não foi possível atualizar a lista.";
   }
 });
 
@@ -1335,7 +1335,7 @@ clearBtn.addEventListener("click", async () => {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    window.alert(error.message || "Nao foi possivel limpar os cadastros.");
+    window.alert(error.message || "Não foi possível limpar os cadastros.");
   }
 });
 
@@ -1353,7 +1353,7 @@ editPhotoInput.addEventListener("change", () => {
   reader.onerror = () => {
     selectedEditPhotoFile = null;
     setEditPhotoPreview(editCurrentPhotoUrlInput.value);
-    window.alert("Nao foi possivel carregar a nova imagem.");
+    window.alert("Não foi possível carregar a nova imagem.");
   };
   reader.readAsDataURL(file);
 });
@@ -1391,13 +1391,13 @@ closeEditBtn.addEventListener("click", closeEditDialog);
 
 const CATALOG_FILTER_LABELS = {
   todos: "todos os cards oficiais",
-  turistico: "pontos turisticos",
+  turistico: "pontos turísticos",
   gastronomia: "gastronomia",
-  hotel: "hoteis/pousadas"
+  hotel: "hotéis/pousadas"
 };
 
 const CATALOG_CATEGORY_BADGES = {
-  turistico: "Ponto turistico",
+  turistico: "Ponto turístico",
   gastronomia: "Gastronomia",
   hotel: "Hotel/Pousada"
 };
@@ -1468,11 +1468,11 @@ const submissionMapPickerState = createAdminMapPickerState({
     editBairroInput.value,
     editNameInput.value
   ),
-  idleMessage: 'Clique em "Abrir / localizar" para revisar ou corrigir a posicao no mapa.',
-  notFoundMessage: "Nao foi possivel localizar este cadastro no mapa. Revise o endereco e tente novamente.",
-  locatedMessage: "Endereco encontrado. Confira o pino e ajuste manualmente se precisar.",
-  adjustedMessage: "Pino ajustado manualmente. A nova localizacao sera salva com o cadastro.",
-  changedMessage: "O endereco foi alterado. Clique em \"Abrir / localizar\" para confirmar a nova localizacao."
+  idleMessage: 'Clique em "Abrir / localizar" para revisar ou corrigir a posição no mapa.',
+  notFoundMessage: "Não foi possível localizar este cadastro no mapa. Revise o endereço e tente novamente.",
+  locatedMessage: "Endereço encontrado. Confira o pino e ajuste manualmente se precisar.",
+  adjustedMessage: "Pino ajustado manualmente. A nova localização será salva com o cadastro.",
+  changedMessage: "O endereço foi alterado. Clique em \"Abrir / localizar\" para confirmar a nova localização."
 });
 
 const catalogMapPickerState = createAdminMapPickerState({
@@ -1493,11 +1493,11 @@ const catalogMapPickerState = createAdminMapPickerState({
     catalogEditBairroInput.value,
     catalogEditNameInput.value
   ),
-  idleMessage: 'Preencha rua, numero e bairro. Depois clique em "Abrir / localizar".',
-  notFoundMessage: "Nao foi possivel localizar este card no mapa. Revise o endereco e tente novamente.",
-  locatedMessage: "Endereco do card encontrado. Confira o pino e ajuste se precisar.",
-  adjustedMessage: "Pino ajustado manualmente. A nova localizacao sera salva no card.",
-  changedMessage: "O endereco do card foi alterado. Clique em \"Abrir / localizar\" para confirmar a nova localizacao."
+  idleMessage: 'Preencha rua, número e bairro. Depois clique em "Abrir / localizar".',
+  notFoundMessage: "Não foi possível localizar este card no mapa. Revise o endereço e tente novamente.",
+  locatedMessage: "Endereço do card encontrado. Confira o pino e ajuste se precisar.",
+  adjustedMessage: "Pino ajustado manualmente. A nova localização será salva no card.",
+  changedMessage: "O endereço do card foi alterado. Clique em \"Abrir / localizar\" para confirmar a nova localização."
 });
 
 function normalizeCatalogCategory(value) {
@@ -1526,7 +1526,7 @@ function buildCatalogMetaLines(record) {
   if (record.category === "hotel") {
     return [
       normalizeLine(record.addressLine),
-      normalizeLine(contacts.email) || "E-mail nao informado",
+      normalizeLine(contacts.email) || "E-mail não informado",
       normalizeLine(contacts.phone)
     ].filter(Boolean);
   }
@@ -1611,7 +1611,7 @@ function createCatalogCard(record) {
   description.className = "card-description";
   description.textContent = subtitle
     ? mergeGuideDescription(subtitle, record.description || "")
-    : normalizeLine(record.description) || "Sem descricao informada.";
+    : normalizeLine(record.description) || "Sem descrição informada.";
 
   const metaLines = buildCatalogMetaLines(record);
   const meta = document.createElement("div");
@@ -1760,10 +1760,10 @@ function toggleCatalogDialogFields(category) {
 
   if (catalogEditHint) {
     catalogEditHint.textContent = isTourism
-      ? "Esse card turistico aparece no Guia do Turista assim que a alteracao for salva."
+      ? "Esse card turístico aparece no Guia do Turista assim que a alteração for salva."
       : isHotel
         ? "Os dados de contato e hospedagem serao publicados no guia logo apos salvar."
-        : "Esse card de gastronomia sera atualizado no guia assim que a alteracao for salva.";
+        : "Esse card de gastronomia será atualizado no guia assim que a alteração for salva.";
   }
 }
 
@@ -1824,7 +1824,7 @@ function openCatalogEditDialog(recordId) {
     draft.latitude,
     draft.longitude,
     hasConfirmedCoordinates(draft.latitude, draft.longitude)
-      ? "Localizacao atual do card carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar."
+      ? "Localização atual do card carregada. Clique em \"Abrir / localizar\" para revisar ou ajustar."
       : catalogMapPickerState.idleMessage
   );
   resetCatalogPhotoSelection();
@@ -1932,7 +1932,7 @@ async function saveCatalogCard(event) {
   const isCreateMode = catalogEditMode === "create";
 
   if ((!isCreateMode && !recordId) || !payload.name || !payload.description) {
-    window.alert("Preencha pelo menos nome e descricao do card.");
+    window.alert("Preencha pelo menos nome e descrição do card.");
     return;
   }
 
@@ -1942,7 +1942,7 @@ async function saveCatalogCard(event) {
   }
 
   if (payload.addressLine && !hasConfirmedCoordinates(payload.latitude, payload.longitude)) {
-    window.alert("Confirme a localizacao no mapa antes de salvar este card.");
+    window.alert("Confirme a localização no mapa antes de salvar este card.");
     return;
   }
 
@@ -1967,7 +1967,7 @@ async function saveCatalogCard(event) {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    window.alert(error.message || "Nao foi possivel salvar o card oficial.");
+    window.alert(error.message || "Não foi possível salvar o card oficial.");
   }
 }
 
@@ -1994,7 +1994,7 @@ async function deleteCatalogCard(recordId, recordName = "") {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    window.alert(error.message || "Nao foi possivel excluir o card.");
+    window.alert(error.message || "Não foi possível excluir o card.");
   }
 }
 
@@ -2022,7 +2022,7 @@ catalogRefreshBtn?.addEventListener("click", async () => {
     if (error instanceof UnauthorizedError) {
       return;
     }
-    catalogStatusText.textContent = error.message || "Nao foi possivel atualizar os cards oficiais.";
+    catalogStatusText.textContent = error.message || "Não foi possível atualizar os cards oficiais.";
   }
 });
 
@@ -2042,7 +2042,7 @@ catalogEditPhotoInput?.addEventListener("change", () => {
   reader.onerror = () => {
     selectedCatalogPhotoFile = null;
     setCatalogPhotoPreview(catalogEditCurrentPhotoUrlInput.value);
-    window.alert("Nao foi possivel carregar a nova imagem do card.");
+    window.alert("Não foi possível carregar a nova imagem do card.");
   };
   reader.readAsDataURL(file);
 });
@@ -2109,7 +2109,7 @@ async function loginAdmin(event) {
     const result = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(result.message || "Nao foi possivel realizar o login.");
+      throw new Error(result.message || "Não foi possível realizar o login.");
     }
 
     setAuthenticatedView(true, result.username || username);
@@ -2120,7 +2120,7 @@ async function loginAdmin(event) {
     await initializeAdminData();
   } catch (error) {
     setAuthenticatedView(false);
-    setLoginFeedback(error.message || "Nao foi possivel realizar o login.", "error");
+    setLoginFeedback(error.message || "Não foi possível realizar o login.", "error");
   } finally {
     if (loginSubmitBtn) {
       loginSubmitBtn.disabled = false;
@@ -2135,7 +2135,7 @@ async function logoutAdmin() {
       credentials: "same-origin"
     });
   } finally {
-    handleUnauthorized("Sessao encerrada. Faca login novamente para continuar.");
+    handleUnauthorized("Sessão encerrada. Faça login novamente para continuar.");
   }
 }
 
@@ -2150,18 +2150,18 @@ async function initializeAdminData() {
       return;
     }
 
-    statusText.textContent = error.message || "Nao foi possivel carregar os cadastros do servidor.";
+    statusText.textContent = error.message || "Não foi possível carregar os cadastros do servidor.";
     emptyState.hidden = false;
-    emptyState.textContent = "Verifique se a API e o banco MySQL estao ativos.";
-    catalogStatusText.textContent = error.message || "Nao foi possivel carregar os cards oficiais.";
+    emptyState.textContent = "Verifique se a API e o banco MySQL estão ativos.";
+    catalogStatusText.textContent = error.message || "Não foi possível carregar os cards oficiais.";
     catalogEmptyState.hidden = false;
-    catalogEmptyState.textContent = "Verifique se a API e o banco MySQL estao ativos.";
+    catalogEmptyState.textContent = "Verifique se a API e o banco MySQL estão ativos.";
   }
 }
 
 async function initAdminApp() {
   setAuthenticatedView(false);
-  setLoginFeedback("Validando sessao atual...", "info");
+  setLoginFeedback("Validando sessão atual...", "info");
 
   try {
     const session = await fetchAdminSession();
@@ -2174,11 +2174,11 @@ async function initAdminApp() {
     }
 
     setAuthenticatedView(true, session.username || "");
-    setLoginFeedback("Sessao ativa.", "success");
+    setLoginFeedback("Sessão ativa.", "success");
     await initializeAdminData();
   } catch (error) {
     setAuthenticatedView(false);
-    setLoginFeedback(error.message || "Nao foi possivel validar a sessao admin.", "error");
+    setLoginFeedback(error.message || "Não foi possível validar a sessão admin.", "error");
   }
 }
 

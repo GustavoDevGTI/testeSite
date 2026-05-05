@@ -212,12 +212,12 @@ function placeLocationMarker(position, shouldCenter = true) {
       position: literal,
       map: locationMap,
       draggable: true,
-      title: "Localizacao confirmada do estabelecimento"
+      title: "Localização confirmada do estabelecimento"
     });
 
     locationMarker.addListener("dragend", (event) => {
       storeCoordinates(event.latLng);
-      setMapStatus("Pino ajustado manualmente. Localizacao confirmada para o cadastro.");
+      setMapStatus("Pino ajustado manualmente. Localização confirmada para o cadastro.");
     });
   } else {
     locationMarker.setPosition(literal);
@@ -244,7 +244,7 @@ function resetLocationSelection(showMessage = true) {
   }
 
   if (showMessage) {
-    setMapStatus('Preencha rua, numero e bairro. Depois clique em "Localizar no mapa".');
+    setMapStatus('Preencha rua, número e bairro. Depois clique em "Localizar no mapa".');
   }
 }
 
@@ -254,7 +254,7 @@ function invalidateLocationSelection() {
   }
 
   resetLocationSelection(false);
-  setMapStatus('O endereco foi alterado. Clique em "Localizar no mapa" para confirmar a nova posicao.');
+  setMapStatus('O endereço foi alterado. Clique em "Localizar no mapa" para confirmar a nova posição.');
 }
 
 function buildLocationQueryFromInputs() {
@@ -307,18 +307,18 @@ function geocodeLocationQuery(query) {
 
 function getGeocodeFailureMessage(status) {
   if (status === "REQUEST_DENIED") {
-    return "O Google recusou a consulta. Verifique se a chave do Maps permite este dominio e se a Geocoding/Maps JavaScript API esta ativa.";
+    return "O Google recusou a consulta. Verifique se a chave do Maps permite este domínio e se a Geocoding/Maps JavaScript API está ativa.";
   }
 
   if (status === "OVER_QUERY_LIMIT") {
-    return "A cota de localizacao do Google foi atingida temporariamente. Tente novamente mais tarde.";
+    return "A cota de localização do Google foi atingida temporariamente. Tente novamente mais tarde.";
   }
 
   if (status === "INVALID_REQUEST") {
-    return "Endereco incompleto para localizar. Revise rua, numero e bairro.";
+    return "Endereço incompleto para localizar. Revise rua, número e bairro.";
   }
 
-  return "Nao foi possivel localizar esse endereco em Amargosa/BA. Revise os campos ou clique no mapa para marcar manualmente.";
+  return "Não foi possível localizar esse endereço em Amargosa/BA. Revise os campos ou clique no mapa para marcar manualmente.";
 }
 
 async function findLocationByAddress() {
@@ -370,10 +370,10 @@ function initLocationPicker() {
     }
 
     placeLocationMarker(event.latLng);
-    setMapStatus("Ponto confirmado no mapa. Se precisar, arraste o pino para refinar a localizacao.");
+    setMapStatus("Ponto confirmado no mapa. Se precisar, arraste o pino para refinar a localização.");
   });
 
-  setMapStatus('Preencha rua, numero e bairro. Depois clique em "Localizar no mapa".');
+  setMapStatus('Preencha rua, número e bairro. Depois clique em "Localizar no mapa".');
 }
 
 function ensureLocationPickerReady() {
@@ -387,7 +387,7 @@ function ensureLocationPickerReady() {
   }
 
   if (!mapsLoaderPromise) {
-    setMapStatus("Carregando o mapa para confirmar a localizacao...");
+    setMapStatus("Carregando o mapa para confirmar a localização...");
 
     mapsLoaderPromise = new Promise((resolve, reject) => {
       window.__amargosaInitLocationPicker = () => {
@@ -409,7 +409,7 @@ function ensureLocationPickerReady() {
       script.onerror = () => {
         mapsLoaderPromise = null;
         delete window.__amargosaInitLocationPicker;
-        reject(new Error("Nao foi possivel carregar o mapa neste momento."));
+        reject(new Error("Não foi possível carregar o mapa neste momento."));
       };
 
       document.head.appendChild(script);
@@ -421,7 +421,7 @@ function ensureLocationPickerReady() {
 
 async function locateAddressOnMap() {
   if (!logradouroInput.value.trim() || !numeroInput.value.trim() || !bairroInput.value.trim()) {
-    setMapStatus("Informe rua, numero e bairro antes de localizar no mapa.", true);
+    setMapStatus("Informe rua, número e bairro antes de localizar no mapa.", true);
     return;
   }
 
@@ -430,12 +430,12 @@ async function locateAddressOnMap() {
   try {
     await ensureLocationPickerReady();
   } catch (error) {
-    setMapStatus(error.message || "O mapa ainda esta carregando. Aguarde alguns segundos e tente novamente.", true);
+    setMapStatus(error.message || "O mapa ainda está carregando. Aguarde alguns segundos e tente novamente.", true);
     mapLocateBtn.disabled = false;
     return;
   }
 
-  setMapStatus("Localizando o endereco informado no mapa...");
+  setMapStatus("Localizando o endereço informado no mapa...");
 
   try {
     const { result, status } = await findLocationByAddress();
@@ -452,7 +452,7 @@ async function locateAddressOnMap() {
       }
 
       placeLocationMarker(location, false);
-      setMapStatus("Endereco encontrado. Confira o pino e, se precisar, arraste ou clique no mapa para ajustar.");
+      setMapStatus("Endereço encontrado. Confira o pino e, se precisar, arraste ou clique no mapa para ajustar.");
       return;
     }
 
@@ -497,7 +497,7 @@ async function handlePhotoFile(file) {
     return;
   }
   if (file.size > 1_500_000) {
-    showFeedback("A foto e muito grande. Use uma imagem de ate 1,5 MB.", true);
+    showFeedback("A foto é muito grande. Use uma imagem de até 1,5 MB.", true);
     return;
   }
 
@@ -511,7 +511,7 @@ async function handlePhotoFile(file) {
     fotoPreviewWrap.hidden = false;
     clearFeedback();
   } catch (_) {
-    showFeedback("Nao foi possivel carregar a foto.", true);
+    showFeedback("Não foi possível carregar a foto.", true);
   }
 }
 
@@ -587,14 +587,14 @@ function renderAttendanceHoursFromDigits(value) {
   const endDigits = digits.slice(4);
 
   if (!endDigits) {
-    return `${startHour} ate `;
+    return `${startHour} até `;
   }
 
   if (endDigits.length <= 2) {
-    return `${startHour} ate ${endDigits}`;
+    return `${startHour} até ${endDigits}`;
   }
 
-  return `${startHour} ate ${endDigits.slice(0, 2)}:${endDigits.slice(2)}`;
+  return `${startHour} até ${endDigits.slice(0, 2)}:${endDigits.slice(2)}`;
 }
 
 function isValidTimeDigitsFragment(value) {
@@ -676,7 +676,7 @@ function normalizeAttendanceHours(value) {
 }
 
 function isCompleteAttendanceHours(value) {
-  return /^(?:[01]\d|2[0-3]):[0-5]\d ate (?:[01]\d|2[0-3]):[0-5]\d$/.test(String(value || "").trim());
+  return /^(?:[01]\d|2[0-3]):[0-5]\d até (?:[01]\d|2[0-3]):[0-5]\d$/.test(String(value || "").trim());
 }
 
 function buildGastronomyScheduleLine(daysLine, hoursLine) {
@@ -737,7 +737,7 @@ function buildMetaLines(data, category, addressLine, cnpjFormatted) {
     lines.push(buildGastronomyScheduleLine(data.get("diaFuncionamento").trim(), normalizeAttendanceHours(data.get("horario").trim())));
     lines.push(addressLine);
     if (complemento) lines.push(`Complemento: ${complemento}`);
-    if (referencia) lines.push(`Referencia: ${referencia}`);
+    if (referencia) lines.push(`Referência: ${referencia}`);
     if (cnpjFormatted) lines.push(`CNPJ: ${cnpjFormatted}`);
     if (data.get("gasExtra").trim()) lines.push(data.get("gasExtra").trim());
   } else {
@@ -745,7 +745,7 @@ function buildMetaLines(data, category, addressLine, cnpjFormatted) {
     if (data.get("servicoHotel").trim()) lines.push(data.get("servicoHotel").trim());
     lines.push(addressLine);
     if (complemento) lines.push(`Complemento: ${complemento}`);
-    if (referencia) lines.push(`Referencia: ${referencia}`);
+    if (referencia) lines.push(`Referência: ${referencia}`);
     if (cnpjFormatted) lines.push(`CNPJ: ${cnpjFormatted}`);
     if (email) lines.push(email);
     if (telefone) lines.push(telefone);
@@ -812,7 +812,7 @@ async function submitRecord(payload) {
   const result = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(result.message || "Nao foi possivel enviar o cadastro.");
+    throw new Error(result.message || "Não foi possível enviar o cadastro.");
   }
 
   return result;
@@ -974,7 +974,7 @@ form.addEventListener("submit", async (event) => {
   if (selectedType === "gastronomia") {
     setAttendanceHoursDigits(horarioField, extractAttendanceHoursDigits(horarioField.value));
     if (!isCompleteAttendanceHours(horarioField.value)) {
-      showFeedback("Informe o horario completo. Ex: 12:00 ate 14:00.", true);
+      showFeedback("Informe o horário completo. Ex: 12:00 até 14:00.", true);
       horarioField.focus();
       return;
     }

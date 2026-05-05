@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="/public/images/favicon/favicon.png">
   <link rel="apple-touch-icon" href="/public/images/favicon/apple-touch-icon.png">
   <meta name="description"
-    content="Encontre pontos turisticos, wi-fi gratuito, opcoes de gastronomia e hospedagem no mapa da cidade">
+    content="Encontre pontos turísticos, wi-fi gratuito, opções de gastronomia e hospedagem no mapa da cidade">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1164,9 +1164,9 @@
           <button class="filter-button" type="button" data-filter="todos" aria-pressed="false">Todos</button>
           <button class="filter-button is-active" type="button" data-filter="turistico" aria-pressed="true">Pontos Tur&iacute;sticos</button>
           <button class="filter-button" type="button" data-filter="gastronomia" aria-pressed="false">Restaurantes/Bares</button>
-          <button class="filter-button" type="button" data-filter="hotel" aria-pressed="false">Hoteis/Pousadas</button>
+          <button class="filter-button" type="button" data-filter="hotel" aria-pressed="false">Hot&eacute;is/Pousadas</button>
         </div>
-        <p class="filter-feedback" data-filter-feedback>Exibindo locais em pontos turisticos</p>
+        <p class="filter-feedback" data-filter-feedback>Exibindo locais em pontos tur&iacute;sticos</p>
         <div class="points-carousel" data-carousel>
           <button class="carousel-arrow" type="button" data-carousel-prev aria-label="Mostrar local anterior">
             <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
@@ -2044,10 +2044,10 @@
           </div>
 
           <div class="legend" aria-label="Legenda do mapa">
-            <span><i class="dot tourism" aria-hidden="true"></i> Ponto Turistico</span>
+            <span><i class="dot tourism" aria-hidden="true"></i> Ponto Tur&iacute;stico</span>
             <span><i class="dot heritage" aria-hidden="true"></i> Patrim&ocirc;nio hist&oacute;rico</span>
             <span><i class="dot gastronomy" aria-hidden="true"></i> Restaurantes/Bares</span>
-            <span><i class="dot lodging" aria-hidden="true"></i> Hoteis/Pousadas</span>
+            <span><i class="dot lodging" aria-hidden="true"></i> Hot&eacute;is/Pousadas</span>
           </div>
         </article>
 
@@ -2284,7 +2284,7 @@
         metaLines: category === "gastronomia"
           ? [gastronomyScheduleLine, addressLine].filter(Boolean)
           : category === "hotel"
-            ? [addressLine, email || "E-mail nao informado", phone].filter(Boolean)
+            ? [addressLine, email || "E-mail não informado", phone].filter(Boolean)
             : [],
         contacts: {
           instagram: normalizeText(contacts.instagram),
@@ -2302,7 +2302,7 @@
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(result.message || "Nao foi possivel carregar os cadastros aprovados.");
+          throw new Error(result.message || "Não foi possível carregar os cadastros aprovados.");
         }
 
         return Array.isArray(result.records)
@@ -2346,7 +2346,7 @@
         category,
         name,
         subtitle: normalizeText(rawRecord?.subtitle),
-        description: normalizeText(rawRecord?.description) || "Sem descricao informada.",
+        description: normalizeText(rawRecord?.description) || "Sem descrição informada.",
         photoSrc: normalizeText(rawRecord?.photoSrc),
         imageAlt: normalizeText(rawRecord?.imageAlt || name),
         addressLine,
@@ -2361,7 +2361,7 @@
         metaLines: category === "gastronomia"
           ? [scheduleLine, addressLine].filter(Boolean)
           : category === "hotel"
-            ? [addressLine, email || "E-mail nao informado", phone].filter(Boolean)
+            ? [addressLine, email || "E-mail não informado", phone].filter(Boolean)
             : [],
         contacts: {
           instagram: normalizeText(contacts.instagram),
@@ -2379,7 +2379,7 @@
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(result.message || "Nao foi possivel carregar os cards oficiais.");
+          throw new Error(result.message || "Não foi possível carregar os cards oficiais.");
         }
 
         return Array.isArray(result.records)
@@ -2627,7 +2627,7 @@
         ? "https://placehold.co/1200x800?text=Hotel+ou+Pousada"
         : record.category === "gastronomia"
           ? "https://placehold.co/1200x800?text=Bar+ou+Restaurante"
-          : "https://placehold.co/1200x800?text=Ponto+Turistico");
+          : "https://placehold.co/1200x800?text=Ponto+Tur%C3%ADstico");
       image.alt = record.imageAlt || record.name;
       image.loading = "lazy";
       image.decoding = "async";
@@ -2863,9 +2863,9 @@
 
     const filterLabels = {
       todos: "todos os locais",
-      turistico: "pontos turisticos",
+      turistico: "pontos turísticos",
       gastronomia: "restaurantes/bares",
-      hotel: "hoteis/pousadas"
+      hotel: "hotéis/pousadas"
     };
     const categoryFilters = ["turistico", "gastronomia", "hotel"];
     function getInitialGuideRouteTarget() {

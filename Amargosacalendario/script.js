@@ -837,7 +837,7 @@
 
         const time = document.createElement("span");
         time.className = "event-card-time";
-        time.textContent = calendarEvent.time || "Horario livre";
+        time.textContent = calendarEvent.time || "Horário livre";
 
         head.append(title, time);
         card.appendChild(head);
@@ -981,7 +981,7 @@
 
             const time = document.createElement("span");
             time.className = "day-preview-time";
-            time.textContent = calendarEvent.time || "Horario a definir";
+            time.textContent = calendarEvent.time || "Horário a definir";
 
             const title = document.createElement("strong");
             title.className = "day-preview-title";
@@ -1098,7 +1098,7 @@
         const isPastEvent = Boolean(currentEvent) && isPastDateKey(dateKey);
 
         if (isPastDateKey(dateKey) && !currentEvent) {
-            showToast("Datas anteriores a hoje estao disponiveis apenas para consulta.", true);
+            showToast("Datas anteriores a hoje estão disponíveis apenas para consulta.", true);
             return;
         }
         if (!state.isConfigured) {
@@ -1131,8 +1131,8 @@
             setEventFormMode(isPastEvent ? "delete-only" : "edit");
             refs.eventModalTitle.textContent = isPastEvent ? "Excluir evento" : "Editar evento";
             refs.eventModalSubtitle.textContent = isPastEvent
-                ? "Este evento ja aconteceu e nao pode ser editado. Voce ainda pode exclui-lo."
-                : "Atualize as informacoes ou exclua o evento abaixo.";
+                ? "Este evento já aconteceu e não pode ser editado. Você ainda pode excluí-lo."
+                : "Atualize as informações ou exclua o evento abaixo.";
             renderEventImagePreview(refs.eventImageUrlInput.value);
             refs.deleteEventButton.hidden = false;
         } else {
@@ -1746,7 +1746,7 @@
             });
         if (error) {
             return {
-                errorMessage: normalizeSupabaseError(error, "Nao foi possivel enviar a imagem do evento.")
+                errorMessage: normalizeSupabaseError(error, "Não foi possível enviar a imagem do evento.")
             };
         }
         const { data } = client.storage.from(getEventImagesBucketName()).getPublicUrl(filePath);
@@ -2142,19 +2142,19 @@
             return "A tabela calendar_events ainda não existe. Execute o arquivo supabase-setup.sql no Supabase.";
         }
         if (rawMessage.includes("bucket") && rawMessage.includes("not found")) {
-            return "O bucket de imagens ainda nao existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
+            return "O bucket de imagens ainda não existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
         }
         if (rawMessage.includes("image_url")) {
-            return "A coluna image_url ainda nao existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
+            return "A coluna image_url ainda não existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
         }
         if (rawMessage.includes("responsible")) {
-            return "A coluna responsible ainda nao existe. Execute o SQL de atualizacao do calendario no Supabase.";
+            return "A coluna responsible ainda não existe. Execute o SQL de atualização do calendário no Supabase.";
         }
         if (rawMessage.includes("access_type")) {
-            return "A coluna access_type ainda nao existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
+            return "A coluna access_type ainda não existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
         }
         if (rawMessage.includes("display_style")) {
-            return "A coluna display_style ainda nao existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
+            return "A coluna display_style ainda não existe. Execute novamente o arquivo supabase-setup.sql no Supabase.";
         }
         if (rawMessage.includes("failed to fetch")) {
             return "Não foi possível conectar ao banco online agora.";

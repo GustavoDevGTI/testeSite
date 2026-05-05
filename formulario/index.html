@@ -18,7 +18,7 @@
         <a class="utility-link utility-link--muted" href="../painel/">Painel admin</a>
       </div>
       <h1>Cadastro de Estabelecimentos</h1>
-      <p class="lead">Preencha os dados do estabelecimento para solicitar inclusao no Guia do Turista de Amargosa.</p>
+      <p class="lead">Preencha os dados do estabelecimento para solicitar inclusão no Guia do Turista de Amargosa.</p>
 
       <div class="choice" role="radiogroup" aria-label="Tipo de estabelecimento">
         <label>
@@ -30,7 +30,7 @@
           <span>Hotel / Pousada</span>
         </label>
       </div>
-      <p class="tip" id="stepTip">Primeiro selecione uma categoria para liberar o formulario.</p>
+      <p class="tip" id="stepTip">Primeiro selecione uma categoria para liberar o formulário.</p>
 
       <div id="formWrap" hidden>
         <form id="cadastroForm">
@@ -45,7 +45,7 @@
             </div>
 
             <div class="field full">
-              <label for="descricao">Descricao curta *</label>
+              <label for="descricao">Descrição curta *</label>
               <textarea id="descricao" name="descricao" maxlength="280" required></textarea>
             </div>
 
@@ -54,7 +54,7 @@
               <input id="logradouro" name="logradouro" placeholder="Ex: Avenida Doutor Luis Sande" required>
             </div>
             <div class="field">
-              <label for="numero">Numero *</label>
+              <label for="numero">Número *</label>
               <input id="numero" name="numero" placeholder="Ex: 196" required>
             </div>
             <div class="field">
@@ -62,8 +62,8 @@
               <input id="complemento" name="complemento" placeholder="Ex: Sala 02, fundos">
             </div>
             <div class="field">
-              <label for="referencia">Ponto de referencia (opcional)</label>
-              <input id="referencia" name="referencia" placeholder="Ex: Em frente a praca central">
+              <label for="referencia">Ponto de referência (opcional)</label>
+              <input id="referencia" name="referencia" placeholder="Ex: Em frente à praça central">
             </div>
             <div class="field">
               <label for="bairro">Bairro *</label>
@@ -74,14 +74,14 @@
               <div class="map-picker">
                 <div class="map-picker__header">
                   <div>
-                    <p class="map-picker__label">Confirmacao no mapa *</p>
-                    <p class="map-picker__lead">Localize pelo endereco e, se precisar, ajuste o pino manualmente para salvar a posicao exata do estabelecimento.</p>
+                    <p class="map-picker__label">Confirmação no mapa *</p>
+                    <p class="map-picker__lead">Localize pelo endereço e, se precisar, ajuste o pino manualmente para salvar a posição exata do estabelecimento.</p>
                   </div>
                   <button type="button" class="secondary map-picker__action" id="mapLocateBtn">Localizar no mapa</button>
                 </div>
-                <div class="map-picker__status" id="mapStatus">Preencha rua, numero e bairro. Depois clique em "Localizar no mapa".</div>
+                <div class="map-picker__status" id="mapStatus">Preencha rua, número e bairro. Depois clique em "Localizar no mapa".</div>
                 <div class="map-picker__summary" id="mapSummary" hidden></div>
-                <div class="map-picker__canvas" id="locationMap" aria-label="Mapa para confirmar a localizacao do estabelecimento"></div>
+                <div class="map-picker__canvas" id="locationMap" aria-label="Mapa para confirmar a localização do estabelecimento"></div>
                 <input type="hidden" id="latitude" name="latitude">
                 <input type="hidden" id="longitude" name="longitude">
               </div>
@@ -94,7 +94,7 @@
                 <button type="button" class="secondary upload-trigger" id="fotoBtn">Escolher foto</button>
                 <span class="upload-name" id="fotoNome">Nenhuma foto selecionada</span>
                 <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="Arraste e solte uma foto aqui ou toque para escolher">
-                  Arraste a foto para ca ou toque aqui para escolher.
+                  Arraste a foto para cá ou toque aqui para escolher.
                 </div>
                 <div class="photo-preview" id="fotoPreviewWrap" hidden>
                   <img id="fotoPreview" alt="Preview da foto selecionada">
@@ -106,10 +106,10 @@
           <div class="grid category-fields" data-show="gastronomia" hidden>
             <div class="field">
               <label for="diaFuncionamento">Dia de funcionamento *</label>
-              <input id="diaFuncionamento" name="diaFuncionamento" placeholder="Ex: Todos os dias ou nao funciona segunda-feira">
+              <input id="diaFuncionamento" name="diaFuncionamento" placeholder="Ex: Todos os dias ou não funciona segunda-feira">
             </div>
             <div class="field">
-              <label for="horario">Horario de atendimento *</label>
+              <label for="horario">Horário de atendimento *</label>
               <input id="horario" name="horario" inputmode="numeric" maxlength="15" placeholder="12561430">
             </div>
             <input id="gasExtra" name="gasExtra" type="hidden" value="">
@@ -121,8 +121,8 @@
               <input id="statusHotel" name="statusHotel" placeholder="Ex: aberto todos os dias">
             </div>
             <div class="field">
-              <label for="servicoHotel">Servico principal (opcional)</label>
-              <input id="servicoHotel" name="servicoHotel" placeholder="Ex: cafe da manha incluso">
+              <label for="servicoHotel">Serviço principal (opcional)</label>
+              <input id="servicoHotel" name="servicoHotel" placeholder="Ex: café da manhã incluso">
             </div>
             <div class="field">
               <label for="email">E-mail (opcional)</label>
@@ -136,7 +136,7 @@
               <input id="instagram" name="instagram" placeholder="https://www.instagram.com/...">
             </div>
             <div class="field">
-              <label for="whatsapp">WhatsApp (numero)</label>
+              <label for="whatsapp">WhatsApp (número)</label>
               <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Ex: 5575999999999">
             </div>
             <div class="field">
