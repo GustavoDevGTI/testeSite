@@ -132,7 +132,18 @@ function normalizeEmail(value) {
     return "";
   }
 
-  return email;
+  return email.includes("@") ? email : "";
+}
+
+function normalizeAddressLine(value) {
+  const addressLine = normalizeLine(value);
+  const comparable = normalizeComparable(addressLine);
+
+  if (comparable === "e-mail nao informado" || comparable === "email nao informado") {
+    return "";
+  }
+
+  return addressLine;
 }
 
 function normalizeBool(value, fallback = true) {
@@ -203,7 +214,7 @@ function buildCardPayloadFromSubmission(record) {
     description: buildDescriptionFromSubmission(record),
     photoUrl: normalizeMediaUrl(record.photoSrc),
     imageAlt: name,
-    addressLine: normalizeLine(guide.addressLine),
+    addressLine: normalizeAddressLine(guide.addressLine),
     scheduleLine: buildScheduleLineFromSubmission(record),
     instagramUrl: normalizeLine(contacts.instagram),
     whatsappUrl: normalizeWhatsapp(contacts.whatsapp),
@@ -234,7 +245,7 @@ function mapRowToCard(row) {
     description: normalizeDescription(row.description),
     photoSrc: normalizeMediaUrl(row.image_url),
     imageAlt: normalizeLine(row.image_alt) || normalizeLine(row.name),
-    addressLine: normalizeLine(row.address_line),
+    addressLine: normalizeAddressLine(row.address_line),
     scheduleLine: normalizeLine(row.schedule_line),
     displayOrder: toNumber(row.display_order, 0),
     isActive: Boolean(row.is_active),
@@ -738,7 +749,7 @@ function buildCardPayload(input, currentCard = null) {
     description: normalizeDescription(pickInputValue(input, "description", currentCard?.description)),
     photoUrl: normalizeMediaUrl(pickInputValue(input, "photoUrl", currentCard?.photoSrc)),
     imageAlt: normalizeLine(pickInputValue(input, "imageAlt", currentCard?.imageAlt || input.name || currentCard?.name)),
-    addressLine: normalizeLine(pickInputValue(input, "addressLine", currentCard?.addressLine)),
+    addressLine: normalizeAddressLine(pickInputValue(input, "addressLine", currentCard?.addressLine)),
     scheduleLine: normalizeLine(pickInputValue(input, "scheduleLine", currentCard?.scheduleLine)),
     instagramUrl: normalizeLine(pickInputValue(input, "instagram", currentCard?.contacts?.instagram)),
     whatsappUrl: normalizeWhatsapp(pickInputValue(input, "whatsapp", currentCard?.contacts?.whatsapp)),

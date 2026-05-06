@@ -722,7 +722,7 @@ function buildGuideData(data, category, name, description, addressLine, contacts
     addressLine,
     mapQuery,
     directionsUrl: buildDirectionsUrl(mapQuery),
-    metaLines: [addressLine, contacts.email, contacts.phone].filter(Boolean),
+    metaLines: [addressLine].filter(Boolean),
     popupTitleColor: "#3568c9"
   };
 }
@@ -730,8 +730,6 @@ function buildGuideData(data, category, name, description, addressLine, contacts
 function buildMetaLines(data, category, addressLine, cnpjFormatted) {
   const complemento = data.get("complemento").trim();
   const referencia = data.get("referencia").trim();
-  const email = String(data.get("email") || "").trim();
-  const telefone = sanitizePhoneValue(data.get("telefone"));
 
   const lines = [];
 
@@ -749,8 +747,6 @@ function buildMetaLines(data, category, addressLine, cnpjFormatted) {
     if (complemento) lines.push(`Complemento: ${complemento}`);
     if (referencia) lines.push(`Referência: ${referencia}`);
     if (cnpjFormatted) lines.push(`CNPJ: ${cnpjFormatted}`);
-    if (email) lines.push(email);
-    if (telefone) lines.push(telefone);
   }
 
   return lines.filter(Boolean);

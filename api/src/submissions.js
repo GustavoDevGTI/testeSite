@@ -133,7 +133,7 @@ function mapRowToRecord(row) {
 
   const metaLines = row.category === "gastronomia"
     ? [buildGastronomyScheduleLine(row.days_line, row.hours_line), row.address_line].filter(Boolean)
-    : [row.address_line, row.email || "E-mail nao informado", row.phone].filter(Boolean);
+    : [row.address_line].filter(Boolean);
 
   return {
     id: row.public_id,

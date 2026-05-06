@@ -1697,8 +1697,6 @@
                     <span>Aberto</span>
                     <span>Caf&eacute; da manh&atilde; incluso</span>
                     <span>Av Abelardo Veloso, 258</span>
-                    <span>nkcarlisto@gmailcom</span>
-                    <span>(75) 3634-1317 / 99915-2095 / 98804-1865</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-calisto">Ver no mapa</button>
@@ -1733,8 +1731,6 @@
                   <div class="card-meta">
                     <span>Aberto todos os dias</span>
                     <span>Rodovia Amargosa-Mutuipe, km 2</span>
-                    <span>hotelfazendacolibri@hotmailcom</span>
-                    <span>(75) 3634-1009</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-colibri">Ver no mapa</button>
@@ -1769,8 +1765,6 @@
                   <div class="card-meta">
                     <span>Aberto todos os dias</span>
                     <span>BA-540, km 5, Fazenda Reunidas Ribeir&atilde;o do Cupido</span>
-                    <span>nubiamoares123@gmailcom</span>
-                    <span>(75) 98897-1241</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-vale-aguas">Ver no mapa</button>
@@ -1804,8 +1798,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Avenida Abelardo Veloso, 470, Centro</span>
-                    <span>pousadakatiara@yahoocombr</span>
-                    <span>(75) 3634-1075</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-katiara">Ver no mapa</button>
@@ -1839,8 +1831,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Avenida Doutor Abelardo Velloso, 522, Centro</span>
-                    <span>gilsonantonio@gmailcom</span>
-                    <span>(75) 98859-8303</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-girassol">Ver no mapa</button>
@@ -1870,8 +1860,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Pra&ccedil;a da Bandeira, 269, Centro</span>
-                    <span>reservas@pousadadobosqueamargosacombr</span>
-                    <span>(75) 3634-2663</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-bosque">Ver no mapa</button>
@@ -1903,10 +1891,6 @@
                   <p>
                     Hospedagem com mais de um telefone de contato para informa&ccedil;&otilde;es e reserva
                   </p>
-                  <div class="card-meta">
-                    <span>E-mail n&atilde;o informado</span>
-                    <span>(75) 98371-0724 / (75) 98352-6794 / (75) 98896-4894</span>
-                  </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-dona-marieta">Ver no mapa</button>
                     <div class="card-actions-inline">
@@ -1931,8 +1915,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Rua Aldemiro Vaz Sampaio, 100, Centro</span>
-                    <span>Imperialhotel2023@gmailcom</span>
-                    <span>(75) 3634-1925</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-imperial">Ver no mapa</button>
@@ -1966,8 +1948,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Rua Moreira Coelho, 28, Centro</span>
-                    <span>Contato Denise</span>
-                    <span>(71) 98855-5456</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-sampaio">Ver no mapa</button>
@@ -1993,8 +1973,6 @@
                   </p>
                   <div class="card-meta">
                     <span>Povoado Baitinga, 15 - Rural, Amargosa - BA, 45300-000</span>
-                    <span>E-mail n&atilde;o informado</span>
-                    <span>(75) 99223-4496</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-baitinga">Ver no mapa</button>
@@ -2024,8 +2002,6 @@
                   </p>
                   <div class="card-meta">
                     <span>BA-540, 400, Rodovia Amargosa-Mutuipe</span>
-                    <span>E-mail n&atilde;o informado</span>
-                    <span>(75) 6334-1325</span>
                   </div>
                   <div class="card-actions">
                     <button class="card-button" type="button" data-map-focus="hotel-asa-branca">Ver no mapa</button>
@@ -2293,7 +2269,7 @@
         metaLines: category === "gastronomia"
           ? [gastronomyScheduleLine, addressLine].filter(Boolean)
           : category === "hotel"
-            ? [addressLine, email || "E-mail não informado", phone].filter(Boolean)
+            ? [addressLine].filter(Boolean)
             : [],
         contacts: {
           instagram: normalizeText(contacts.instagram),
@@ -2370,7 +2346,7 @@
         metaLines: category === "gastronomia"
           ? [scheduleLine, addressLine].filter(Boolean)
           : category === "hotel"
-            ? [addressLine, email || "E-mail não informado", phone].filter(Boolean)
+            ? [addressLine].filter(Boolean)
             : [],
         contacts: {
           instagram: normalizeText(contacts.instagram),

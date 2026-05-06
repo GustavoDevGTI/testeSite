@@ -783,9 +783,7 @@ function getGastronomyMetaLines(record) {
 
 function getHotelMetaLines(record) {
   return [
-    normalizeLine(record.guide?.addressLine),
-    normalizeLine(record.contacts?.email) || "E-mail não informado",
-    normalizeLine(record.contacts?.phone)
+    normalizeLine(record.guide?.addressLine)
   ].filter(Boolean);
 }
 
@@ -1572,9 +1570,7 @@ function buildCatalogMetaLines(record) {
 
   if (record.category === "hotel") {
     return [
-      normalizeLine(record.addressLine),
-      normalizeLine(contacts.email) || "E-mail não informado",
-      normalizeLine(contacts.phone)
+      normalizeLine(record.addressLine)
     ].filter(Boolean);
   }
 
