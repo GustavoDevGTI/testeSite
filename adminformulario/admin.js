@@ -265,7 +265,7 @@ function getGeocodeFailureMessage(status, fallbackMessage) {
   }
 
   if (status === "INVALID_REQUEST") {
-    return "Endereço incompleto para localizar. Revise rua, número e bairro.";
+    return "Endereço incompleto para localizar. Revise rua e bairro.";
   }
 
   return fallbackMessage;
@@ -335,7 +335,6 @@ function buildEditAddressLineFromFields() {
 function hasEditRequiredAddressParts() {
   return Boolean(
     normalizeLine(editLogradouroInput.value)
-    && normalizeLine(editNumeroInput.value)
     && normalizeLine(editBairroInput.value)
   );
 }
@@ -372,7 +371,6 @@ function buildCatalogAddressLineFromFields() {
 function hasCatalogRequiredAddressParts() {
   return Boolean(
     normalizeLine(catalogEditLogradouroInput.value)
-    && normalizeLine(catalogEditNumeroInput.value)
     && normalizeLine(catalogEditBairroInput.value)
   );
 }
@@ -1422,7 +1420,7 @@ editMapLocateBtn?.addEventListener("click", () => {
     !hasEditRequiredAddressParts()
     && !hasConfirmedCoordinates(editLatitudeInput.value, editLongitudeInput.value)
   ) {
-    setMapPickerStatus(submissionMapPickerState, "Informe rua, numero e bairro antes de localizar no mapa.", true);
+    setMapPickerStatus(submissionMapPickerState, "Informe rua e bairro antes de localizar no mapa.", true);
     return;
   }
 
@@ -1538,7 +1536,7 @@ const catalogMapPickerState = createAdminMapPickerState({
     catalogEditBairroInput.value,
     catalogEditNameInput.value
   ),
-  idleMessage: 'Preencha rua, número e bairro. Depois clique em "Abrir / localizar".',
+  idleMessage: 'Preencha rua e bairro. Se souber, informe o número. Depois clique em "Abrir / localizar".',
   notFoundMessage: "Não foi possível localizar este card no mapa. Revise o endereço e tente novamente.",
   locatedMessage: "Endereço do card encontrado. Confira o pino e ajuste se precisar.",
   adjustedMessage: "Pino ajustado manualmente. A nova localização será salva no card.",
@@ -2116,7 +2114,7 @@ catalogMapLocateBtn?.addEventListener("click", () => {
     !hasCatalogRequiredAddressParts()
     && !hasConfirmedCoordinates(catalogEditLatitudeInput.value, catalogEditLongitudeInput.value)
   ) {
-    setMapPickerStatus(catalogMapPickerState, "Informe rua, numero e bairro antes de localizar no mapa.", true);
+    setMapPickerStatus(catalogMapPickerState, "Informe rua e bairro antes de localizar no mapa.", true);
     return;
   }
 

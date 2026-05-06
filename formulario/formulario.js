@@ -246,7 +246,7 @@ function resetLocationSelection(showMessage = true) {
   }
 
   if (showMessage) {
-    setMapStatus('Preencha rua, número e bairro. Depois clique em "Localizar no mapa".');
+    setMapStatus('Preencha rua e bairro. Se souber, informe o número. Depois clique em "Localizar no mapa".');
   }
 }
 
@@ -317,7 +317,7 @@ function getGeocodeFailureMessage(status) {
   }
 
   if (status === "INVALID_REQUEST") {
-    return "Endereço incompleto para localizar. Revise rua, número e bairro.";
+    return "Endereço incompleto para localizar. Revise rua e bairro.";
   }
 
   return "Não foi possível localizar esse endereço em Amargosa/BA. Revise os campos ou clique no mapa para marcar manualmente.";
@@ -375,7 +375,7 @@ function initLocationPicker() {
     setMapStatus("Ponto confirmado no mapa. Se precisar, arraste o pino para refinar a localização.");
   });
 
-  setMapStatus('Preencha rua, número e bairro. Depois clique em "Localizar no mapa".');
+  setMapStatus('Preencha rua e bairro. Se souber, informe o número. Depois clique em "Localizar no mapa".');
 }
 
 function ensureLocationPickerReady() {
@@ -422,8 +422,8 @@ function ensureLocationPickerReady() {
 }
 
 async function locateAddressOnMap() {
-  if (!logradouroInput.value.trim() || !numeroInput.value.trim() || !bairroInput.value.trim()) {
-    setMapStatus("Informe rua, número e bairro antes de localizar no mapa.", true);
+  if (!logradouroInput.value.trim() || !bairroInput.value.trim()) {
+    setMapStatus("Informe rua e bairro antes de localizar no mapa.", true);
     return;
   }
 
