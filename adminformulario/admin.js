@@ -90,6 +90,8 @@ let selectedEditPhotoFile = null;
 let adminAuthenticated = false;
 let adminMapsLoaderPromise = null;
 
+const MAX_IMAGE_UPLOAD_BYTES = 20 * 1024 * 1024;
+const MAX_IMAGE_UPLOAD_LABEL = "20 MB";
 const DEFAULT_MAP_CENTER = { lat: -13.0265, lng: -39.6085 };
 const DEFAULT_MAP_ZOOM = 14;
 const GOOGLE_MAPS_API_KEY = "AIzaSyBdddKSwLzMfQdvDOYIO2Qx5ZX7RiF6syc";
@@ -117,6 +119,24 @@ function digitsOnly(value) {
 
 function sanitizePhoneValue(value) {
   return normalizeLine(value).replace(/[^\d()+\-\s]/g, "");
+}
+
+function validateImageFile(file, label = "imagem") {
+  if (!file) {
+    return true;
+  }
+
+  if (!file.type || !file.type.startsWith("image/")) {
+    window.alert(`Arquivo inválido. Envie somente ${label}.`);
+    return false;
+  }
+
+  if (file.size > MAX_IMAGE_UPLOAD_BYTES) {
+    window.alert(`A imagem é muito grande. Envie uma imagem de até ${MAX_IMAGE_UPLOAD_LABEL}.`);
+    return false;
+  }
+
+  return true;
 }
 
 function bindPhoneSanitizer(input) {
@@ -1347,6 +1367,13 @@ editPhotoInput.addEventListener("change", () => {
     return;
   }
 
+  if (!validateImageFile(file, "imagem")) {
+    selectedEditPhotoFile = null;
+    editPhotoInput.value = "";
+    setEditPhotoPreview(editCurrentPhotoUrlInput.value);
+    return;
+  }
+
   selectedEditPhotoFile = file;
   const reader = new FileReader();
   reader.onload = () => setEditPhotoPreview(reader.result);
@@ -2032,6 +2059,13 @@ catalogEditPhotoInput?.addEventListener("change", () => {
   const file = catalogEditPhotoInput.files && catalogEditPhotoInput.files[0];
   if (!file) {
     selectedCatalogPhotoFile = null;
+    setCatalogPhotoPreview(catalogEditCurrentPhotoUrlInput.value);
+    return;
+  }
+
+  if (!validateImageFile(file, "imagem do card")) {
+    selectedCatalogPhotoFile = null;
+    catalogEditPhotoInput.value = "";
     setCatalogPhotoPreview(catalogEditCurrentPhotoUrlInput.value);
     return;
   }

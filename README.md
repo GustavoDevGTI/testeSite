@@ -48,7 +48,8 @@ Crie um arquivo `api/.env` com base em `api/.env.example`:
 - `DB_USER`
 - `DB_PASSWORD`
 - `UPLOAD_DIR`
-- `MAX_UPLOAD_MB`
+- `UPLOAD_MAX_BYTES` (padrao: `20971520`, equivalente a 20 MB)
+- `MAX_UPLOAD_MB` (alternativa legada para definir o limite em MB)
 - `ADMIN_USERNAME`
 - `ADMIN_PASSWORD`
 - `ADMIN_SESSION_SECRET`

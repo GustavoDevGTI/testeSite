@@ -1,6 +1,7 @@
 const path = require("path");
 
 const rootDir = path.resolve(__dirname, "..");
+const DEFAULT_UPLOAD_MAX_BYTES = 20 * 1024 * 1024;
 
 function toNumber(value, fallback) {
   const parsed = Number(value);
@@ -10,7 +11,7 @@ function toNumber(value, fallback) {
 module.exports = {
   port: toNumber(process.env.API_PORT, 3000),
   uploadDir: path.resolve(rootDir, process.env.UPLOAD_DIR || "uploads"),
-  uploadMaxBytes: toNumber(process.env.UPLOAD_MAX_BYTES || (Number(process.env.MAX_UPLOAD_MB) * 1024 * 1024), 10 * 1024 * 1024),
+  uploadMaxBytes: toNumber(process.env.UPLOAD_MAX_BYTES || (Number(process.env.MAX_UPLOAD_MB) * 1024 * 1024), DEFAULT_UPLOAD_MAX_BYTES),
   admin: {
     username: process.env.ADMIN_USERNAME || "admin",
     password: process.env.ADMIN_PASSWORD || "turismo@123",

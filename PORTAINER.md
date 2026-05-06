@@ -39,6 +39,7 @@ Use o `.env.example` como base para as variaveis do stack:
 - `ADMIN_SESSION_COOKIE_NAME`
 - `ADMIN_SESSION_TTL_HOURS`
 - `ADMIN_COOKIE_SECURE`
+- `UPLOAD_MAX_BYTES` (use `20971520` para permitir imagens de ate 20 MB)
 
 ## Como subir
 

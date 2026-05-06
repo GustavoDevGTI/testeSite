@@ -36,6 +36,8 @@ let locationMarker = null;
 let locationGeocoder = null;
 let mapsLoaderPromise = null;
 
+const MAX_PHOTO_UPLOAD_BYTES = 20 * 1024 * 1024;
+const MAX_PHOTO_UPLOAD_LABEL = "20 MB";
 const defaultMapCenter = { lat: -13.0265, lng: -39.6085 };
 const defaultMapZoom = 14;
 const GOOGLE_MAPS_API_KEY = "AIzaSyBdddKSwLzMfQdvDOYIO2Qx5ZX7RiF6syc";
@@ -496,8 +498,8 @@ async function handlePhotoFile(file) {
     showFeedback("Arquivo invalido. Envie somente imagem.", true);
     return;
   }
-  if (file.size > 1_500_000) {
-    showFeedback("A foto é muito grande. Use uma imagem de até 1,5 MB.", true);
+  if (file.size > MAX_PHOTO_UPLOAD_BYTES) {
+    showFeedback(`A foto é muito grande. Use uma imagem de até ${MAX_PHOTO_UPLOAD_LABEL}.`, true);
     return;
   }
 
