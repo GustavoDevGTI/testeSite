@@ -139,6 +139,21 @@ function validateImageFile(file, label = "imagem") {
   return true;
 }
 
+function appendPayloadWithoutPhotoCache(formData, payload, shouldKeepUploadReference = false) {
+  Object.entries(payload).forEach(([key, value]) => {
+    if (key === "photoUrl" || key === "currentPhotoUrl") {
+      return;
+    }
+
+    formData.append(key, value || "");
+  });
+
+  const currentPhotoUrl = normalizeLine(payload.currentPhotoUrl);
+  if (shouldKeepUploadReference && currentPhotoUrl.startsWith("/uploads/")) {
+    formData.append("currentPhotoUrl", currentPhotoUrl);
+  }
+}
+
 function bindPhoneSanitizer(input) {
   input?.addEventListener("input", () => {
     const sanitized = sanitizePhoneValue(input.value);
@@ -895,11 +910,18 @@ async function apiRequest(path, options = {}) {
     credentials: "same-origin",
     ...options
   });
-  const result = await response.json().catch(() => ({}));
+  const contentType = response.headers.get("content-type") || "";
+  const result = contentType.includes("application/json")
+    ? await response.json().catch(() => ({}))
+    : {};
 
   if (response.status === 401) {
     handleUnauthorized(result.message || "Sua sessão expirou. Faça login novamente.");
     throw new UnauthorizedError(result.message || "Não autorizado.");
+  }
+
+  if (response.status === 413) {
+    throw new Error(`Imagem muito grande. Envie uma imagem de até ${MAX_IMAGE_UPLOAD_LABEL}.`);
   }
 
   if (!response.ok) {
@@ -1256,9 +1278,7 @@ async function saveEditedRecord(event) {
   }
 
   const formData = new FormData();
-  Object.entries(payload).forEach(([key, value]) => {
-    formData.append(key, value || "");
-  });
+  appendPayloadWithoutPhotoCache(formData, payload, Boolean(selectedEditPhotoFile));
 
   if (selectedEditPhotoFile) {
     formData.append("photo", selectedEditPhotoFile);
@@ -1974,9 +1994,7 @@ async function saveCatalogCard(event) {
   }
 
   const formData = new FormData();
-  Object.entries(payload).forEach(([key, value]) => {
-    formData.append(key, value || "");
-  });
+  appendPayloadWithoutPhotoCache(formData, payload, Boolean(selectedCatalogPhotoFile));
 
   if (selectedCatalogPhotoFile) {
     formData.append("photo", selectedCatalogPhotoFile);
