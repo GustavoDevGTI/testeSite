@@ -3115,6 +3115,9 @@ section h2::after {
 }
 
 .footer-gti-logo {
+    position: relative;
+    top: -1.05rem;
+    left: 2.25rem;
     width: clamp(104px, 10vw, 132px);
     max-height: 48px;
     object-fit: contain;
@@ -3132,6 +3135,8 @@ section h2::after {
     }
 
     .footer-gti-logo {
+        top: 0;
+        left: 0;
         width: 124px;
         max-height: 48px;
     }
