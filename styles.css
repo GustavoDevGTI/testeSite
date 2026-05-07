@@ -3085,28 +3085,7 @@ section h2::after {
     min-height: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-.footer-brand-mark {
-    position: relative;
-    left: 0;
-    bottom: 0;
-    width: clamp(88px, 9vw, 122px);
-    height: auto;
-    opacity: 1;
-    filter: none;
-    pointer-events: none;
-    user-select: none;
-    z-index: 10;
-    flex-shrink: 0;
-}
-
-.footer-brand-mark--right {
-    left: 0;
-    right: 0;
-    order: 3;
+    justify-content: center;
 }
 
 .footer__center {
@@ -3115,7 +3094,6 @@ section h2::after {
     align-items: center;
     gap: 0.45rem;
     flex: 1;
-    order: 2;
 }
 
 .footer-prefeitura-logo {
@@ -3126,10 +3104,6 @@ section h2::after {
 
 .footer__center p {
     margin: 0;
-}
-
-.footer-brand-mark:first-child {
-    order: 1;
 }
 
 .amanda-help-widget {
@@ -3754,18 +3728,6 @@ section h2::after {
 
     .hero {
         margin-top: 86px;
-    }
-
-    .footer-brand-mark {
-        width: 74px;
-        left: 0;
-        bottom: 12px;
-        opacity: 0.48;
-    }
-
-    .footer-brand-mark--right {
-        left: auto;
-        right: 0;
     }
 
     .footer-prefeitura-logo {
