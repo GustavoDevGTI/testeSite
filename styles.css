@@ -3106,7 +3106,7 @@ section h2::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(1.25rem, 2vw, 2rem);
+    position: relative;
 }
 
 .footer__rights {
@@ -3115,9 +3115,9 @@ section h2::after {
 }
 
 .footer-gti-logo {
-    position: relative;
+    position: absolute;
     top: -1.65rem;
-    left: 3.1rem;
+    left: calc(100% + 4.2rem);
     width: clamp(104px, 10vw, 132px);
     max-height: 48px;
     object-fit: contain;
@@ -3135,6 +3135,7 @@ section h2::after {
     }
 
     .footer-gti-logo {
+        position: relative;
         top: 0;
         left: 0;
         width: 124px;
