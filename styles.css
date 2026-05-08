@@ -3094,6 +3094,7 @@ section h2::after {
     align-items: center;
     gap: 0.45rem;
     flex: 0 0 auto;
+    text-align: center;
 }
 
 .footer-prefeitura-logo {
@@ -3107,11 +3108,14 @@ section h2::after {
     align-items: center;
     justify-content: center;
     position: relative;
+    width: max-content;
+    max-width: 100%;
 }
 
 .footer__rights {
     margin: 0;
     text-align: center;
+    line-height: 1.35;
 }
 
 .footer-gti-logo {
