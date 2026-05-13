@@ -782,6 +782,59 @@ textarea {
     font-size: clamp(1.05rem, 1.9vw, 1.28rem);
 }
 
+.hero-slide--daily-attractions {
+    --hero-image: url('atrações/background-sao-joao.png');
+    --hero-overlay: linear-gradient(180deg, rgba(39, 0, 75, 0.1) 0%, rgba(121, 4, 135, 0.08) 46%, rgba(42, 0, 75, 0.42) 100%);
+    --hero-position: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-slide--daily-attractions::after {
+    background: linear-gradient(180deg, rgba(36, 0, 72, 0.04) 0%, rgba(47, 0, 76, 0.12) 50%, rgba(23, 0, 45, 0.28) 100%);
+}
+
+.hero-slide--daily-attractions .hero-slide__content {
+    width: min(1280px, calc(100% - 40px));
+    margin: 0 auto 46px;
+    text-align: center;
+}
+
+.hero-slide--daily-attractions .hero-slide__eyebrow {
+    justify-content: center;
+    margin-bottom: 0.45rem;
+    color: var(--secondary-color);
+    text-shadow: 0 8px 18px rgba(40, 0, 74, 0.42);
+}
+
+.hero-slide--daily-attractions .hero-slide__title {
+    margin: 0 auto 0.35rem;
+    color: #fff7d7;
+    font-size: clamp(3.4rem, 8.8vw, 7.8rem);
+    line-height: 0.86;
+    text-align: center;
+    text-shadow: 0 8px 0 rgba(90, 7, 106, 0.54), 0 24px 50px rgba(20, 0, 42, 0.36);
+}
+
+.hero-slide--daily-attractions .hero-slide__text {
+    max-width: none;
+    margin: 0 auto 1.65rem;
+    color: #fff7d7;
+    font-size: clamp(1.35rem, 3vw, 2.55rem);
+    font-weight: 900;
+    line-height: 1.05;
+    text-shadow: 0 7px 0 rgba(90, 7, 106, 0.42), 0 18px 34px rgba(20, 0, 42, 0.34);
+}
+
+.hero-slide--daily-attractions .hero-slide__action {
+    min-width: 128px;
+    justify-content: center;
+    background: rgba(59, 223, 255, 0.18);
+    border-color: rgba(59, 223, 255, 0.45);
+    color: #fff7d7;
+    box-shadow: 0 14px 30px rgba(25, 0, 48, 0.22);
+}
+
 .hero-slide--calendar {
     --hero-image: url('public/images/agenda-cultural-carousel.png');
     --hero-overlay: linear-gradient(115deg, rgba(5, 45, 34, 0.62) 0%, rgba(25, 124, 91, 0.18) 52%, rgba(5, 36, 27, 0.66) 100%);
@@ -4022,6 +4075,35 @@ body.modo_escuro .gallery-modal[data-gallery-theme] .gallery-modal__theme {
     border-color: rgba(var(--gallery-theme-color-rgb), 0.18);
 }
 
+body.attractions-day-modal-open {
+    overflow: hidden;
+}
+
+.event-modal--attractions-day {
+    z-index: 13000;
+    padding: 0;
+    background: #2b004c;
+}
+
+.event-modal--attractions-day .attractions-day-modal__dialog {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    background: #2b004c;
+    box-shadow: none;
+}
+
+.attractions-day-modal__frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #2b004c;
+}
+
 @media (max-width: 768px) {
     .gallery-modal {
         padding: 14px;
@@ -4463,4 +4545,35 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
     .event-modal--contact .event-modal__intro {
         padding: 1.35rem;
     }
+}
+
+@media (max-width: 768px) {
+    .hero-slide--daily-attractions .hero-slide__content {
+        width: calc(100% - 28px);
+        margin: 0 auto 76px;
+    }
+
+    .hero-slide--daily-attractions .hero-slide__eyebrow {
+        font-size: 0.7rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .hero-slide--daily-attractions .hero-slide__title {
+        font-size: clamp(2.7rem, 17vw, 5.6rem);
+    }
+
+    .hero-slide--daily-attractions .hero-slide__text {
+        margin-bottom: 1rem;
+        font-size: clamp(1rem, 7vw, 1.95rem);
+    }
+}
+
+.event-modal--attractions-day .attractions-day-modal__dialog {
+    max-height: none;
+    overflow: hidden;
+}
+
+.event-modal--attractions-day .attractions-day-modal__frame {
+    min-height: 0;
+    border-radius: 0;
 }

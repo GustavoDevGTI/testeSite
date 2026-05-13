@@ -249,7 +249,16 @@
 
     <!-- Hero Section -->
     <section class="hero hero-carousel" aria-label="Destaques principais do turismo em Amargosa">
-        <div class="hero-slide hero-slide--welcome is-active" data-hero-slide aria-hidden="false">
+        <a class="hero-slide hero-slide--daily-attractions is-active" href="./atraçõesdia/" data-hero-slide data-attractions-day-modal-trigger aria-haspopup="dialog" aria-controls="attractions-day-modal" aria-hidden="false">
+            <div class="hero-slide__content">
+                <span class="hero-slide__eyebrow">São João 2026</span>
+                <h1 class="hero-slide__title">Atrações do Dia</h1>
+                <p class="hero-slide__text">O melhor São João de 19 a 24 de junho</p>
+                <span class="hero-slide__action">Ver mais</span>
+            </div>
+        </a>
+
+        <div class="hero-slide hero-slide--welcome" data-hero-slide aria-hidden="true">
             <div class="hero-slide__content">
                 <span class="hero-slide__eyebrow">Portal de Turismo</span>
                 <h1 class="hero-slide__title">Bem-vindo a Amargosa</h1>
@@ -305,12 +314,13 @@
         </a>
 
         <div class="hero-carousel__pagination" aria-label="Selecionar destaque">
-            <button class="hero-carousel__dot is-active" type="button" data-hero-dot="0" aria-label="Mostrar destaque Bem-vindo a Amargosa" aria-pressed="true"></button>
-            <button class="hero-carousel__dot" type="button" data-hero-dot="1" aria-label="Mostrar destaque Principais Eventos" aria-pressed="false"></button>
-            <button class="hero-carousel__dot" type="button" data-hero-dot="2" aria-label="Mostrar destaque Guia" aria-pressed="false"></button>
-            <button class="hero-carousel__dot" type="button" data-hero-dot="3" aria-label="Mostrar destaque Identidade Cultural" aria-pressed="false"></button>
-            <button class="hero-carousel__dot" type="button" data-hero-dot="4" aria-label="Mostrar destaque Agenda Cultural" aria-pressed="false"></button>
-            <button class="hero-carousel__dot" type="button" data-hero-dot="5" aria-label="Mostrar destaque Galeria" aria-pressed="false"></button>
+            <button class="hero-carousel__dot is-active" type="button" data-hero-dot="0" aria-label="Mostrar destaque Atrações do Dia" aria-pressed="true"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="1" aria-label="Mostrar destaque Bem-vindo a Amargosa" aria-pressed="false"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="2" aria-label="Mostrar destaque Principais Eventos" aria-pressed="false"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="3" aria-label="Mostrar destaque Guia" aria-pressed="false"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="4" aria-label="Mostrar destaque Identidade Cultural" aria-pressed="false"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="5" aria-label="Mostrar destaque Agenda Cultural" aria-pressed="false"></button>
+            <button class="hero-carousel__dot" type="button" data-hero-dot="6" aria-label="Mostrar destaque Galeria" aria-pressed="false"></button>
         </div>
 
         <div class="hero-carousel__controls" aria-label="Navegação do carrossel principal">
@@ -863,6 +873,12 @@
                     <iframe class="event-modal__frame" name="guia-modal-frame" data-guia-frame data-src="./guia-do-turista.html" title="Guia do Turista de Amargosa" loading="lazy"></iframe>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="event-modal event-modal--attractions-day" id="attractions-day-modal" hidden>
+        <div class="event-modal__dialog attractions-day-modal__dialog" role="dialog" aria-modal="true" aria-label="Atrações do Dia" tabindex="-1">
+            <iframe class="attractions-day-modal__frame" data-attractions-day-frame data-src="./atraçõesdia/" title="Atrações do Dia do São João de Amargosa" loading="lazy"></iframe>
         </div>
     </div>
 

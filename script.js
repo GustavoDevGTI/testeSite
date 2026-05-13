@@ -62,6 +62,9 @@ const saoJoaoModalTriggers = Array.from(document.querySelectorAll('[data-sao-joa
 const festivalForroModal = document.querySelector('#festival-forro-modal');
 const festivalForroModalCloseButton = festivalForroModal?.querySelector('.event-modal__close');
 const festivalForroModalTriggers = Array.from(document.querySelectorAll('[data-festival-forro-modal-trigger]'));
+const attractionsDayModal = document.querySelector('#attractions-day-modal');
+const attractionsDayModalDialog = attractionsDayModal?.querySelector('.attractions-day-modal__dialog');
+const attractionsDayModalFrame = attractionsDayModal?.querySelector('[data-attractions-day-frame]');
 const guiaModal = document.querySelector('#guia-modal');
 const guiaModalCloseButton = guiaModal?.querySelector('.event-modal__close');
 const guiaModalDialog = guiaModal?.querySelector('.event-modal__dialog');
@@ -153,6 +156,7 @@ let lastGalleryTrigger = null;
 let lastCarnavalCulturalModalTrigger = null;
 let lastSaoJoaoModalTrigger = null;
 let lastFestivalForroModalTrigger = null;
+let lastAttractionsDayModalTrigger = null;
 let lastGuiaModalTrigger = null;
 let lastContactModalTrigger = null;
 let heroActiveIndex = heroSlides.findIndex((slide) => slide.classList.contains('is-active'));
@@ -1700,6 +1704,10 @@ function getVisibleBrowserModal() {
         return { id: 'festival-forro-modal', close: closeFestivalForroModal };
     }
 
+    if (attractionsDayModal && !attractionsDayModal.hidden) {
+        return { id: 'attractions-day-modal', close: closeAttractionsDayModal };
+    }
+
     if (guiaModal && !guiaModal.hidden) {
         return { id: 'guia-modal', close: closeGuiaModal };
     }
@@ -1877,6 +1885,7 @@ function closeOpenEventModals() {
     closeCarnavalCulturalModal({ skipHistory: true });
     closeSaoJoaoModal({ skipHistory: true });
     closeFestivalForroModal({ skipHistory: true });
+    closeAttractionsDayModal({ skipHistory: true });
     closeGuiaModal({ skipHistory: true });
 }
 
@@ -2073,6 +2082,37 @@ function closeFestivalForroModal(options = {}) {
     body.classList.remove('festival-forro-modal-open');
     activeBrowserModalId = null;
     lastFestivalForroModalTrigger?.focus?.();
+}
+
+function openAttractionsDayModal(trigger = null) {
+    if (!attractionsDayModal) {
+        return;
+    }
+
+    if (trigger instanceof Element && !attractionsDayModal.contains(trigger)) {
+        lastAttractionsDayModalTrigger = trigger;
+    }
+
+    ensureIframeLoaded(attractionsDayModalFrame);
+    attractionsDayModal.hidden = false;
+    body.classList.add('attractions-day-modal-open');
+    syncBrowserHistoryOnModalOpen('attractions-day-modal');
+    attractionsDayModalDialog?.focus?.();
+}
+
+function closeAttractionsDayModal(options = {}) {
+    if (!attractionsDayModal || attractionsDayModal.hidden) {
+        return;
+    }
+
+    if (shouldCloseModalViaBrowserBack('attractions-day-modal', options)) {
+        return;
+    }
+
+    attractionsDayModal.hidden = true;
+    body.classList.remove('attractions-day-modal-open');
+    activeBrowserModalId = null;
+    lastAttractionsDayModalTrigger?.focus?.();
 }
 
 function showGalleryModalShell() {
@@ -2573,6 +2613,17 @@ document.addEventListener('click', (event) => {
         definirPainelPortalAberto(false);
         definirMenuPortalDesktopAberto(false);
         openGuiaModal(guideModalTrigger, resolveGuideModalSource(guideModalTrigger));
+        return;
+    }
+
+    const attractionsDayModalTrigger = event.target.closest('[data-attractions-day-modal-trigger]');
+
+    if (attractionsDayModalTrigger) {
+        event.preventDefault();
+        event.stopPropagation();
+        definirPainelPortalAberto(false);
+        definirMenuPortalDesktopAberto(false);
+        openAttractionsDayModal(attractionsDayModalTrigger);
         return;
     }
 
