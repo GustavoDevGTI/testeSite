@@ -7,6 +7,18 @@
   <link rel="icon" type="image/png" href="../public/images/favicon/favicon.png">
   <link rel="apple-touch-icon" href="../public/images/favicon/apple-touch-icon.png">
   <style>
+    :root {
+      --ink: #fff7d7;
+      --muted: rgba(255, 247, 215, 0.76);
+      --card: rgba(54, 8, 95, 0.64);
+      --card-strong: rgba(93, 10, 124, 0.78);
+      --line: rgba(255, 232, 118, 0.24);
+      --yellow: #ffd84c;
+      --pink: #ff43b4;
+      --cyan: #22d7e8;
+      --orange: #ff8a24;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -20,9 +32,269 @@
     body {
       min-height: 100vh;
       background: #5a087f url("./background-sao-joao.png") center / cover no-repeat fixed;
+      color: var(--ink);
+      font-family: "Cabin", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(25, 0, 50, 0.08), rgba(48, 0, 72, 0.28));
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: clamp(28px, 4vw, 54px) 0 clamp(32px, 5vw, 64px);
+    }
+
+    .hero {
+      display: grid;
+      gap: 0.6rem;
+      margin-bottom: clamp(22px, 3vw, 34px);
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--yellow);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 6vw, 6.4rem);
+      line-height: 0.9;
+      text-shadow: 0 8px 0 rgba(91, 7, 103, 0.48), 0 18px 36px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(180px, 1fr));
+      gap: clamp(12px, 1.4vw, 18px);
+      align-items: stretch;
+      overflow-x: auto;
+      padding: 8px 2px 18px;
+      scrollbar-color: rgba(255, 216, 76, 0.6) rgba(255, 255, 255, 0.12);
+    }
+
+    .day-column {
+      min-width: 180px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(97, 15, 139, 0.76), rgba(56, 7, 103, 0.58));
+      box-shadow: 0 24px 60px rgba(23, 0, 45, 0.3);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .day-head {
+      display: grid;
+      gap: 0.25rem;
+      padding: 1.1rem 1rem;
+      background: linear-gradient(135deg, rgba(255, 216, 76, 0.28), rgba(255, 67, 180, 0.2));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .day-head span {
+      color: var(--yellow);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .day-head strong {
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      line-height: 1;
+    }
+
+    .day-list {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .show {
+      display: grid;
+      gap: 0.55rem;
+      padding: 1rem;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .show:last-child {
+      border-bottom: 0;
+    }
+
+    .show strong {
+      color: #ffffff;
+      font-size: 1.05rem;
+      line-height: 1.08;
+    }
+
+    .show-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      padding: 0 0.62rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .pill--time {
+      color: #2f1251;
+      background: var(--yellow);
+      border-color: transparent;
+    }
+
+    .note {
+      max-width: 980px;
+      margin: 1rem auto 0;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      background: rgba(28, 0, 52, 0.34);
+      color: var(--muted);
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 980px) {
+      .schedule-grid {
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 20px, 560px);
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+        overflow: visible;
+      }
+
+      .day-column {
+        min-width: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <main class="page" aria-label="Programa&ccedil;&atilde;o experimental das atra&ccedil;&otilde;es">
+    <header class="hero">
+      <p class="eyebrow">S&atilde;o Jo&atilde;o de Amargosa 2026</p>
+      <h1>Atra&ccedil;&otilde;es</h1>
+      <p>Modelo visual para organizar os artistas confirmados por dia, com hor&aacute;rios fict&iacute;cios para teste de layout.</p>
+    </header>
+
+    <section class="schedule-grid">
+      <article class="day-column">
+        <header class="day-head">
+          <span>Sexta-feira</span>
+          <strong>19 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Jo&atilde;o Gomes</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Flor Serena</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>Del Feliz</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Trio da Huanna</strong><div class="show-meta"><span class="pill pill--time">00h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+
+      <article class="day-column">
+        <header class="day-head">
+          <span>S&aacute;bado</span>
+          <strong>20 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Elba Ramalho</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Chambinho do Acordeon</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>Santanna, O Cantador</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Arreio de Ouro</strong><div class="show-meta"><span class="pill pill--time">00h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+
+      <article class="day-column">
+        <header class="day-head">
+          <span>Domingo</span>
+          <strong>21 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Vitor Fernandes</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>K&aacute;tia Cilene</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>EstakaZero</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>J&oacute; Miranda</strong><div class="show-meta"><span class="pill pill--time">00h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+
+      <article class="day-column">
+        <header class="day-head">
+          <span>Segunda-feira</span>
+          <strong>22 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Tayrone</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Ful&ocirc; de Mandacaru</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>F&aacute;bio Carneirinho</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Adu&iacute;lio Mendes</strong><div class="show-meta"><span class="pill pill--time">00h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+
+      <article class="day-column">
+        <header class="day-head">
+          <span>Ter&ccedil;a-feira</span>
+          <strong>23 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Thiago Aquino</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Neto Brito</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Z&eacute;u Azevedo</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>Filomena Bagaceira</strong><div class="show-meta"><span class="pill pill--time">00h30</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+
+      <article class="day-column">
+        <header class="day-head">
+          <span>Quarta-feira</span>
+          <strong>24 jun</strong>
+        </header>
+        <ul class="day-list">
+          <li class="show"><strong>Fl&aacute;vio Leandro</strong><div class="show-meta"><span class="pill pill--time">20h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+          <li class="show"><strong>Gilvan Filho</strong><div class="show-meta"><span class="pill pill--time">21h30</span><span class="pill">Palco Vila Junina</span></div></li>
+          <li class="show"><strong>Vinny Magalh&atilde;es</strong><div class="show-meta"><span class="pill pill--time">23h00</span><span class="pill">Palco Gonzag&atilde;o</span></div></li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="note">Prot&oacute;tipo gr&aacute;fico: dias, hor&aacute;rios e palcos est&atilde;o distribu&iacute;dos apenas para teste visual.</p>
+  </main>
 </body>
 </html>
