@@ -4608,9 +4608,29 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
         background: #2b004c;
     }
 
-    .event-modal--attractions-day .event-modal__backdrop,
-    .event-modal--attractions-day .attractions-day-modal__close {
+    .event-modal--attractions-day .event-modal__backdrop {
         display: none;
+    }
+
+    .event-modal--attractions-day .attractions-day-modal__close {
+        top: max(0.75rem, env(safe-area-inset-top));
+        right: 0.75rem;
+        display: inline-grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(34, 215, 232, 0.46);
+        border-radius: 999px;
+        background: rgba(34, 215, 232, 0.18);
+        color: #3bdfff;
+        box-shadow: 0 14px 30px rgba(20, 0, 42, 0.28);
+        backdrop-filter: blur(6px);
+        z-index: 3;
+    }
+
+    .event-modal--attractions-day .attractions-day-modal__close .material-symbols-outlined {
+        font-size: 1.25rem;
+        line-height: 1;
     }
 
     .event-modal--attractions-day .attractions-day-modal__dialog {
