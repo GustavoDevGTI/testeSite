@@ -301,7 +301,7 @@
     const scheduleDays = [
       {
         badge: "Primeiro dia",
-        day: "19",
+        day: "13",
         shows: [
           ["19h00", "Flor Serena", "Abertura junina", "Palco Manoelito Sena"],
           ["20h15", "Del Feliz", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
@@ -313,7 +313,7 @@
       },
       {
         badge: "Segundo dia",
-        day: "20",
+        day: "14",
         shows: [
           ["19h00", "Chambinho do Acordeon", "Abertura junina", "Palco Manoelito Sena"],
           ["20h15", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco Gonzag&atilde;o"],
@@ -380,12 +380,39 @@
     const nextDay = document.querySelector("#nextDay");
     const stage = document.querySelector(".stage");
     const daySwipeMedia = window.matchMedia("(max-width: 620px)");
-    let activeDay = 0;
+    let activeDay = getInitialDayIndex();
     let swipeStartX = 0;
     let swipeStartY = 0;
     let pointerStartX = 0;
     let pointerStartY = 0;
     let lastSwipeAt = 0;
+
+    function getInitialDayIndex(currentDate = new Date()) {
+      const eventMonth = 4;
+      const eventDays = scheduleDays.map(({ day }) => Number(day));
+      const firstEventDay = Math.min(...eventDays);
+      const lastEventDay = Math.max(...eventDays);
+      const currentMonth = currentDate.getMonth();
+      const currentDay = currentDate.getDate();
+
+      if (currentMonth < eventMonth) {
+        return 0;
+      }
+
+      if (currentMonth > eventMonth) {
+        return scheduleDays.length - 1;
+      }
+
+      if (currentDay <= firstEventDay) {
+        return 0;
+      }
+
+      if (currentDay >= lastEventDay) {
+        return scheduleDays.length - 1;
+      }
+
+      return scheduleDays.findIndex(({ day }) => Number(day) === currentDay);
+    }
 
     function renderDay() {
       const currentDay = scheduleDays[activeDay];
