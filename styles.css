@@ -802,7 +802,7 @@ textarea {
     position: absolute;
     left: 0;
     right: 0;
-    top: 70%;
+    top: 72%;
     bottom: auto;
     width: 100%;
     margin: 0;
@@ -832,6 +832,20 @@ textarea {
     color: #fff7d7;
     box-shadow: 0 14px 30px rgba(25, 0, 48, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+    .hero-slide--daily-attractions {
+        --hero-image: url('public/images/atracoes-dia-banner-mobile.png');
+    }
+
+    .hero-slide--daily-attractions::before {
+        background-size: 100% 100%, cover;
+    }
+
+    .hero-slide--daily-attractions .hero-slide__content {
+        top: 75%;
+    }
 }
 
 .hero-slide--calendar {

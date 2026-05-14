@@ -96,9 +96,16 @@
       font-size: 2rem;
       font-weight: 950;
       line-height: 1;
+      padding: 0;
       box-shadow: 0 14px 30px rgba(20, 0, 42, 0.28);
       transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    .day-nav__icon {
+      display: block;
+      line-height: 1;
+      transform: translateY(-0.04em);
     }
 
     .day-nav:hover,
@@ -253,9 +260,9 @@
     <section class="day-panel">
       <span class="badge" id="dayBadge">Primeiro dia</span>
       <div class="day-switcher" aria-label="Navegar entre os dias da programa&ccedil;&atilde;o">
-        <button class="day-nav" type="button" id="previousDay" aria-label="Dia anterior">&lsaquo;</button>
+        <button class="day-nav" type="button" id="previousDay" aria-label="Dia anterior"><span class="day-nav__icon" aria-hidden="true">&lsaquo;</span></button>
         <h1 class="day-title"><span class="day-number" id="dayNumber">19</span><span class="day-month">jun</span></h1>
-        <button class="day-nav" type="button" id="nextDay" aria-label="Pr&oacute;ximo dia">&rsaquo;</button>
+        <button class="day-nav" type="button" id="nextDay" aria-label="Pr&oacute;ximo dia"><span class="day-nav__icon" aria-hidden="true">&rsaquo;</span></button>
       </div>
     </section>
 
@@ -342,7 +349,14 @@
     const lineup = document.querySelector("#lineup");
     const previousDay = document.querySelector("#previousDay");
     const nextDay = document.querySelector("#nextDay");
+    const stage = document.querySelector(".stage");
+    const daySwipeMedia = window.matchMedia("(max-width: 620px)");
     let activeDay = 0;
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let lastSwipeAt = 0;
 
     function renderDay() {
       const currentDay = scheduleDays[activeDay];
@@ -362,8 +376,57 @@
       renderDay();
     }
 
+    function trySwipeDay(deltaX, deltaY) {
+      const isHorizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.25;
+      const now = Date.now();
+
+      if (!isHorizontalSwipe || now - lastSwipeAt < 320) {
+        return;
+      }
+
+      lastSwipeAt = now;
+      changeDay(deltaX < 0 ? 1 : -1);
+    }
+
     previousDay.addEventListener("click", () => changeDay(-1));
     nextDay.addEventListener("click", () => changeDay(1));
+    stage.addEventListener("touchstart", (event) => {
+      const touch = event.touches && event.touches[0];
+
+      if (!touch || !daySwipeMedia.matches) {
+        return;
+      }
+
+      swipeStartX = touch.clientX;
+      swipeStartY = touch.clientY;
+    }, { passive: true });
+    stage.addEventListener("touchend", (event) => {
+      const touch = event.changedTouches && event.changedTouches[0];
+
+      if (!touch || !daySwipeMedia.matches) {
+        return;
+      }
+
+      const deltaX = touch.clientX - swipeStartX;
+      const deltaY = touch.clientY - swipeStartY;
+
+      trySwipeDay(deltaX, deltaY);
+    }, { passive: true });
+    stage.addEventListener("pointerdown", (event) => {
+      if (!daySwipeMedia.matches) {
+        return;
+      }
+
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+    });
+    stage.addEventListener("pointerup", (event) => {
+      if (!daySwipeMedia.matches) {
+        return;
+      }
+
+      trySwipeDay(event.clientX - pointerStartX, event.clientY - pointerStartY);
+    });
     renderDay();
   </script>
 </body>
