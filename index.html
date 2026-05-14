@@ -877,7 +877,11 @@
     </div>
 
     <div class="event-modal event-modal--attractions-day" id="attractions-day-modal" hidden>
+        <div class="event-modal__backdrop" data-attractions-day-modal-close></div>
         <div class="event-modal__dialog attractions-day-modal__dialog" role="dialog" aria-modal="true" aria-label="Atrações do Dia" tabindex="-1">
+            <button class="event-modal__close attractions-day-modal__close" type="button" data-attractions-day-modal-close aria-label="Fechar atrações do dia">
+                <span class="material-symbols-outlined">close</span>
+            </button>
             <iframe class="attractions-day-modal__frame" data-attractions-day-frame data-src="./atraçõesdia/" title="Atrações do Dia do São João de Amargosa" loading="lazy"></iframe>
         </div>
     </div>

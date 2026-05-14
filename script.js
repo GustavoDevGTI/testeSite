@@ -2616,6 +2616,14 @@ document.addEventListener('click', (event) => {
         return;
     }
 
+    const attractionsDayModalCloseTrigger = event.target.closest('[data-attractions-day-modal-close]');
+
+    if (attractionsDayModalCloseTrigger) {
+        event.preventDefault();
+        closeAttractionsDayModal();
+        return;
+    }
+
     const attractionsDayModalTrigger = event.target.closest('[data-attractions-day-modal-trigger]');
 
     if (attractionsDayModalTrigger) {
@@ -2904,6 +2912,11 @@ document.addEventListener('keydown', (event) => {
 
         if (festivalForroModal && !festivalForroModal.hidden) {
             closeFestivalForroModal();
+            return;
+        }
+
+        if (attractionsDayModal && !attractionsDayModal.hidden) {
+            closeAttractionsDayModal();
             return;
         }
 

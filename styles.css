@@ -4080,19 +4080,31 @@ body.attractions-day-modal-open {
 
 .event-modal--attractions-day {
     z-index: 13000;
-    padding: 0;
-    background: #2b004c;
+    padding: 24px;
+}
+
+.event-modal--attractions-day .event-modal__backdrop {
+    background: rgba(32, 6, 52, 0.68);
+    backdrop-filter: blur(12px);
 }
 
 .event-modal--attractions-day .attractions-day-modal__dialog {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    max-height: none;
-    border: 0;
-    border-radius: 0;
-    background: #2b004c;
-    box-shadow: none;
+    width: min(1180px, 100%);
+    height: min(860px, calc(100vh - 48px));
+    height: min(860px, calc(100dvh - 48px));
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+    overflow: hidden;
+    border: 1px solid rgba(181, 107, 214, 0.22);
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(54, 8, 95, 0.98), rgba(35, 4, 72, 0.98));
+    box-shadow: 0 32px 72px rgba(24, 0, 44, 0.36);
+}
+
+.event-modal--attractions-day .attractions-day-modal__close {
+    background: rgba(253, 249, 255, 0.82);
+    color: #6d2f91;
+    box-shadow: 0 10px 22px rgba(24, 0, 44, 0.2);
 }
 
 .attractions-day-modal__frame {
@@ -4100,6 +4112,7 @@ body.attractions-day-modal-open {
     width: 100%;
     height: 100%;
     border: 0;
+    border-radius: 28px;
     background: #2b004c;
 }
 
@@ -4568,11 +4581,36 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
 }
 
 .event-modal--attractions-day .attractions-day-modal__dialog {
-    max-height: none;
     overflow: hidden;
 }
 
 .event-modal--attractions-day .attractions-day-modal__frame {
     min-height: 0;
-    border-radius: 0;
+}
+
+@media (max-width: 768px) {
+    .event-modal--attractions-day {
+        padding: 0;
+        background: #2b004c;
+    }
+
+    .event-modal--attractions-day .event-modal__backdrop,
+    .event-modal--attractions-day .attractions-day-modal__close {
+        display: none;
+    }
+
+    .event-modal--attractions-day .attractions-day-modal__dialog {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        max-height: none;
+        border: 0;
+        border-radius: 0;
+        background: #2b004c;
+        box-shadow: none;
+    }
+
+    .event-modal--attractions-day .attractions-day-modal__frame {
+        border-radius: 0;
+    }
 }
