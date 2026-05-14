@@ -105,21 +105,21 @@
     }
 
     .day-nav__icon {
-      display: block;
-      width: 0.45em;
-      height: 0.45em;
-      border-top: 0.13em solid currentColor;
-      border-right: 0.13em solid currentColor;
-      font-size: 1.8rem;
-      line-height: 0;
+      display: grid;
+      place-items: center;
+      width: 1em;
+      height: 1em;
+      font-size: 2rem;
+      line-height: 1;
+      transform: translateY(-0.04em);
     }
 
     #previousDay .day-nav__icon {
-      transform: rotate(225deg);
+      transform: translate(-0.02em, -0.04em);
     }
 
     #nextDay .day-nav__icon {
-      transform: rotate(45deg);
+      transform: translate(0.02em, -0.04em);
     }
 
     .day-nav:hover,
