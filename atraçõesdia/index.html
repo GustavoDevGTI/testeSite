@@ -48,16 +48,17 @@
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(240px, 0.72fr) minmax(320px, 1.28fr);
+      grid-template-columns: minmax(320px, 0.82fr) minmax(420px, 1.18fr);
       align-items: center;
-      gap: clamp(22px, 5vw, 70px);
+      gap: clamp(22px, 4vw, 56px);
       padding: clamp(28px, 5vw, 70px) 0;
     }
 
     .day-panel {
       display: grid;
       gap: 1rem;
-      justify-items: start;
+      justify-items: center;
+      text-align: center;
     }
 
     .badge {
@@ -78,8 +79,9 @@
 
     .day-switcher {
       display: grid;
-      grid-template-columns: 52px minmax(0, auto) 52px;
+      grid-template-columns: 52px minmax(0, 1fr) 52px;
       align-items: center;
+      width: min(100%, 520px);
       gap: clamp(0.45rem, 2vw, 1rem);
     }
 
@@ -104,8 +106,20 @@
 
     .day-nav__icon {
       display: block;
-      line-height: 1;
-      transform: translateY(-0.04em);
+      width: 0.45em;
+      height: 0.45em;
+      border-top: 0.13em solid currentColor;
+      border-right: 0.13em solid currentColor;
+      font-size: 1.8rem;
+      line-height: 0;
+    }
+
+    #previousDay .day-nav__icon {
+      transform: rotate(225deg);
+    }
+
+    #nextDay .day-nav__icon {
+      transform: rotate(45deg);
     }
 
     .day-nav:hover,
@@ -122,8 +136,8 @@
 
     .day-title {
       margin: 0;
-      font-size: clamp(4rem, 12vw, 9.5rem);
-      line-height: 0.78;
+      font-size: clamp(4rem, 9vw, 7.25rem);
+      line-height: 0.82;
       text-align: center;
       text-shadow: 0 10px 0 rgba(94, 8, 108, 0.5), 0 30px 60px rgba(0, 0, 0, 0.28);
     }
@@ -146,7 +160,7 @@
 
     .show-card {
       display: grid;
-      grid-template-columns: 92px minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
       gap: clamp(0.8rem, 2vw, 1.25rem);
       min-height: 86px;
@@ -159,14 +173,7 @@
     }
 
     .time {
-      color: #34104e;
-      background: var(--blue);
-      border-radius: 16px;
-      padding: 0.55rem 0.65rem;
-      text-align: center;
-      font-size: 1.25rem;
-      font-weight: 950;
-      box-shadow: 0 10px 22px rgba(34, 215, 232, 0.24);
+      display: none;
     }
 
     .artist {
@@ -218,20 +225,14 @@
 
       .stage {
         width: min(100% - 20px, 520px);
-        gap: 0;
-        padding-top: 28px;
+        gap: 1.05rem;
+        padding-top: 34px;
       }
 
       .day-panel {
         width: 100%;
         gap: 0.72rem;
-        padding: 1.2rem 0.8rem 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        border-bottom: 0;
-        border-radius: 28px 28px 0 0;
-        background: linear-gradient(180deg, rgba(78, 6, 119, 0.64), rgba(64, 5, 107, 0.42));
-        box-shadow: 0 20px 58px rgba(20, 0, 42, 0.22);
-        backdrop-filter: blur(12px);
+        padding: 0 0.5rem;
       }
 
       .badge {
@@ -249,6 +250,9 @@
       .day-nav {
         width: 44px;
         height: 44px;
+      }
+
+      .day-nav__icon {
         font-size: 1.55rem;
       }
 
@@ -262,9 +266,8 @@
       }
 
       .lineup {
-        border-top: 0;
-        border-radius: 0 0 28px 28px;
-        padding: 0.45rem 0.8rem 0.9rem;
+        border-radius: 28px;
+        padding: 0.55rem 0.8rem 0.9rem;
       }
 
       .show-card {
@@ -272,10 +275,6 @@
         text-align: center;
         min-height: 0;
         padding: 1.1rem 0.55rem;
-      }
-
-      .time {
-        display: none;
       }
 
       .time,
@@ -304,72 +303,72 @@
         badge: "Primeiro dia",
         day: "19",
         shows: [
-          ["19h00", "Flor Serena", "Abertura junina", "Palco 2"],
-          ["20h15", "Del Feliz", "Forr&oacute; de palco", "Palco 1"],
-          ["21h30", "Trio da Huanna", "Arrasta-p&eacute;", "Palco 1"],
-          ["22h45", "J&oacute; Miranda", "Forr&oacute; contempor&acirc;neo", "Palco 2"],
-          ["00h00", "Jo&atilde;o Gomes", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["01h30", "Arreio de Ouro", "Encerramento", "Palco 1"]
+          ["19h00", "Flor Serena", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "Del Feliz", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
+          ["21h30", "Trio da Huanna", "Arrasta-p&eacute;", "Palco Gonzag&atilde;o"],
+          ["22h45", "J&oacute; Miranda", "Forr&oacute; contempor&acirc;neo", "Palco Manoelito Sena"],
+          ["00h00", "Jo&atilde;o Gomes", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["01h30", "Arreio de Ouro", "Encerramento", "Palco Gonzag&atilde;o"]
         ]
       },
       {
         badge: "Segundo dia",
         day: "20",
         shows: [
-          ["19h00", "Chambinho do Acordeon", "Abertura junina", "Palco 2"],
-          ["20h15", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco 1"],
-          ["21h30", "Elba Ramalho", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["22h45", "Flor Serena", "Forr&oacute; de palco", "Palco 2"],
-          ["00h00", "Arreio de Ouro", "Arrasta-p&eacute;", "Palco 1"],
-          ["01h30", "Del Feliz", "Encerramento", "Palco 1"]
+          ["19h00", "Chambinho do Acordeon", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco Gonzag&atilde;o"],
+          ["21h30", "Elba Ramalho", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["22h45", "Flor Serena", "Forr&oacute; de palco", "Palco Manoelito Sena"],
+          ["00h00", "Arreio de Ouro", "Arrasta-p&eacute;", "Palco Gonzag&atilde;o"],
+          ["01h30", "Del Feliz", "Encerramento", "Palco Gonzag&atilde;o"]
         ]
       },
       {
         badge: "Terceiro dia",
         day: "21",
         shows: [
-          ["19h00", "K&aacute;tia Cilene", "Abertura junina", "Palco 2"],
-          ["20h15", "EstakaZero", "Forr&oacute; das antigas", "Palco 1"],
-          ["21h30", "Vitor Fernandes", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["22h45", "J&oacute; Miranda", "Forr&oacute; contempor&acirc;neo", "Palco 2"],
-          ["00h00", "Trio da Huanna", "Arrasta-p&eacute;", "Palco 1"],
-          ["01h30", "Flor Serena", "Encerramento", "Palco 2"]
+          ["19h00", "K&aacute;tia Cilene", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "EstakaZero", "Forr&oacute; das antigas", "Palco Gonzag&atilde;o"],
+          ["21h30", "Vitor Fernandes", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["22h45", "J&oacute; Miranda", "Forr&oacute; contempor&acirc;neo", "Palco Manoelito Sena"],
+          ["00h00", "Trio da Huanna", "Arrasta-p&eacute;", "Palco Gonzag&atilde;o"],
+          ["01h30", "Flor Serena", "Encerramento", "Palco Manoelito Sena"]
         ]
       },
       {
         badge: "Quarto dia",
         day: "22",
         shows: [
-          ["19h00", "Ful&ocirc; de Mandacaru", "Abertura junina", "Palco 2"],
-          ["20h15", "F&aacute;bio Carneirinho", "Forr&oacute; de palco", "Palco 1"],
-          ["21h30", "Tayrone", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["22h45", "Adu&iacute;lio Mendes", "Forr&oacute; rom&acirc;ntico", "Palco 1"],
-          ["00h00", "Del Feliz", "Arrasta-p&eacute;", "Palco 2"],
-          ["01h30", "Arreio de Ouro", "Encerramento", "Palco 1"]
+          ["19h00", "Ful&ocirc; de Mandacaru", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "F&aacute;bio Carneirinho", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
+          ["21h30", "Tayrone", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["22h45", "Adu&iacute;lio Mendes", "Forr&oacute; rom&acirc;ntico", "Palco Gonzag&atilde;o"],
+          ["00h00", "Del Feliz", "Arrasta-p&eacute;", "Palco Manoelito Sena"],
+          ["01h30", "Arreio de Ouro", "Encerramento", "Palco Gonzag&atilde;o"]
         ]
       },
       {
         badge: "Quinto dia",
         day: "23",
         shows: [
-          ["19h00", "Z&eacute;u Azevedo", "Abertura junina", "Palco 2"],
-          ["20h15", "Neto Brito", "Forr&oacute; de palco", "Palco 1"],
-          ["21h30", "Thiago Aquino", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["22h45", "Filomena Bagaceira", "Forr&oacute; irreverente", "Palco 1"],
-          ["00h00", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco 2"],
-          ["01h30", "Trio da Huanna", "Encerramento", "Palco 1"]
+          ["19h00", "Z&eacute;u Azevedo", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "Neto Brito", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
+          ["21h30", "Thiago Aquino", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["22h45", "Filomena Bagaceira", "Forr&oacute; irreverente", "Palco Gonzag&atilde;o"],
+          ["00h00", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco Manoelito Sena"],
+          ["01h30", "Trio da Huanna", "Encerramento", "Palco Gonzag&atilde;o"]
         ]
       },
       {
         badge: "Sexto dia",
         day: "24",
         shows: [
-          ["19h00", "Gilvan Filho", "Abertura junina", "Palco 2"],
-          ["20h15", "Vinny Magalh&atilde;es", "Forr&oacute; de palco", "Palco 1"],
-          ["21h30", "Fl&aacute;vio Leandro", "Atra&ccedil;&atilde;o principal", "Palco 1"],
-          ["22h45", "K&aacute;tia Cilene", "Forr&oacute; das antigas", "Palco 2"],
-          ["00h00", "F&aacute;bio Carneirinho", "Arrasta-p&eacute;", "Palco 1"],
-          ["01h30", "Flor Serena", "Encerramento", "Palco 2"]
+          ["19h00", "Gilvan Filho", "Abertura junina", "Palco Manoelito Sena"],
+          ["20h15", "Vinny Magalh&atilde;es", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
+          ["21h30", "Fl&aacute;vio Leandro", "Atra&ccedil;&atilde;o principal", "Palco Gonzag&atilde;o"],
+          ["22h45", "K&aacute;tia Cilene", "Forr&oacute; das antigas", "Palco Manoelito Sena"],
+          ["00h00", "F&aacute;bio Carneirinho", "Arrasta-p&eacute;", "Palco Gonzag&atilde;o"],
+          ["01h30", "Flor Serena", "Encerramento", "Palco Manoelito Sena"]
         ]
       }
     ];
@@ -392,9 +391,8 @@
       const currentDay = scheduleDays[activeDay];
       dayBadge.textContent = currentDay.badge;
       dayNumber.textContent = currentDay.day;
-      lineup.innerHTML = currentDay.shows.map(([time, artist, description, stage]) => `
+      lineup.innerHTML = currentDay.shows.map(([, artist, description, stage]) => `
         <article class="show-card">
-          <span class="time">${time}</span>
           <div class="artist"><strong>${artist}</strong><span>${description}</span></div>
           <span class="stage-name">${stage}</span>
         </article>
