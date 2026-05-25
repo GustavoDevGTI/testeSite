@@ -301,7 +301,7 @@
     const scheduleDays = [
       {
         badge: "Primeiro dia",
-        day: "13",
+        day: "19",
         shows: [
           ["19h00", "Flor Serena", "Abertura junina", "Palco Manoelito Sena"],
           ["20h15", "Del Feliz", "Forr&oacute; de palco", "Palco Gonzag&atilde;o"],
@@ -313,7 +313,7 @@
       },
       {
         badge: "Segundo dia",
-        day: "14",
+        day: "20",
         shows: [
           ["19h00", "Chambinho do Acordeon", "Abertura junina", "Palco Manoelito Sena"],
           ["20h15", "Santanna, O Cantador", "Forr&oacute; tradicional", "Palco Gonzag&atilde;o"],
@@ -388,7 +388,7 @@
     let lastSwipeAt = 0;
 
     function getInitialDayIndex(currentDate = new Date()) {
-      const eventMonth = 4;
+      const eventMonth = 5;
       const eventDays = scheduleDays.map(({ day }) => Number(day));
       const firstEventDay = Math.min(...eventDays);
       const lastEventDay = Math.max(...eventDays);

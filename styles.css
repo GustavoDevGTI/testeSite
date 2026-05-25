@@ -791,7 +791,7 @@ textarea {
 }
 
 .hero-slide--daily-attractions::before {
-    background-size: 100% 100%, 100% 100%;
+    background-size: cover, cover;
 }
 
 .hero-slide--daily-attractions::after {
