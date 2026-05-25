@@ -805,7 +805,7 @@ textarea {
     top: 52%;
     bottom: auto;
     width: min(1120px, calc(100% - 80px));
-    margin: 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
