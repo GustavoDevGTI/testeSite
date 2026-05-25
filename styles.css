@@ -835,16 +835,18 @@ textarea {
 }
 
 @media (max-width: 768px) {
-    .hero-slide--daily-attractions {
-        --hero-image: url('public/images/atracoes-dia-banner-mobile.png');
-    }
-
     .hero-slide--daily-attractions::before {
         background-size: 100% 100%, cover;
     }
 
     .hero-slide--daily-attractions .hero-slide__content {
         top: 75%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-slide--daily-attractions {
+        --hero-image: url('public/images/atracoes-dia-banner-mobile.png');
     }
 }
 
