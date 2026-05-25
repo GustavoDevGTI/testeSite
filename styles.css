@@ -802,18 +802,20 @@ textarea {
     position: absolute;
     left: 0;
     right: 0;
-    top: 72%;
+    top: 52%;
     bottom: auto;
-    width: 100%;
+    width: min(1120px, calc(100% - 80px));
     margin: 0;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: clamp(1.35rem, 3.4vw, 2.35rem);
     text-align: center;
     transform: translateY(-50%);
 }
 
 .hero-slide--daily-attractions .hero-slide__eyebrow,
-.hero-slide--daily-attractions .hero-slide__title,
 .hero-slide--daily-attractions .hero-slide__text {
     position: absolute;
     width: 1px;
@@ -824,9 +826,20 @@ textarea {
     white-space: nowrap;
 }
 
+.hero-slide--daily-attractions .hero-slide__title {
+    width: min(100%, 980px);
+    margin: 0;
+    color: #fff7d7;
+    font-size: clamp(3.4rem, 7.2vw, 6.6rem);
+    line-height: 0.94;
+    text-wrap: balance;
+    text-shadow: 0 10px 0 rgba(64, 0, 94, 0.34), 0 18px 34px rgba(31, 0, 58, 0.32);
+}
+
 .hero-slide--daily-attractions .hero-slide__action {
     min-width: 130px;
     justify-content: center;
+    transform: translateY(clamp(0.25rem, 0.9vw, 0.7rem));
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.32);
     color: #fff7d7;
@@ -840,7 +853,14 @@ textarea {
     }
 
     .hero-slide--daily-attractions .hero-slide__content {
-        top: 75%;
+        top: 58%;
+        width: min(100% - 32px, 640px);
+        gap: clamp(1rem, 4.8vw, 1.75rem);
+    }
+
+    .hero-slide--daily-attractions .hero-slide__title {
+        max-width: min(100%, 8.6ch);
+        font-size: clamp(2.55rem, 11.8vw, 4.35rem);
     }
 }
 
@@ -4577,8 +4597,8 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
 
 @media (max-width: 768px) {
     .hero-slide--daily-attractions .hero-slide__content {
-        width: calc(100% - 28px);
-        margin: 0 auto 76px;
+        width: min(100% - 32px, 640px);
+        margin: 0 auto;
     }
 
     .hero-slide--daily-attractions .hero-slide__eyebrow {
@@ -4587,7 +4607,7 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
     }
 
     .hero-slide--daily-attractions .hero-slide__title {
-        font-size: clamp(2.7rem, 17vw, 5.6rem);
+        font-size: clamp(2.55rem, 11.8vw, 4.35rem);
     }
 
     .hero-slide--daily-attractions .hero-slide__text {
