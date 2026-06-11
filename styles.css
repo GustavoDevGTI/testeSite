@@ -791,7 +791,9 @@ textarea {
 }
 
 .hero-slide--daily-attractions::before {
-    background-size: cover, cover;
+    background-color: #fff;
+    background-size: 100% auto, 100% auto;
+    background-position: center center;
 }
 
 .hero-slide--daily-attractions::after {
@@ -802,7 +804,7 @@ textarea {
     position: absolute;
     left: 0;
     right: 0;
-    top: 52%;
+    top: 40%;
     bottom: auto;
     width: min(1120px, calc(100% - 80px));
     margin: 0 auto;
@@ -810,7 +812,7 @@ textarea {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(1.35rem, 3.4vw, 2.35rem);
+    gap: clamp(0.8rem, 1.8vw, 1.35rem);
     text-align: center;
     transform: translateY(-50%);
 }
@@ -827,10 +829,10 @@ textarea {
 }
 
 .hero-slide--daily-attractions .hero-slide__title {
-    width: min(100%, 980px);
+    width: min(100%, 900px);
     margin: 0;
     color: #fff7d7;
-    font-size: clamp(3.4rem, 7.2vw, 6.6rem);
+    font-size: clamp(3rem, 6.4vw, 5.65rem);
     line-height: 0.94;
     text-wrap: balance;
     text-shadow: 0 10px 0 rgba(64, 0, 94, 0.34), 0 18px 34px rgba(31, 0, 58, 0.32);
@@ -839,7 +841,7 @@ textarea {
 .hero-slide--daily-attractions .hero-slide__action {
     min-width: 130px;
     justify-content: center;
-    transform: translateY(clamp(0.25rem, 0.9vw, 0.7rem));
+    transform: none;
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.32);
     color: #fff7d7;
@@ -849,24 +851,30 @@ textarea {
 
 @media (max-width: 768px) {
     .hero-slide--daily-attractions::before {
-        background-size: 100% 100%, cover;
+        background-size: auto 100%, auto 100%;
+        background-position: center center;
     }
 
     .hero-slide--daily-attractions .hero-slide__content {
-        top: 58%;
+        top: 40%;
         width: min(100% - 32px, 640px);
-        gap: clamp(1rem, 4.8vw, 1.75rem);
+        gap: clamp(0.7rem, 2.8vw, 1.1rem);
     }
 
     .hero-slide--daily-attractions .hero-slide__title {
-        max-width: min(100%, 8.6ch);
-        font-size: clamp(2.55rem, 11.8vw, 4.35rem);
+        max-width: min(100%, 9.5ch);
+        font-size: clamp(2.35rem, 10.4vw, 3.8rem);
     }
 }
 
 @media (max-width: 480px) {
     .hero-slide--daily-attractions {
         --hero-image: url('public/images/atracoes-dia-banner-mobile.png');
+    }
+
+    .hero-slide--daily-attractions::before {
+        background-size: cover, cover;
+        background-position: center top;
     }
 }
 
@@ -4607,7 +4615,7 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
     }
 
     .hero-slide--daily-attractions .hero-slide__title {
-        font-size: clamp(2.55rem, 11.8vw, 4.35rem);
+        font-size: clamp(2.35rem, 10.4vw, 3.8rem);
     }
 
     .hero-slide--daily-attractions .hero-slide__text {

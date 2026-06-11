@@ -226,7 +226,11 @@
       .stage {
         width: min(100% - 20px, 520px);
         gap: 1.05rem;
-        padding-top: 34px;
+        min-height: 100vh;
+        min-height: 100dvh;
+        align-content: start;
+        padding-top: clamp(142px, 24vh, 190px);
+        padding-bottom: clamp(128px, 18vh, 168px);
       }
 
       .day-panel {
@@ -268,6 +272,7 @@
       .lineup {
         border-radius: 28px;
         padding: 0.55rem 0.8rem 0.9rem;
+        background: linear-gradient(180deg, rgba(78, 6, 119, 0.5), rgba(33, 0, 68, 0.28));
       }
 
       .show-card {
