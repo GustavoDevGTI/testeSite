@@ -433,12 +433,16 @@
       const currentDay = scheduleDays[activeDay];
       dayBadge.textContent = currentDay.badge;
       dayNumber.textContent = currentDay.day;
-      lineup.innerHTML = currentDay.shows.map(([, artist, description, stage]) => `
-        <article class="show-card">
-          <div class="artist"><strong>${artist}</strong><span>${description}</span></div>
-          <span class="stage-name">${stage}</span>
-        </article>
-      `).join("");
+      lineup.innerHTML = currentDay.shows.map(([, artist, description, stage]) => {
+        const descriptionMarkup = description === "Programa&ccedil;&atilde;o oficial" ? "" : `<span>${description}</span>`;
+
+        return `
+          <article class="show-card">
+            <div class="artist"><strong>${artist}</strong>${descriptionMarkup}</div>
+            <span class="stage-name">${stage}</span>
+          </article>
+        `;
+      }).join("");
     }
 
     function changeDay(direction) {
