@@ -435,7 +435,8 @@
       dayBadge.textContent = currentDay.badge;
       dayNumber.textContent = currentDay.day;
       lineup.innerHTML = currentDay.shows.map(([, artist, description, stage]) => {
-        const descriptionMarkup = description === "Programa&ccedil;&atilde;o oficial" ? "" : `<span>${description}</span>`;
+        const hiddenDescriptions = ["Programa&ccedil;&atilde;o oficial", "Transmiss&atilde;o especial"];
+        const descriptionMarkup = hiddenDescriptions.includes(description) ? "" : `<span>${description}</span>`;
 
         return `
           <article class="show-card">
