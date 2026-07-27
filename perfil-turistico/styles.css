@@ -39,7 +39,6 @@ a {
     padding: 0 1.5rem 3rem;
 }
 
-.profile-hero,
 .profile-section {
     border: 1px solid var(--profile-border);
     border-radius: 18px;
@@ -47,51 +46,9 @@ a {
     box-shadow: var(--profile-shadow);
 }
 
-.profile-hero {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    margin: 0 -1.5rem;
-    padding: 3rem 2.5rem;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    color: #f4fffb;
-    background:
-        radial-gradient(circle at 12% 10%, rgba(213, 177, 76, 0.28), transparent 30%),
-        linear-gradient(135deg, #0b5d4b, #339a80);
-}
-
-.profile-hero > div {
-    max-width: 780px;
-}
-
-.profile-hero h1,
 .profile-section h2,
 .certificate-card h3 {
     margin: 0;
-}
-
-.profile-hero h1 {
-    margin-top: 0.7rem;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.05;
-}
-
-.profile-hero p {
-    max-width: 68ch;
-    margin: 1rem 0 0;
-    color: rgba(244, 255, 251, 0.9);
-    font-size: 1.05rem;
-    line-height: 1.7;
-}
-
-.profile-hero__seal {
-    flex: 0 0 auto;
-    font-size: clamp(5rem, 10vw, 8rem);
-    color: #f5db7e;
-    font-variation-settings: 'FILL' 1;
 }
 
 .profile-eyebrow {
@@ -108,14 +65,13 @@ a {
     text-transform: uppercase;
 }
 
-.profile-hero .profile-eyebrow {
-    background: rgba(255, 255, 255, 0.16);
-    color: #fff4bf;
-}
-
 .profile-section {
     margin-top: 1.25rem;
     padding: 2rem;
+}
+
+.profile-shell > .profile-section:first-child {
+    margin-top: 0;
 }
 
 .profile-section__heading {
@@ -380,16 +336,6 @@ a {
         padding: 0 1rem 2rem;
     }
 
-    .profile-hero {
-        align-items: flex-start;
-        margin: 0 -1rem;
-        padding: 2rem 1.5rem;
-    }
-
-    .profile-hero__seal {
-        font-size: 4rem;
-    }
-
     .profile-section {
         padding: 1.3rem;
     }
@@ -414,14 +360,6 @@ a {
 }
 
 @media (max-width: 560px) {
-    .profile-hero {
-        gap: 0.8rem;
-    }
-
-    .profile-hero__seal {
-        display: none;
-    }
-
     .profile-location__facts {
         grid-template-columns: 1fr;
     }
