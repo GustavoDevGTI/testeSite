@@ -1704,11 +1704,12 @@ section h2::after {
 
 .tourism-profile-card {
     width: 100%;
+    min-height: 158px;
     margin-top: 1.35rem;
-    padding: 1.2rem 1.35rem;
+    padding: 1.75rem 1.6rem;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: center;
     border: 1px solid rgba(15, 111, 90, 0.16);
     border-radius: 12px;
@@ -1731,16 +1732,18 @@ section h2::after {
 }
 
 .tourism-profile-card:focus-visible {
-    outline: 3px solid rgba(51, 154, 128, 0.2);
-    outline-offset: 4px;
+    outline: none;
+    box-shadow:
+        inset 0 0 0 3px rgba(51, 154, 128, 0.24),
+        0 20px 38px rgba(15, 75, 62, 0.16);
 }
 
 .tourism-profile-card__icon {
     display: grid;
     place-items: center;
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
+    width: 66px;
+    height: 66px;
+    border-radius: 18px;
     background: linear-gradient(135deg, #0f6f5a, #339a80);
     color: #fff;
     font-size: 2rem;
@@ -2490,12 +2493,14 @@ section h2::after {
 }
 
 .event-modal--perfil-turistico .event-modal__frame-shell {
+    padding: 0;
     background: linear-gradient(180deg, rgba(247, 255, 252, 0.98), rgba(230, 248, 243, 0.98));
 }
 
 .event-modal--perfil-turistico .event-modal__frame {
+    border-radius: 0;
     background: #f1fbf7;
-    box-shadow: inset 0 0 0 1px rgba(15, 111, 90, 0.08);
+    box-shadow: none;
 }
 
 .event-modal--contact .event-modal__dialog {
@@ -3544,9 +3549,10 @@ section h2::after {
 
     .tourism-profile-card {
         width: calc(100% - 32px);
+        min-height: 174px;
         margin: 1rem 16px 0;
         grid-template-columns: auto minmax(0, 1fr);
-        padding: 1rem;
+        padding: 1.35rem 1.15rem;
     }
 
     .tourism-profile-card__action {
@@ -4167,6 +4173,12 @@ body.modo_escuro .tourism-profile-card {
         linear-gradient(135deg, rgba(19, 30, 27, 0.98), rgba(14, 40, 33, 0.98));
     color: #edf5f2;
     box-shadow: var(--shadow);
+}
+
+body.modo_escuro .tourism-profile-card:focus-visible {
+    box-shadow:
+        inset 0 0 0 3px rgba(116, 217, 188, 0.3),
+        var(--shadow);
 }
 
 body.modo_escuro .tourism-profile-card__content strong,
