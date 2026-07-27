@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260428-0945">
+    <link rel="stylesheet" href="styles.css?v=20260727-01">
 </head>
 <body>
     <nav class="topo-prefeitura" aria-label="Cabeçalho principal">
@@ -599,6 +599,25 @@
                     <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
                 </a>
             </div>
+
+            <button
+                class="tourism-profile-card"
+                type="button"
+                data-perfil-turistico-modal-trigger
+                aria-haspopup="dialog"
+                aria-controls="perfil-turistico-modal"
+            >
+                <span class="tourism-profile-card__icon material-symbols-outlined" aria-hidden="true">verified</span>
+                <span class="tourism-profile-card__content">
+                    <span class="tourism-profile-card__eyebrow">Conhe&ccedil;a Amargosa</span>
+                    <strong>Perfil Tur&iacute;stico</strong>
+                    <span>Localiza&ccedil;&atilde;o, certifica&ccedil;&otilde;es oficiais e governan&ccedil;a do turismo municipal.</span>
+                </span>
+                <span class="tourism-profile-card__action">
+                    Ver perfil
+                    <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </span>
+            </button>
         </div>
     </section>
 
@@ -838,6 +857,41 @@
         </div>
     </div>
 
+    <div class="event-modal event-modal--perfil-turistico" id="perfil-turistico-modal" hidden>
+        <div class="event-modal__backdrop" data-perfil-turistico-modal-close></div>
+        <div class="event-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="perfil-turistico-modal-title">
+            <button class="event-modal__close" type="button" data-perfil-turistico-modal-close aria-label="Fechar Perfil Tur&iacute;stico">
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+
+            <div class="event-modal__content">
+                <div class="event-modal__intro">
+                    <span class="event-modal__eyebrow">Perfil Tur&iacute;stico</span>
+                    <h3 id="perfil-turistico-modal-title">Amargosa no Mapa do Turismo Brasileiro</h3>
+                    <p class="event-modal__lead">Conhe&ccedil;a a localiza&ccedil;&atilde;o, as certifica&ccedil;&otilde;es oficiais e a governan&ccedil;a que fortalecem o turismo do munic&iacute;pio.</p>
+                    <p class="event-modal__copy">Amargosa integra o Programa de Regionaliza&ccedil;&atilde;o do Turismo e conta com Conselho Municipal de Turismo ativo.</p>
+
+                    <div class="event-modal__actions event-modal__actions--shareable">
+                        <a class="event-modal__action" href="./perfil-turistico/" target="_blank" rel="noopener noreferrer">Abrir p&aacute;gina completa</a>
+                        <button class="event-modal__action event-modal__action--secondary event-modal__action--share" type="button" data-event-share data-share-title="Perfil Tur&iacute;stico de Amargosa" data-share-url="https://turismo.amargosa.ba.gov.br/perfil-turistico/">
+                            <span class="material-symbols-outlined" aria-hidden="true">share</span>
+                            <span>Compartilhar</span>
+                        </button>
+                    </div>
+
+                    <div class="event-modal__notice" role="note" aria-label="Documentos oficiais do turismo">
+                        <p class="event-modal__notice-title"><strong>Documentos oficiais</strong></p>
+                        <p>Os certificados apresentados foram emitidos pelo Minist&eacute;rio do Turismo por meio do Programa de Regionaliza&ccedil;&atilde;o do Turismo.</p>
+                    </div>
+                </div>
+
+                <div class="event-modal__frame-shell">
+                    <iframe class="event-modal__frame" data-src="./perfil-turistico/" title="Perfil Tur&iacute;stico de Amargosa" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="event-modal event-modal--guia" id="guia-modal" hidden>
         <div class="event-modal__backdrop" data-guia-modal-close></div>
         <div class="event-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="guia-modal-title">
@@ -924,7 +978,7 @@
         <span class="amanda-help-widget__avatar" aria-hidden="true"></span>
     </a>
 
-    <script src="script.js?v=20260428-0920"></script>
+    <script src="script.js?v=20260727-01"></script>
     <div vw class="enabled" data-vlibras-widget>
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>

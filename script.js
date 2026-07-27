@@ -62,6 +62,9 @@ const saoJoaoModalTriggers = Array.from(document.querySelectorAll('[data-sao-joa
 const festivalForroModal = document.querySelector('#festival-forro-modal');
 const festivalForroModalCloseButton = festivalForroModal?.querySelector('.event-modal__close');
 const festivalForroModalTriggers = Array.from(document.querySelectorAll('[data-festival-forro-modal-trigger]'));
+const perfilTuristicoModal = document.querySelector('#perfil-turistico-modal');
+const perfilTuristicoModalCloseButton = perfilTuristicoModal?.querySelector('.event-modal__close');
+const perfilTuristicoModalTriggers = Array.from(document.querySelectorAll('[data-perfil-turistico-modal-trigger]'));
 const attractionsDayModal = document.querySelector('#attractions-day-modal');
 const attractionsDayModalDialog = attractionsDayModal?.querySelector('.attractions-day-modal__dialog');
 const attractionsDayModalFrame = attractionsDayModal?.querySelector('[data-attractions-day-frame]');
@@ -74,6 +77,7 @@ const contactModalActions = document.querySelector('#contact-modal-actions');
 const carnavalCulturalModalFrame = carnavalCulturalModal?.querySelector('.event-modal__frame');
 const saoJoaoModalFrame = saoJoaoModal?.querySelector('.event-modal__frame');
 const festivalForroModalFrame = festivalForroModal?.querySelector('.event-modal__frame');
+const perfilTuristicoModalFrame = perfilTuristicoModal?.querySelector('.event-modal__frame');
 const guiaModalFrame = guiaModal?.querySelector('[data-guia-frame]');
 const guiaModalPrimaryAction = guiaModal?.querySelector('[data-guia-open-link]');
 const guiaModalMapAction = guiaModal?.querySelector('[data-guia-map-link]');
@@ -156,6 +160,7 @@ let lastGalleryTrigger = null;
 let lastCarnavalCulturalModalTrigger = null;
 let lastSaoJoaoModalTrigger = null;
 let lastFestivalForroModalTrigger = null;
+let lastPerfilTuristicoModalTrigger = null;
 let lastAttractionsDayModalTrigger = null;
 let lastGuiaModalTrigger = null;
 let lastContactModalTrigger = null;
@@ -1704,6 +1709,10 @@ function getVisibleBrowserModal() {
         return { id: 'festival-forro-modal', close: closeFestivalForroModal };
     }
 
+    if (perfilTuristicoModal && !perfilTuristicoModal.hidden) {
+        return { id: 'perfil-turistico-modal', close: closePerfilTuristicoModal };
+    }
+
     if (attractionsDayModal && !attractionsDayModal.hidden) {
         return { id: 'attractions-day-modal', close: closeAttractionsDayModal };
     }
@@ -1813,7 +1822,8 @@ function syncEventModalFrameHeights() {
 
         const isPrimaryEventFrame = frame === carnavalCulturalModalFrame
             || frame === saoJoaoModalFrame
-            || frame === festivalForroModalFrame;
+            || frame === festivalForroModalFrame
+            || frame === perfilTuristicoModalFrame;
         const mobileFrameHeight = isPrimaryEventFrame
             ? Math.max(620, window.innerHeight - 32)
             : Math.max(360, Math.min(window.innerHeight * 0.62, 640));
@@ -1885,6 +1895,7 @@ function closeOpenEventModals() {
     closeCarnavalCulturalModal({ skipHistory: true });
     closeSaoJoaoModal({ skipHistory: true });
     closeFestivalForroModal({ skipHistory: true });
+    closePerfilTuristicoModal({ skipHistory: true });
     closeAttractionsDayModal({ skipHistory: true });
     closeGuiaModal({ skipHistory: true });
 }
@@ -1934,6 +1945,11 @@ function openEventModalByKey(eventKey, trigger = null) {
 
     if (eventKey === 'festival-de-forro') {
         openFestivalForroModal(trigger);
+        return;
+    }
+
+    if (eventKey === 'perfil-turistico') {
+        openPerfilTuristicoModal(trigger);
         return;
     }
 
@@ -2082,6 +2098,38 @@ function closeFestivalForroModal(options = {}) {
     body.classList.remove('festival-forro-modal-open');
     activeBrowserModalId = null;
     lastFestivalForroModalTrigger?.focus?.();
+}
+
+function openPerfilTuristicoModal(trigger = null) {
+    if (!perfilTuristicoModal) {
+        return;
+    }
+
+    if (trigger instanceof Element && !perfilTuristicoModal.contains(trigger)) {
+        lastPerfilTuristicoModalTrigger = trigger;
+    }
+
+    ensureIframeLoaded(perfilTuristicoModalFrame);
+    perfilTuristicoModal.hidden = false;
+    body.classList.add('perfil-turistico-modal-open');
+    syncBrowserHistoryOnModalOpen('perfil-turistico-modal');
+    perfilTuristicoModalCloseButton?.focus();
+    queueEventModalFrameSync();
+}
+
+function closePerfilTuristicoModal(options = {}) {
+    if (!perfilTuristicoModal || perfilTuristicoModal.hidden) {
+        return;
+    }
+
+    if (shouldCloseModalViaBrowserBack('perfil-turistico-modal', options)) {
+        return;
+    }
+
+    perfilTuristicoModal.hidden = true;
+    body.classList.remove('perfil-turistico-modal-open');
+    activeBrowserModalId = null;
+    lastPerfilTuristicoModalTrigger?.focus?.();
 }
 
 function openAttractionsDayModal(trigger = null) {
@@ -2330,6 +2378,28 @@ function initFestivalForroModal() {
     });
 }
 
+function initPerfilTuristicoModal() {
+    if (!perfilTuristicoModal || !perfilTuristicoModalTriggers.length) {
+        return;
+    }
+
+    perfilTuristicoModalTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+            openPerfilTuristicoModal(trigger);
+        });
+    });
+
+    perfilTuristicoModal.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) {
+            return;
+        }
+
+        if (event.target.closest('[data-perfil-turistico-modal-close]')) {
+            closePerfilTuristicoModal();
+        }
+    });
+}
+
 function initGuiaModal() {
     if (!guiaModal) {
         return;
@@ -2383,6 +2453,7 @@ window.addEventListener('message', (event) => {
             visibleModal?.id === 'carnaval-cultural-modal'
             || visibleModal?.id === 'sao-joao-modal'
             || visibleModal?.id === 'festival-forro-modal'
+            || visibleModal?.id === 'perfil-turistico-modal'
             || visibleModal?.id === 'guia-modal'
         ) {
             visibleModal.close();
@@ -2841,6 +2912,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initCarnavalCulturalModal();
     initSaoJoaoModal();
     initFestivalForroModal();
+    initPerfilTuristicoModal();
     initGuiaModal();
     await initEventGalleryButtons();
     await handleGalleryDeepLink();
@@ -2912,6 +2984,11 @@ document.addEventListener('keydown', (event) => {
 
         if (festivalForroModal && !festivalForroModal.hidden) {
             closeFestivalForroModal();
+            return;
+        }
+
+        if (perfilTuristicoModal && !perfilTuristicoModal.hidden) {
+            closePerfilTuristicoModal();
             return;
         }
 
