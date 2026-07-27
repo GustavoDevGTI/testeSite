@@ -181,6 +181,46 @@ a {
     font-weight: 700;
 }
 
+.profile-official-map {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.4rem;
+    background:
+        radial-gradient(circle at 90% 10%, rgba(213, 177, 76, 0.17), transparent 26%),
+        var(--profile-surface);
+}
+
+.profile-official-map__icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--profile-primary), var(--profile-secondary));
+    color: #fff;
+    font-size: 2.2rem;
+    font-variation-settings: 'FILL' 1;
+}
+
+.profile-official-map h2 {
+    margin-top: 0.6rem;
+    color: var(--profile-primary);
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+    line-height: 1.12;
+}
+
+.profile-official-map p {
+    margin: 0.7rem 0 0;
+    color: var(--profile-muted);
+    line-height: 1.65;
+}
+
+.profile-official-map__action {
+    margin: 0;
+    white-space: nowrap;
+}
+
 .profile-button {
     display: inline-flex;
     align-items: center;
@@ -359,6 +399,15 @@ a {
         grid-template-columns: 1fr;
     }
 
+    .profile-official-map {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .profile-official-map__action {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
     .certificate-card__content {
         padding: 1.25rem;
     }
@@ -381,7 +430,16 @@ a {
         grid-template-columns: 1fr;
     }
 
+    .profile-official-map {
+        grid-template-columns: 1fr;
+    }
+
     .profile-council__icon {
+        width: 58px;
+        height: 58px;
+    }
+
+    .profile-official-map__icon {
         width: 58px;
         height: 58px;
     }
