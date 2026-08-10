@@ -70,7 +70,11 @@ a {
 
 .profile-shell > .profile-section:first-child {
     margin-top: 0;
-    padding-top: 4.75rem;
+    padding-top: 2rem;
+}
+
+.profile-shell > .profile-section:first-child .profile-section__heading {
+    padding-right: 3.5rem;
 }
 
 .profile-section__heading {
