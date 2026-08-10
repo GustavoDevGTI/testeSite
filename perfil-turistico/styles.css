@@ -52,16 +52,14 @@ a {
 }
 
 .profile-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    padding: 0.42rem 0.8rem;
-    border-radius: 999px;
-    background: rgba(15, 111, 90, 0.1);
+    display: block;
+    padding: 0;
+    background: transparent;
     color: var(--profile-primary);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.08em;
+    line-height: 1.35;
     text-transform: uppercase;
 }
 

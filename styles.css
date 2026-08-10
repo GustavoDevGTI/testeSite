@@ -2421,9 +2421,16 @@ section h2::after {
 }
 
 .event-modal--perfil-turistico .event-modal__dialog {
+    height: min(900px, calc(100vh - 48px));
+    height: min(900px, calc(100dvh - 48px));
     border-color: rgba(51, 154, 128, 0.22);
     background: linear-gradient(180deg, rgba(247, 255, 252, 0.98), rgba(230, 248, 243, 0.98));
     box-shadow: 0 32px 72px rgba(7, 45, 37, 0.3);
+}
+
+.event-modal--perfil-turistico .event-modal__content {
+    height: 100%;
+    min-height: 0;
 }
 
 .event-modal--perfil-turistico .event-modal__close {
@@ -2440,6 +2447,9 @@ section h2::after {
 }
 
 .event-modal--perfil-turistico .event-modal__intro {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background:
         radial-gradient(circle at 14% 8%, rgba(213, 177, 76, 0.3), transparent 30%),
         linear-gradient(180deg, rgba(11, 93, 75, 0.98), rgba(51, 154, 128, 0.94));
@@ -2451,8 +2461,11 @@ section h2::after {
 }
 
 .event-modal--perfil-turistico .event-modal__eyebrow {
-    background: rgba(255, 255, 255, 0.17);
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
     color: #fff1b9;
+    line-height: 1.25;
 }
 
 .event-modal--perfil-turistico .event-modal__lead,
@@ -2493,11 +2506,13 @@ section h2::after {
 }
 
 .event-modal--perfil-turistico .event-modal__frame-shell {
+    min-height: 0;
     padding: 0;
     background: linear-gradient(180deg, rgba(247, 255, 252, 0.98), rgba(230, 248, 243, 0.98));
 }
 
 .event-modal--perfil-turistico .event-modal__frame {
+    min-height: 0;
     border-radius: 0;
     background: #f1fbf7;
     box-shadow: none;
@@ -4655,6 +4670,10 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
         touch-action: pan-y;
     }
 
+    .event-modal--perfil-turistico .event-modal__dialog {
+        height: auto;
+    }
+
     .event-modal__content {
         grid-template-columns: 1fr;
         min-height: auto;
@@ -4687,7 +4706,8 @@ body.modo_escuro .event-modal--contact .event-modal__dialog {
 
     .event-modal--carnaval-cultural .event-modal__intro,
     .event-modal--sao-joao .event-modal__intro,
-    .event-modal--festival-forro .event-modal__intro {
+    .event-modal--festival-forro .event-modal__intro,
+    .event-modal--perfil-turistico .event-modal__intro {
         overflow: visible;
     }
 
