@@ -883,6 +883,138 @@ textarea {
     }
 }
 
+.hero-slide--tourism-profile {
+    --hero-image: url('public/images/perfil-turistico-carousel-desktop.png');
+    --hero-overlay: linear-gradient(90deg, rgba(6, 65, 52, 0.08) 0%, rgba(6, 65, 52, 0.22) 38%, rgba(6, 65, 52, 0.08) 62%, rgba(6, 65, 52, 0) 100%);
+    --hero-position: center;
+    align-items: center;
+}
+
+.hero-slide--tourism-profile::before {
+    background-color: #318e73;
+}
+
+.hero-slide--tourism-profile::after {
+    background: linear-gradient(180deg, rgba(4, 42, 33, 0.04) 0%, rgba(4, 42, 33, 0.08) 58%, rgba(4, 36, 29, 0.3) 100%);
+}
+
+.hero-slide--tourism-profile .hero-slide__content {
+    position: absolute;
+    left: 27%;
+    top: 48%;
+    width: min(30vw, 560px);
+    margin: 0;
+    padding: clamp(1.15rem, 1.8vw, 1.75rem);
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(6, 74, 59, 0.86), rgba(22, 126, 98, 0.7));
+    box-shadow: 0 20px 44px rgba(7, 48, 38, 0.24);
+    backdrop-filter: blur(7px);
+}
+
+.hero-slide--tourism-profile .hero-slide__eyebrow {
+    margin-bottom: 0.65rem;
+    color: #fff2ad;
+    text-shadow: none;
+}
+
+.hero-slide--tourism-profile .hero-slide__title {
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.9rem;
+    color: #fff;
+    font-size: clamp(2.35rem, 4.1vw, 4rem);
+    line-height: 0.98;
+    text-align: left;
+    text-shadow: 0 10px 24px rgba(3, 34, 27, 0.3);
+}
+
+.hero-slide--tourism-profile .hero-slide__title::after {
+    left: 0;
+    transform: none;
+    background-color: #f0cf4f;
+}
+
+.hero-slide--tourism-profile .hero-slide__text {
+    max-width: none;
+    margin: 0 0 1.1rem;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: clamp(0.96rem, 1.4vw, 1.12rem);
+    line-height: 1.45;
+    text-shadow: 0 5px 14px rgba(3, 34, 27, 0.3);
+}
+
+.hero-slide--tourism-profile .hero-slide__text strong {
+    color: #ffe16b;
+}
+
+.hero-slide--tourism-profile .hero-slide__action {
+    padding: 0.75rem 1.1rem;
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(255, 255, 255, 0.72);
+    color: #0f6f5a;
+    box-shadow: 0 10px 24px rgba(3, 34, 27, 0.18);
+}
+
+.hero-slide--tourism-profile:hover .hero-slide__action,
+.hero-slide--tourism-profile:focus-visible .hero-slide__action {
+    background: #fff;
+    border-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .hero-slide--tourism-profile {
+        --hero-image: url('public/images/perfil-turistico-carousel-mobile.png');
+    }
+
+    .hero-slide--tourism-profile .hero-slide__content {
+        left: clamp(16px, 5vw, 32px);
+        top: 43%;
+        width: min(56%, 360px);
+        margin: 0;
+        padding: 1rem;
+        border-radius: 18px;
+    }
+
+    .hero-slide--tourism-profile .hero-slide__eyebrow {
+        margin-bottom: 0.45rem;
+        font-size: 0.68rem;
+    }
+
+    .hero-slide--tourism-profile .hero-slide__title {
+        margin-bottom: 0.65rem;
+        padding-bottom: 0.7rem;
+        font-size: clamp(2rem, 8.5vw, 2.85rem);
+    }
+
+    .hero-slide--tourism-profile .hero-slide__text {
+        margin-bottom: 0.8rem;
+        font-size: clamp(0.82rem, 2.7vw, 0.98rem);
+        line-height: 1.35;
+    }
+
+    .hero-slide--tourism-profile .hero-slide__action {
+        padding: 0.65rem 0.9rem;
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-slide--tourism-profile .hero-slide__content {
+        top: 42%;
+        width: min(58%, 250px);
+        padding: 0.9rem;
+    }
+
+    .hero-slide--tourism-profile .hero-slide__title {
+        font-size: clamp(1.8rem, 9vw, 2.35rem);
+    }
+
+    .hero-slide--tourism-profile .hero-slide__text {
+        font-size: 0.79rem;
+    }
+}
+
 .hero-slide--calendar {
     --hero-image: url('public/images/agenda-cultural-carousel.png');
     --hero-overlay: linear-gradient(115deg, rgba(5, 45, 34, 0.62) 0%, rgba(25, 124, 91, 0.18) 52%, rgba(5, 36, 27, 0.66) 100%);

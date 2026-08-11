@@ -2384,7 +2384,8 @@ function initPerfilTuristicoModal() {
     }
 
     perfilTuristicoModalTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', () => {
+        trigger.addEventListener('click', (event) => {
+            event.preventDefault();
             openPerfilTuristicoModal(trigger);
         });
     });
