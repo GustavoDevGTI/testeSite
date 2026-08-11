@@ -580,6 +580,11 @@ function setHeroSlide(nextIndex) {
         dot.classList.toggle('is-active', isActive);
         dot.setAttribute('aria-pressed', String(isActive));
     });
+
+    heroCarousel?.classList.toggle(
+        'is-tourism-profile-active',
+        heroSlides[heroActiveIndex]?.classList.contains('hero-slide--tourism-profile')
+    );
 }
 
 function stopHeroAutoplay() {
