@@ -2654,6 +2654,15 @@ section h2::after {
     margin-top: 0.35rem;
 }
 
+.event-modal--perfil-turistico .event-modal__notice ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.1rem;
+}
+
+.event-modal--perfil-turistico .event-modal__notice li + li {
+    margin-top: 0.25rem;
+}
+
 .event-modal--perfil-turistico .event-modal__notice-title {
     color: #f4fffb;
 }
